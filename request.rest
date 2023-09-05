@@ -1,0 +1,41 @@
+GET http://localhost:3000/users 
+###
+
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+    "username": "Rico",
+    "password": "12345678"
+}
+ 
+###
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "username": "Rico",
+    "password": "12345678"
+}
+
+###
+
+POST http://localhost:3000/gather
+Content-Type: application/json
+
+{
+    "characterName": "Rico",
+    "region": "everfall",
+    "action": "woodcutting"
+}
+
+###
+
+
+POST http://localhost:3000/cancel
+Content-Type: application/json
+
+{
+    "characterName": "Rico"
+}

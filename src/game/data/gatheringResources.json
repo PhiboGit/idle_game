@@ -1,0 +1,119 @@
+{
+  "woodcutting": {
+    "tiers": [
+      {
+        "level": 0,
+        "time": 20000,
+        "amount": 4,
+        "exp": 10,
+        "expChar": 5
+      },
+      {
+        "level": 25,
+        "time": 40000,
+        "amount": 4,
+        "exp": 20,
+        "expChar": 10
+      },
+      {
+        "level": 50,
+        "time": 80000,
+        "amount": 4,
+        "exp": 50,
+        "expChar": 15
+      },
+      {
+        "level": 75,
+        "time": 120000,
+        "amount": 4,
+        "exp": 100,
+        "expChar": 20
+      },
+      {
+        "level": 100,
+        "time": 180000,
+        "amount": 4,
+        "exp": 150,
+        "expChar": 30
+      }
+    ]
+  },
+  "mining": {
+    "tiers": [
+      {
+        "level": 0,
+        "time": 20000,
+        "amount": 4,
+        "exp": 50,
+        "expChar": 10
+      },
+      {
+        "level": 25,
+        "time": 40000,
+        "amount": 4,
+        "exp": 150,
+        "expChar": 20
+      },
+      {
+        "level": 50,
+        "time": 80000,
+        "amount": 4,
+        "exp": 500,
+        "expChar": 15
+      },
+      {
+        "level": 75,
+        "time": 120000,
+        "amount": 4,
+        "exp": 50,
+        "expChar": 20
+      },
+      {
+        "level": 100,
+        "time": 180000,
+        "amount": 4,
+        "exp": 2500,
+        "expChar": 30
+      }
+    ]
+  },
+  "harvesting": {
+    "tiers": [
+      {
+        "level": 0,
+        "time": 20000,
+        "amount": 4,
+        "exp": 50,
+        "expChar": 10
+      },
+      {
+        "level": 25,
+        "time": 40000,
+        "amount": 4,
+        "exp": 150,
+        "expChar": 20
+      },
+      {
+        "level": 50,
+        "time": 80000,
+        "amount": 4,
+        "exp": 500,
+        "expChar": 15
+      },
+      {
+        "level": 75,
+        "time": 120000,
+        "amount": 4,
+        "exp": 50,
+        "expChar": 20
+      },
+      {
+        "level": 100,
+        "time": 180000,
+        "amount": 4,
+        "exp": 2500,
+        "expChar": 30
+      }
+    ]
+  }
+}
