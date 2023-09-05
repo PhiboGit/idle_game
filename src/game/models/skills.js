@@ -25,9 +25,9 @@ const SkillsSchema = new mongoose.Schema({
 
 class SkillForm{
   constructor(skill){
-    this.level = skill.level || 0
-    this.luck = skill.luck || 0
-    this.speedBonus = skill.speedBonus || 0
+    this.level = skill?.level || 0
+    this.luck = skill?.luck || 0
+    this.speedBonus = skill?.speedBonus || 0
   }
 }
 

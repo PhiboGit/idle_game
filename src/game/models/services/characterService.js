@@ -123,7 +123,7 @@ async function getSkill(name, skill){
   const select = `skills.${skill}`
 
   const characterSkill = await Character.findOne({characterName: name}, select).lean()
-  const skillForm = getSkillForm(characterSkill.skills[skill])
+  const skillForm = getSkillForm(characterSkill.skills?.[skill])
   return skillForm
 }
 
