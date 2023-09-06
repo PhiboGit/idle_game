@@ -1,5 +1,6 @@
 
 const {woodcutting} = require('./woodcutting')
+const {mining} = require('./mining')
 const WsGatheringForm = require('../../routes/websocket/wsForms/wsGatheringForm')
 const {senderMediator} = require('../../routes/websocket/mediator')
 
