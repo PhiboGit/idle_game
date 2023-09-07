@@ -22,6 +22,14 @@ const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
+const cors = require('cors'); // Import the cors package
+
+// Enable CORS
+app.use(cors({
+    origin: 'http://localhost:5173',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+}));
 
 app.use('/register', require('./src/routes/register'))
 app.use('/login', require('./src/routes/login'))
@@ -74,60 +82,7 @@ function extractTokenFromRequest(req) {
     const cookies = cookie.parse(cookieHeader);
     return cookies.accessToken;
 }
-
-
-
-// Middleware to handle CORS
-// TODO: try to understand CORS!!
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    next();
-});
-
+  
 function onSocketPreError(e) {
     console.log(e);
 }
-  
-
-// app.get('/users', authToken, (req, res) => {
-//     res.send(req.user)
-// })
-
-
-// function authToken(req, res, next) {
-//     const cookieHeader = req.headers.cookie;
-    
-//     if (!cookieHeader) {
-//         console.log('No token cookieHeader provided')
-//         res.status(401).send('No token cookieHeader provided');
-//         return;
-//     }
-//     const cookies = cookie.parse(cookieHeader);
-//     const token = cookies.accessToken;
-
-//     if (!token) {
-//         console.log('No token cookie provided')
-//         res.status(401).send('No token cookie provided');
-//         return;
-//     }
-//     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, payload) => {
-//         if (err) {
-//             console.log('Error verifying token')
-//             res.status(401).send('Invalid token')
-//             return
-//         }
-//         const user = await User.findOne({ username: payload.username }).lean()
-//         console.log(user)
-//         if (err || !user || !user.tokens.some(t => t === token)) {
-//             console.log('Invalid token')
-//             res.status(500).send('Invalid token')
-//             return
-//         }
-//         console.log('Valid token')
-//         req.user = user
-//         next()
-//     })
-// }
