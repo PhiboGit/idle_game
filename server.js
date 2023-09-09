@@ -38,14 +38,16 @@ server.on('upgrade', (req, socket, head) => {
     socket.on('error', onSocketPreError);
     console.log('Connecting to websocket...')
 
-    const token = extractTokenFromRequest(req)
+    const token = extractTokenFromQueryParameters(req);
 
     if (!token) {
-        console.log('No token cookie provided')
+        console.log('No token provided in query parameters');
         socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
         socket.destroy();
-        return
+        return;
     }
+
+    // Verify and handle the token
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, payload) => {
         if (err) {
             console.log('Error verifying token')
@@ -68,21 +70,17 @@ server.on('upgrade', (req, socket, head) => {
             socket.removeListener('error', onSocketPreError);
             wss.emit('connection', ws, req, infos);
         });
-    })
+    });
 });
 
-function extractTokenFromRequest(req) {
-    const cookieHeader = req.headers.cookie;
-
-    if (!cookieHeader) {
-        console.log('No token cookie provided');
-        return null;
-    }
-
-    const cookies = cookie.parse(cookieHeader);
-    return cookies.accessToken;
+function extractTokenFromQueryParameters(req) {
+    console.log('Reading token...')
+    const url = new URL(req.url, 'http://localhost:5173');
+    const token = url.searchParams.get('accessToken');
+    console.log(token)
+    return token;
 }
-  
+
 function onSocketPreError(e) {
     console.log(e);
 }
