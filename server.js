@@ -1,8 +1,9 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
-const cookie = require('cookie');
+const cookie = require('cookie')
 const express = require('express')
 const jwt = require('jsonwebtoken')
+const cors = require('cors')
 
 const {wss} = require('./src/routes/websocket/websocket');
 const User = require('./src/models/user')
@@ -22,7 +23,7 @@ const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
-const cors = require('cors'); // Import the cors package
+
 
 // Enable CORS
 app.use(cors({

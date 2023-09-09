@@ -1,3 +1,10 @@
+const data = {
+    gatheringType: 'String: woodcutting, mining',
+    tier: 'Number: 1-6',
+    limit: 'Boolean',
+    iterations: 'Number',
+}
+
 class WsGatheringForm{
     constructor(data){
         this.gatheringType = data.gatheringType
@@ -7,18 +14,19 @@ class WsGatheringForm{
     }
 }
 
-function getGatheringData(data){
+function getGatheringData(msg){
+    console.log("getGatheringData: ", msg)
     if(
-        data &&
-        typeof data.gatheringType === 'string' &&
-        typeof data.tier === 'number' &&
-        typeof data.iterations === 'number' &&
-        typeof data.limit === 'boolean'
+        msg && msg.data &&
+        typeof msg.data.gatheringType === 'string' &&
+        typeof msg.data.tier === 'number' &&
+        typeof msg.data.iterations === 'number' &&
+        typeof msg.data.limit === 'boolean'
         ){
-            return new WsGatheringForm(data)
+            return new WsGatheringForm(msg.data)
         }
     console.info('gathering data form invalid')
     return null
 }
 
-module.exports = {getGatheringData, WsGatheringForm}
+module.exports = {getGatheringData, WsGatheringForm, gatheringDataForm: data}

@@ -1,9 +1,15 @@
-const {handleAction} = require('../../game/actions/actionRouter')
+const ActionHandler = require('../../game/actions/actionHandler')
 const {senderMediator} = require('./mediator')
 
 // Define a configuration object for message routing
 const messageRoutes = {
-  'action': handleAction,
+  'action': {
+    'cancel': ActionHandler.handleCancel,
+    'gather': ActionHandler.handleGathering,
+    'refining': undefined,
+    'crafting': undefined,
+    'combat': undefined
+  },
   'getTime': handleGetTime,
   'broadcast': handleBroadcast,
 };
@@ -11,23 +17,31 @@ const messageRoutes = {
 
 function routeMessage(character, msgJson) {
   const messageType = msgJson.type
-  const typeRoute = messageType.split('/')[0]
+  if (!messageType || typeof messageType !== 'string') {
+    senderMediator.publish('error', {character: character, msg: "Does not have property 'type', or value is not a 'string'!" })
+    return
+  }
 
-  // handle the routes recieved from ws message
-  if (typeRoute === 'action') {
-    handleAction(character, msgJson)
-  } else if (typeRoute === "getTime") {
-    handleGetTime(character)
-  } else if (typeRoute === "broadcast") {
-    handleBroadcast(character, msgJson)
-  } else {
-    console.log("Invalid route for 'type' attribute.")
-    senderMediator.publish('error', {character: character, msg: "Invalid route for 'type' attribute." })
+  const typeRoute = messageType.split('/')
+  let currentRoute = messageRoutes
+
+  for (const routeSegment of typeRoute) {
+    const handler = currentRoute[routeSegment]
+    if (!handler) {
+      console.log("Invalid route for 'type' attribute.")
+      senderMediator.publish('error', {character: character, msg: `No route found for type ${messageType}. Segment:  ${routeSegment} is not defined!` })
+      return
+    }
+    if (typeof handler === 'function') {
+      handler(character, msgJson)
+      return
+    }
+    currentRoute = currentRoute[routeSegment]
   }
 }
 
 
-function handleGetTime(character){
+function handleGetTime(character, msgJson){
   time = Date.now()
   senderMediator.publish('time', {character: character, msg: time })
 }
