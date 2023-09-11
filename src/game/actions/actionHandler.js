@@ -1,17 +1,21 @@
 const ActionManager = require('./actionManager')
-const {woodcutting} = require('./woodcutting')
-const {mining} = require('./mining')
+/* const {woodcutting, woodcuttingStart} = require('./woodcutting')
+const {mining} = require('./mining') */
 const WsGatheringForm = require('../../routes/websocket/wsForms/wsGatheringForm')
 const {senderMediator} = require('../../routes/websocket/mediator')
 
 
-function handleCancel(character) {
-  if(ActionManager.cancelAction(character)){
-    console.log("An action has been cancelled")
-    senderMediator.publish('action_manager', {character: character, msg: "action cancelled"})
-  } else {
-  senderMediator.publish('action_manager', {character: character, msg: "no active action"})
+function handleCancel(character, msg) {
+  if(!(msg && msg.data && typeof msg.data.index === 'number')){
+    senderMediator.publish('error', {character: character,
+      msg: {message: "Cancel needs 'data' property",
+            info: {
+             data: {index: 'Number: -1-5, -1 is the current running action, else the index of the Queue.'}
+           }}})
+    return
   }
+
+  ActionManager.cancelAction(character, msg.data.index)
 }
 
 function handleGathering(character, msg) {
@@ -25,21 +29,7 @@ function handleGathering(character, msg) {
     return
   }
 
-  const gathering = {
-    'woodcutting': woodcutting,
-    'mining':mining,
-    'harvesting': undefined
-  }
-  
-  handler = gathering[form.gatheringType]
-  if (typeof handler !== 'function') {
-    console.log("Unknown gathering type: " + form.gatheringType)
-    senderMediator.publish('error', {character: character, msg: `Check the values of data. Unknown gatheringType: ${form.gatheringType}`})
-    return
-  }
-
-  handler(character, form)
-    
+  ActionManager.add(character, msg.type +"/"+ form.gatheringType, form)
 }
 
 module.exports = {handleCancel, handleGathering}

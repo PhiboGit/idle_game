@@ -9,69 +9,40 @@ const {getCharacterForm_Increment} = require('../models/characterForm')
 
 const {senderMediator} = require('../../routes/websocket/mediator')
 
-/**
- * Initializes the mining for the character.
- *  
- * @param {String} character 
- * @param {WsGatheringForm} form 
- * @returns 
- */
-async function mining(character, form) {
-    const tier = form.tier
-    const requiredLevel = getMiningData(tier).level
+async function startMining(character, args, activeTimeout) {
+	return new Promise(async (resolve, reject) => {
+				console.log('init mining...')
+		const tier = args.tier
+		const miningData = getMiningData(tier)
+		const requiredLevel = miningData.level
+		characterSkill = await CharacterService.getSkill(character, 'mining')
 
-    //check is required level to use
-    characterSkill = await CharacterService.getSkill(character, 'mining')
-    console.log("getSkill: " ,characterSkill)
-    
-    characterSkillLevel = characterSkill.level
-    if (characterSkillLevel < requiredLevel) {
-        // The action does not get executed!
-        console.log(`${character} does not have the required level. Is ${characterSkillLevel} but needs ${requiredLevel}`)
-        senderMediator.publish('info', {character: character, msg: {rejected: "You do not have the required level"}})
-        return
-    }
+		//check is required level to use
+		characterSkillLevel = characterSkill.level
+		if (characterSkillLevel < requiredLevel) {
+			// The action does not get executed!
+			console.log(`${character} does not have the required level. Is ${characterSkillLevel} but needs ${requiredLevel}`)
+			reject('level')
+			return
+		}
 
+	console.log('init mining timeout...')
+	let cuttingTime = miningData.time
+	const timeoutID = setTimeout(async () => {
+		// after the delay we loot!
+		await calculatingGains(character, tier)
+		activeTimeout[character] = null
+		resolve('success!')
+	}, Globals.getSpeedModifier()*cuttingTime)
 
-    console.log(`${character} started mining tier: ${tier}`)
-    // starting the action
-    miningAction(character, tier, form.limit, form.iterations)
+	// setting a function to cancel the timeout
+	function cancelTimeout() {
+		clearTimeout(timeoutID)
+		reject('cancel')
+	}
+	activeTimeout[character] = cancelTimeout
+	})
 }
-
-
-/**
- * Sets the action for the character to mining.
- * 
- * @param {String} character 
- * @param {Number} tier 
- * @param {Boolean} limit 
- * @param {Number} iterations if limit is true then the action is executed number of iterations.
- * @returns 
- */
-async function miningAction(character, tier, limit, iterations) {
-    // cancel the action if limited
-    if (limit && iterations <= 0){
-        return
-    }
-
-    characterSkill = await CharacterService.getSkill(character, 'mining')
-    // calculate the required time
-    let cuttingTime = getMiningData(tier).time
-
-    // start a Timeout to prefrom the action with a delay
-    action = setTimeout(async() => {
-        // after the delay we loot!
-        calculatingGains(character, tier)
-
-        // repeatedly performs the action and decrements the iteration counter
-        miningAction(character, tier, limit, --iterations)
-    }, Globals.getSpeedModifier()*cuttingTime)
-
-    // set the action. This way the character has an active action.
-    ActionManager.setAction(character, action)
-    console.log(`${character} mining iteration: ${iterations}`)
-}
-
 
 /**
  * Does everything after the action has finished.
@@ -101,4 +72,4 @@ async function calculatingGains(character, tier) {
     await CharacterService.increment(character, form)
 }
 
-module.exports = {mining}
+module.exports = {startMining}

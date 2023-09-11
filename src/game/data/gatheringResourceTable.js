@@ -26,6 +26,7 @@ class GatheringResourceForm {
  */
 function getWoodcuttingData(tier){
   // tiers is a array. tier1 is at 0, tier2 is at 1...
+  if (tier < 1 || tier > woodcuttingData.tiers.length) return null
   return new GatheringResourceForm(woodcuttingData.tiers[tier-1])
 }
 
@@ -36,6 +37,7 @@ function getWoodcuttingData(tier){
  */
 function getMiningData(tier){
   // tiers is a array. tier1 is at 0, tier2 is at 1...
+  if (tier < 1 || tier > miningData.tiers.length) return null
   return new GatheringResourceForm(miningData.tiers[tier-1])
 }
 
@@ -46,6 +48,7 @@ function getMiningData(tier){
  */
 function getHarvestingData(tier){
   // tiers is a array. tier1 is at 0, tier2 is at 1...
+  if (tier < 1 || tier > harvestingData.tiers.length) return null
   return new GatheringResourceForm(harvestingData.tiers[tier-1])
 }
 

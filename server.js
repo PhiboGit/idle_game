@@ -82,6 +82,18 @@ function extractTokenFromQueryParameters(req) {
     return token;
 }
 
+function extractTokenFromRequest(req) {
+    const cookieHeader = req.headers.cookie;
+
+    if (!cookieHeader) {
+        console.log('No token cookie provided');
+        return null;
+    }
+
+    const cookies = cookie.parse(cookieHeader);
+    return cookies.accessToken;
+}
+
 function onSocketPreError(e) {
     console.log(e);
 }

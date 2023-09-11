@@ -31,7 +31,7 @@ User.collection.createIndex({ username: 1, characterName: 1 }, { unique: true },
 	if (error) {
 	  console.error('Error creating unique index:', error);
 	} else {
-	  console.log('Unique index created on username,characterName field');
+	  console.log('Unique index created for UserSchema on username,characterName field');
 	}
   });
 

@@ -81,6 +81,19 @@ async function updateLevel(name, update){
   }  
 }
 
+
+async function update(character, update){
+  await Character.findOneAndUpdate(
+    { characterName: character },
+    update,
+    { new: true }
+  )
+}
+
+async function getAll(){
+  return await Character.find()
+}
+
 /**
  * 
  * @param {String} charName 
@@ -127,4 +140,4 @@ async function getSkill(name, skill){
   return skillForm
 }
 
-module.exports = {increment, getSkill, findCharacter}
+module.exports = {increment, getSkill, findCharacter, update, getAll}
