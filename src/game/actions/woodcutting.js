@@ -1,4 +1,3 @@
-//const ActionManager = require('./actionManager')
 const {choice, rollDice} = require('../utils/randomDice')
 const {getWoodcuttingData} = require('../data/gatheringResourceTable')
 const Globals = require('../utils/globals')
@@ -9,10 +8,9 @@ const {getCharacterForm_Increment} = require('../models/characterForm')
 
 const {senderMediator} = require('../../routes/websocket/mediator')
 
-
 async function startWoodcutting(character, args, activeTimeout) {
 	return new Promise(async (resolve, reject) => {
-				console.log('init woodcutting...')
+		console.log('init woodcutting...')
 		const tier = args.tier
 		const woodcuttingData = getWoodcuttingData(tier)
 		const requiredLevel = woodcuttingData.level
@@ -28,7 +26,7 @@ async function startWoodcutting(character, args, activeTimeout) {
 		}
 
 	console.log('init woodcutting timeout...')
-	let cuttingTime = miningData.time
+	let cuttingTime = woodcuttingData.time
 	const timeoutID = setTimeout(async () => {
 		// after the delay we loot!
 		await calculatingGains(character, tier)
@@ -38,6 +36,7 @@ async function startWoodcutting(character, args, activeTimeout) {
 
 	// setting a function to cancel the timeout
 	function cancelTimeout() {
+		console.log('cancelling timeout woodcutting...')
 		clearTimeout(timeoutID)
 		reject('cancel')
 	}

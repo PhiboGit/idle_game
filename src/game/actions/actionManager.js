@@ -83,17 +83,19 @@ async function processQueue(character) {
 			console.log('All timeouts completed.',character, repeats)
 			console.log('current Queue: ',character, repeatsQueue.length)
 		} catch (error) {
-			if (error === 'cancel') {
-				console.error('Timeout canceled.',character, repeats)
-				console.log('current Queue: ',character, repeatsQueue.length)
-				CharacterService.update(character, {$set: { currentAction: null }})
-			}
-			if (error === 'level') {
-				console.error('Level requirement not met!')
-				console.log('current Queue: ',character, repeatsQueue.length)
-				CharacterService.update(character, {$set: { currentAction: null }})
-			} else {
-				throw error
+			switch (error) {
+					case 'cancel':
+							console.error('Timeout canceled.', character, repeats)
+							console.log('current Queue: ', character, repeatsQueue.length)
+							CharacterService.update(character, { $set: { currentAction: null } })
+							break;
+					case 'level':
+							console.error('Level requirement not met!')
+							console.log('current Queue: ', character, repeatsQueue.length)
+							CharacterService.update(character, { $set: { currentAction: null } })
+							break
+					default:
+							throw error
 			}
 		}
 	}
@@ -109,7 +111,6 @@ async function startSequentialTimeouts(character, repeats) {
   while (repeats.iterations > 0 || !repeats.limit) {
 		CharacterService.update(character, {$set: { currentAction: repeats }})
 		console.log(`Iterations left: ${repeats.iterations}`)
-		//const result = await wait(character, activeTimeout)
 		const result = await callback(character, repeats.args, activeTimeout)
 		console.log(`Timeout completed. ${result}`)
 		repeats.counter++

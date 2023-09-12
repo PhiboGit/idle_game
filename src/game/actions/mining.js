@@ -1,4 +1,3 @@
-const ActionManager = require('./actionManager')
 const {choice, rollDice} = require('../utils/randomDice')
 const {getMiningData} = require('../data/gatheringResourceTable')
 const Globals = require('../utils/globals')
@@ -11,7 +10,7 @@ const {senderMediator} = require('../../routes/websocket/mediator')
 
 async function startMining(character, args, activeTimeout) {
 	return new Promise(async (resolve, reject) => {
-				console.log('init mining...')
+		console.log('init mining...')
 		const tier = args.tier
 		const miningData = getMiningData(tier)
 		const requiredLevel = miningData.level
@@ -37,12 +36,14 @@ async function startMining(character, args, activeTimeout) {
 
 	// setting a function to cancel the timeout
 	function cancelTimeout() {
+		console.log('cancelling timeout mining...')
 		clearTimeout(timeoutID)
 		reject('cancel')
 	}
 	activeTimeout[character] = cancelTimeout
 	})
 }
+
 
 /**
  * Does everything after the action has finished.
