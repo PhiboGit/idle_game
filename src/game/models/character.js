@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
-const ResourceSchema = require('./resource')
-const {SkillsSchema} = require('./skills')
+const {resources} = require('./resources')
+const {skills} = require('./skills')
 
 const {senderMediator} = require('../../routes/websocket/mediator')
 
@@ -18,8 +18,8 @@ const CharacterSchema = new mongoose.Schema(
 		exp: Number,
 		currentAction: {type: Object, default: null},
 		actionQueue: [Object],
-    resource: ResourceSchema,
-		skills: SkillsSchema,
+    resources,
+		skills,
 	},
 	{ collection: 'characters' }
 )

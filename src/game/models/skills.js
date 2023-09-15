@@ -1,38 +1,22 @@
 const mongoose = require('mongoose')
 
 
-const SkillsSchema = new mongoose.Schema({
-  woodcutting: {
-    exp: Number,
-    level: Number,
-    luck: Number,
-    speedBonus: Number,
-  },
-  mining: {
-    exp: Number,
-    level: Number,
-    luck: Number,
-    speedBonus: Number,
-  },
-  harvesting: {
-    exp: Number,
-    level: Number,
-    luck: Number,
-    speedBonus: Number,
-  },  
-}, { _id: false });
-
-
-class SkillForm{
-  constructor(skill){
-    this.level = skill?.level || 0
-    this.luck = skill?.luck || 0
-    this.speedBonus = skill?.speedBonus || 0
-  }
+const skill = {
+  exp: {type: Number, default: 0},
+  level: {type: Number, default: 0},
+  luck: {type: Number, default: 0},
+  speedBonus: {type: Number, default: 0},
 }
 
-function getSkillForm(skill){
-  return new SkillForm(skill)
+const skills = {
+  woodcutting: skill,
+  mining: skill,
+  harvesting: skill,  
+
+  woodworking:skill,
+  weaving: skill,
+  smelting:skill,
+
 }
 
-module.exports = {SkillsSchema, SkillForm, getSkillForm};
+module.exports = {skills};

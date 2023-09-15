@@ -1,12 +1,9 @@
-const {choice, rollDice} = require('../utils/randomDice')
-const {getMiningData} = require('../data/gatheringResourceTable')
-const Globals = require('../utils/globals')
-const CharacterService = require('../models/services/characterService')
-const {WsGatheringForm} = require('../../routes/websocket/wsForms/wsGatheringForm')
-const {SkillForm} = require('../models/skills')
-const {getCharacterForm_Increment} = require('../models/characterForm')
+const {choice, rollDice} = require('../../utils/randomDice')
+const {getMiningData} = require('../../data/gatheringResourceTable')
+const Globals = require('../../utils/globals')
+const CharacterService = require('../../models/services/characterService')
 
-const {senderMediator} = require('../../routes/websocket/mediator')
+const {senderMediator} = require('../../../routes/websocket/mediator')
 
 async function startMining(character, args, activeTimeout) {
 	return new Promise(async (resolve, reject) => {
@@ -26,13 +23,13 @@ async function startMining(character, args, activeTimeout) {
 		}
 
 	console.log('init mining timeout...')
-	let cuttingTime = miningData.time
+	let gatheringTime = miningData.time
 	const timeoutID = setTimeout(async () => {
 		// after the delay we loot!
 		await calculatingGains(character, tier)
 		activeTimeout[character] = null
 		resolve('success!')
-	}, Globals.getSpeedModifier()*cuttingTime)
+	}, Globals.getSpeedModifier()*gatheringTime)
 
 	// setting a function to cancel the timeout
 	function cancelTimeout() {
@@ -55,22 +52,23 @@ async function startMining(character, args, activeTimeout) {
  * @param {Number} tier 
  */
 async function calculatingGains(character, tier) {
-    console.log('calculating loot and gains...')
-    const OreTierData = getMiningData(tier)
+	console.log('calculating loot and gains...')
+	const OreTierData = getMiningData(tier)
 
-    // rolling the loot and calculating exp gains
-    const OreAmount = rollDice(OreTierData.amount)
-    console.log(`${character} gathered ${OreAmount} tier${tier} Ore `)
-    const characterExp = OreTierData.CharacterExp
+	// rolling the loot and calculating exp gains
+	const OreAmount = rollDice(OreTierData.amount)
+	console.log(`${character} gathered ${OreAmount} tier${tier} Ore `)
+	const characterExp = OreTierData.CharacterExp
 
-    // filling out the form to increment the values of a character
-    const form = getCharacterForm_Increment()
-    form.exp = characterExp
-    form.resource.ore.tiers[tier] = OreAmount
-    form.skills.mining.exp = OreTierData.exp
-    
-    // At last update all the values for the character.
-    await CharacterService.increment(character, form)
+	// filling out the form to increment the values of a character
+	const incrementData = {}
+
+	incrementData['exp'] = characterExp
+	incrementData['skills.mining.exp'] = OreTierData.exp
+	incrementData[`resources.oreT${tier}`] = OreAmount
+	
+	// At last update all the values for the character.
+	await CharacterService.increment(character, incrementData)
 }
 
 module.exports = {startMining}
