@@ -1,13 +1,15 @@
 const CharacterService = require('../models/services/characterService')
 
-const {startWoodcutting} = require('./woodcutting')
-const {startMining} = require('./mining')
+const {startWoodcutting} = require('./gathering/woodcutting')
+const {startMining} = require('./gathering/mining')
+const {startHarvesting} = require('./gathering/harvesting')
 
 
 
 const actionLookup = {
-	'action/gathering/woodcutting': startWoodcutting,
-	'action/gathering/mining': startMining,
+	'woodcutting': startWoodcutting,
+	'mining': startMining,
+	'harvesting': startHarvesting
 }
 
 
@@ -39,8 +41,8 @@ async function init(){
 
 init()
 
-function add(character, actionString, args){
-  const actionObject = {actionString:actionString, args: args, limit: args.limit, iterations: args.iterations, counter: 0}
+function add(character, actionType, args){
+  const actionObject = {actionType:actionType, args: args, counter: 0}
   console.log(`ActionManager.add: ${character} `, JSON.stringify(actionObject))
     
   enqueue(character, actionObject)
@@ -52,7 +54,8 @@ function enqueue(character, repeats) {
 	}
 	repeatsQueue = actionQueue[character]
 	
-	if (repeatsQueue.length >= 2){
+	// action queue size limit
+	if (repeatsQueue.length >= 3){
 		console.log('Queue is full!', repeatsQueue)
 		return
 	}
@@ -84,18 +87,30 @@ async function processQueue(character) {
 			console.log('current Queue: ',character, repeatsQueue.length)
 		} catch (error) {
 			switch (error) {
-					case 'cancel':
-							console.error('Timeout canceled.', character, repeats)
-							console.log('current Queue: ', character, repeatsQueue.length)
-							CharacterService.update(character, { $set: { currentAction: null } })
-							break;
-					case 'level':
-							console.error('Level requirement not met!')
-							console.log('current Queue: ', character, repeatsQueue.length)
-							CharacterService.update(character, { $set: { currentAction: null } })
-							break
-					default:
-							throw error
+				case 'cancel':
+					console.error('Timeout canceled.', character, repeats)
+					console.log('current Queue: ', character, repeatsQueue.length)
+					CharacterService.update(character, { $set: { currentAction: null } })
+					break
+				case 'level':
+					console.error('Level requirement not met!')
+					console.log('current Queue: ', character, repeatsQueue.length)
+					CharacterService.update(character, { $set: { currentAction: null } })
+					break
+
+				case 'recipe':
+					console.error('Recipe does not exist')
+					console.log('current Queue: ', character, repeatsQueue.length)
+					CharacterService.update(character, { $set: { currentAction: null } })
+					break
+
+				case 'ingredients':
+					console.error('Ingredients requirement not met!')
+					console.log('current Queue: ', character, repeatsQueue.length)
+					CharacterService.update(character, { $set: { currentAction: null } })
+					break
+				default:
+					throw error
 			}
 		}
 	}
@@ -106,16 +121,16 @@ async function processQueue(character) {
 async function startSequentialTimeouts(character, repeats) {
 	console.log('startSequentialTimeouts: ', repeats)
 
-	const callback = actionLookup[repeats.actionString]
-    
-  while (repeats.iterations > 0 || !repeats.limit) {
+	const callback = actionLookup[repeats.actionType]
+	    
+  while (repeats.args.iterations > 0 || !repeats.args.limit) {
 		CharacterService.update(character, {$set: { currentAction: repeats }})
-		console.log(`Iterations left: ${repeats.iterations}`)
+		console.log(`Iterations left: ${repeats.args.iterations}`)
 		const result = await callback(character, repeats.args, activeTimeout)
 		console.log(`Timeout completed. ${result}`)
 		repeats.counter++
 		console.log(`Iterations completed: ${repeats.counter}`)
-		repeats.iterations--
+		repeats.args.iterations--
 	}
     
 	console.log('startSequentialTimeouts completed: ', repeats)

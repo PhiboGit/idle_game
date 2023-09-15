@@ -1,12 +1,9 @@
-const {choice, rollDice} = require('../utils/randomDice')
-const {getWoodcuttingData} = require('../data/gatheringResourceTable')
-const Globals = require('../utils/globals')
-const CharacterService = require('../models/services/characterService')
-const {WsGatheringForm} = require('../../routes/websocket/wsForms/wsGatheringForm')
-const {SkillForm} = require('../models/skills')
-const {getCharacterForm_Increment} = require('../models/characterForm')
+const {choice, rollDice} = require('../../utils/randomDice')
+const {getWoodcuttingData} = require('../../data/gatheringResourceTable')
+const Globals = require('../../utils/globals')
+const CharacterService = require('../../models/services/characterService')
 
-const {senderMediator} = require('../../routes/websocket/mediator')
+const {senderMediator} = require('../../../routes/websocket/mediator')
 
 async function startWoodcutting(character, args, activeTimeout) {
 	return new Promise(async (resolve, reject) => {
@@ -26,13 +23,15 @@ async function startWoodcutting(character, args, activeTimeout) {
 		}
 
 	console.log('init woodcutting timeout...')
-	let cuttingTime = woodcuttingData.time
+	let gatheringTime = woodcuttingData.time
+
+	
 	const timeoutID = setTimeout(async () => {
 		// after the delay we loot!
 		await calculatingGains(character, tier)
 		activeTimeout[character] = null
 		resolve('success!')
-	}, Globals.getSpeedModifier()*cuttingTime)
+	}, Globals.getSpeedModifier()*gatheringTime)
 
 	// setting a function to cancel the timeout
 	function cancelTimeout() {
@@ -55,22 +54,24 @@ async function startWoodcutting(character, args, activeTimeout) {
  * @param {Number} tier 
  */
 async function calculatingGains(character, tier) {
-    console.log('calculating loot and gains...')
-    const woodTierData = getWoodcuttingData(tier)
+	console.log('calculating loot and gains...')
+	const woodTierData = getWoodcuttingData(tier)
 
-    // rolling the loot and calculating exp gains
-    const woodAmount = rollDice(woodTierData.amount)
-    console.log(`${character} gathered ${woodAmount} tier${tier} Wood `)
-    const characterExp = woodTierData.CharacterExp
+	// rolling the loot and calculating exp gains
+	const woodAmount = rollDice(woodTierData.amount)
+	console.log(`${character} gathered ${woodAmount} woodT${tier}`)
+	const characterExp = woodTierData.CharacterExp
 
-    // filling out the form to increment the values of a character
-    const form = getCharacterForm_Increment()
-    form.exp = characterExp
-    form.resource.wood.tiers[tier] = woodAmount
-    form.skills.woodcutting.exp = woodTierData.exp
-    
-    // At last update all the values for the character.
-    await CharacterService.increment(character, form)
+	
+	// filling out the form to increment the values of a character
+	const incrementData = {}
+
+	incrementData['exp'] = characterExp
+	incrementData['skills.woodcutting.exp'] = woodTierData.exp
+	incrementData[`resources.woodT${tier}`] = woodAmount
+	
+	// At last update all the values for the character.
+	await CharacterService.increment(character, incrementData)
 }
 
 module.exports = {startWoodcutting}

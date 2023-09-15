@@ -3,8 +3,6 @@ const { default: mongoose } = require('mongoose')
 const Character = require('../character')
 const GatheringExpTable = require('../../data/gatheringExpTable')
 const {CharacterForm_Incremental, getUpdate_IncObject} = require('../../models/characterForm')
-const {getSkillForm, SkillForm} = require('../skills')
-
 
 /**
  * Increments the characters values and updates the database.
@@ -18,7 +16,7 @@ async function increment(name, form){
   const update = {}
 
   const incObject = getUpdate_IncObject(form)
-  update['$inc'] = incObject
+  update['$inc'] = form
 
   const levelUpdate = await updateLevel(name, update)
     if(levelUpdate){
@@ -119,7 +117,7 @@ function getFieldValue(doc, fieldPath) {
           value = value[part];
       } else {
         console.log("CharacterService field access: Invalid field " + part);
-        return undefined
+        return null
       }
   }
 
@@ -130,14 +128,22 @@ function getFieldValue(doc, fieldPath) {
  * 
  * @param {String} name 
  * @param {String} skill 
- * @returns {SkillForm}
+ * @returns {GatheringSkillForm}
  */
 async function getSkill(name, skill){
   const select = `skills.${skill}`
 
   const characterSkill = await Character.findOne({characterName: name}, select).lean()
-  const skillForm = getSkillForm(characterSkill.skills?.[skill])
-  return skillForm
+
+  const defaultSkill = {
+      exp: characterSkill.skills?.[skill]?.exp || 0,
+      level: characterSkill.skills?.[skill]?.level || 0,
+      luck: characterSkill.skills?.[skill]?.luck || 0,
+      speedBonus: characterSkill.skills?.[skill]?.speedBonus || 0,
+    }
+  return defaultSkill
 }
 
-module.exports = {increment, getSkill, findCharacter, update, getAll}
+
+
+module.exports = {increment, getSkill, findCharacter, getFieldValue, update, getAll}

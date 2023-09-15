@@ -1,0 +1,121 @@
+{
+  "woodworkingRecipes": {
+    "plankT1":{
+      "amount": 1,
+      "level": 0,
+      "time": 20000,
+      "exp": 10,
+      "characterExp": 5,
+      "ingredients": [
+        {"resource": "woodT1",
+        "amount": 12}
+      ]
+    },
+
+    "plankT2":{
+      "amount": 1,
+      "level": 25,
+      "time": 20000,
+      "exp": 10,
+      "characterExp": 5,
+      "ingredients": [
+        {"resource": "woodT2",
+        "amount": 10},
+        {"resource": "plankT1",
+        "amount": 1}
+      ]
+    },
+
+    "plankT3":{
+      "amount": 1,
+      "level": 50,
+      "time": 20000,
+      "exp": 10,
+      "characterExp": 5,
+      "ingredients": [
+        {"resource": "woodT3",
+        "amount": 8},
+        {"resource": "plankT2",
+        "amount": 1}
+      ]
+    },
+
+    "plankT4":{
+      "amount": 1,
+      "level": 75,
+      "time": 20000,
+      "exp": 10,
+      "characterExp": 5,
+      "ingredients": [
+        {"resource": "woodT4",
+        "amount": 6},
+        {"resource": "plankT3",
+        "amount": 1}
+      ]
+    },
+
+    "plankT5":{
+      "amount": 1,
+      "level": 100,
+      "time": 20000,
+      "exp": 10,
+      "characterExp": 5,
+      "ingredients": [
+        {"resource": "woodT5",
+        "amount": 4},
+        {"resource": "plankT4",
+        "amount": 1}
+      ]
+    }
+  },
+
+  "smeltingRecipes": {
+    "ingotT1":{
+      "amount": 1,
+      "level": 0,
+      "time": 20000,
+      "exp": 10,
+      "characterExp": 5,
+      "ingredients": [
+        [{"resource": "coal"}],
+
+        [{"resource": "oreT1",
+        "amount": 10}],
+        
+        [{"resource": "ingotT1",
+        "amount": 1}]
+      ]
+    },
+
+    "ingotT2":{
+      "amount": 1,
+      "level": 25,
+      "time": 20000,
+      "exp": 10,
+      "characterExp": 5,
+      "ingredients": [
+        [{"resource": "coal"}],
+
+        [{"resource": "oreT2",
+        "amount": 10}],
+
+        [{"resource": "ingotT1",
+        "amount": 1}]
+      ]
+    }
+  },
+
+  "toolsmithRecipes": {
+    "pickaxeT1": {
+      "amount": 1,
+      "level": 0,
+      "time": 20000,
+      "exp": 10,
+      "characterExp": 5,
+      "ingredients": [
+        {"resource": "oreT1",
+        "amount": 12}
+      ]
+    }
+  }
+}

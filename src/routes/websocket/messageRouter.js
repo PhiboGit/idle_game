@@ -3,13 +3,8 @@ const {senderMediator} = require('./mediator')
 
 // Define a configuration object for message routing
 const messageRoutes = {
-  'action': {
-    'cancel': ActionHandler.handleCancel,
-    'gathering': ActionHandler.handleGathering,
-    'refining': undefined,
-    'crafting': undefined,
-    'combat': undefined
-  },
+  'action': ActionHandler.handleAction,
+  'cancel': ActionHandler.handleCancel,
   'getTime': handleGetTime,
   'broadcast': handleBroadcast,
 };
