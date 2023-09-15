@@ -8,6 +8,10 @@ const miningWS= {
     }
   }
 
+  const cancelWS={
+    "type": "cancel",
+    "index": -1 // index < 0 is the current action, otherwise the queue index
+  }
 
 const smeltingWS= {
 	"type": "action",
@@ -19,10 +23,6 @@ const smeltingWS= {
     }
   }
 
-const cancelWS={
-	"type": "cancel",
-	"index": -1 // index < 0 is the current action, otherwise the queue index
-}
 
 
 

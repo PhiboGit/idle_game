@@ -75,7 +75,7 @@ function verifyGatheringArgs(args){
 		Number.isInteger(args.iterations) &&
 		args.iterations > 0 &&
 
-    args.limit &&
+    args.hasOwnProperty("limit") &&
 		typeof args.limit === 'boolean'
 		){
 			return true

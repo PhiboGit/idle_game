@@ -154,4 +154,4 @@ function getWoodworkingRecipe(tier){
   return recipes[tier]
 }
 
-module.exports = {startWoodcutting}
+module.exports = {startWoodworking}
