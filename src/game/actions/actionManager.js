@@ -3,13 +3,15 @@ const CharacterService = require('../models/services/characterService')
 const {startWoodcutting} = require('./gathering/woodcutting')
 const {startMining} = require('./gathering/mining')
 const {startHarvesting} = require('./gathering/harvesting')
-
+const {startWoodworking} = require('./refining/woodworking')
 
 
 const actionLookup = {
 	'woodcutting': startWoodcutting,
 	'mining': startMining,
-	'harvesting': startHarvesting
+	'harvesting': startHarvesting,
+
+	'woodworking': startWoodworking
 }
 
 
@@ -83,30 +85,30 @@ async function processQueue(character) {
 		try {
 			await startSequentialTimeouts(character,repeats)
 			CharacterService.update(character, {$set: { currentAction: null }})
-			console.log('All timeouts completed.',character, repeats)
-			console.log('current Queue: ',character, repeatsQueue.length)
+			console.log('All timeouts completed.',character)
 		} catch (error) {
 			switch (error) {
 				case 'cancel':
 					console.error('Timeout canceled.', character, repeats)
-					console.log('current Queue: ', character, repeatsQueue.length)
 					CharacterService.update(character, { $set: { currentAction: null } })
 					break
 				case 'level':
 					console.error('Level requirement not met!')
-					console.log('current Queue: ', character, repeatsQueue.length)
 					CharacterService.update(character, { $set: { currentAction: null } })
 					break
 
 				case 'recipe':
 					console.error('Recipe does not exist')
-					console.log('current Queue: ', character, repeatsQueue.length)
 					CharacterService.update(character, { $set: { currentAction: null } })
 					break
 
-				case 'ingredients':
+				case 'ingredient':
 					console.error('Ingredients requirement not met!')
-					console.log('current Queue: ', character, repeatsQueue.length)
+					CharacterService.update(character, { $set: { currentAction: null } })
+					break
+
+				case 'amount':
+					console.error('Ingredients amount requirement not met for character!')
 					CharacterService.update(character, { $set: { currentAction: null } })
 					break
 				default:

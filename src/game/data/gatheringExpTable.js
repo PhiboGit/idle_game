@@ -37,9 +37,9 @@ function getLuck(level) {
  * @param {Number} level 
  * @returns {Number}
  */
-function getSpeedBonus(level) {
-  table = expTable['Gathering Speed Bonus']
+function getSpeed(level) {
+  table = expTable['Speed']
   return table[level]
 }
 
-module.exports = {getLevel, getSpeedBonus, getLuck}
+module.exports = {getLevel, getSpeed, getLuck}

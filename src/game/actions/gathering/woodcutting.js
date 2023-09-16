@@ -23,7 +23,7 @@ async function startWoodcutting(character, args, activeTimeout) {
 		}
 
 	console.log('init woodcutting timeout...')
-	let gatheringTime = woodcuttingData.time
+	let actionTime = woodcuttingData.time
 
 	
 	const timeoutID = setTimeout(async () => {
@@ -31,7 +31,7 @@ async function startWoodcutting(character, args, activeTimeout) {
 		await calculatingGains(character, tier)
 		activeTimeout[character] = null
 		resolve('success!')
-	}, Globals.getSpeedModifier()*gatheringTime)
+	}, Globals.getSpeedModifier()*actionTime)
 
 	// setting a function to cancel the timeout
 	function cancelTimeout() {

@@ -128,7 +128,7 @@ function getFieldValue(doc, fieldPath) {
  * 
  * @param {String} name 
  * @param {String} skill 
- * @returns {GatheringSkillForm}
+ * @returns 
  */
 async function getSkill(name, skill){
   const select = `skills.${skill}`
@@ -139,7 +139,7 @@ async function getSkill(name, skill){
       exp: characterSkill.skills?.[skill]?.exp || 0,
       level: characterSkill.skills?.[skill]?.level || 0,
       luck: characterSkill.skills?.[skill]?.luck || 0,
-      speedBonus: characterSkill.skills?.[skill]?.speedBonus || 0,
+      speed: characterSkill.skills?.[skill]?.speed || 0,
     }
   return defaultSkill
 }

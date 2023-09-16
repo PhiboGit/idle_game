@@ -21,9 +21,9 @@ function verify(msg){
 	    "actionType" : "smelting",
    */
   if(!(msg && 
-      msg.type && typeof msg.type === 'string' && msg.type === 'action' && 
-      msg.actionType && typeof msg.actionType === 'string' &&
-      msg.args)){
+      msg.hasOwnProperty("type") && typeof msg.type === 'string' && msg.type === 'action' && 
+      msg.hasOwnProperty("actionType") && typeof msg.actionType === 'string' &&
+      msg.hasOwnProperty("args"))){
         console.log('Invalid msg! msg doees not have property {type: "action", actionType: String, args:{}}')
         return false
   }
@@ -65,12 +65,12 @@ function verify(msg){
 
 function verifyGatheringArgs(args){
 	if(
-    args.tier &&
+    args.hasOwnProperty("tier") &&
 		typeof args.tier === 'number' &&
 		Number.isInteger(args.tier) &&
 		args.tier > 0 && args.tier <=5 &&
 
-    args.iterations &&
+    args.hasOwnProperty("iterations") &&
 		typeof args.iterations === 'number' &&
 		Number.isInteger(args.iterations) &&
 		args.iterations > 0 &&
@@ -87,20 +87,35 @@ function verifyGatheringArgs(args){
 
 function verifyCraftingArgs(args){
 	if(
-    args.recipe &&
+    args.hasOwnProperty("recipe") &&
 		typeof args.recipe === 'string' &&
 
 
-    args.iterations &&
+    args.hasOwnProperty("iterations") &&
 		typeof args.iterations === 'number' &&
 		Number.isInteger(args.iterations) &&
 		args.iterations > 0 &&
 
-    args.limit &&
-		typeof args.limit === 'boolean'
+    args.hasOwnProperty("limit") &&
+		typeof args.limit === 'boolean' &&
+
+    args.hasOwnProperty("ingredients") &&
+    Array.isArray(args.ingredients) &&
+    args.ingredients.length <= 10 &&
+    args.ingredients.every(item => typeof item === 'string') &&
+
+    args.hasOwnProperty("upgrades") &&
+    Array.isArray(args.upgrades) &&
+    args.upgrades.length <= 10 &&
+    args.upgrades.every(item => typeof item === 'string')
 		){
-			return true
-		}
+      // Remove duplicates from ingredients and upgrades arrays in place
+      args.ingredients = [...new Set(args.ingredients)];
+      args.upgrades = [...new Set(args.upgrades)];
+
+  
+      return true
+    }
 	console.info('Invalid args for crafting')
 	return false
 }
