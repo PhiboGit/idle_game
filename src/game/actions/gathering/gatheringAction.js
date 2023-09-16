@@ -1,12 +1,14 @@
-const { Globals, getGatheringData, looting, validateLevel } = require('../actionUtils');
+const { Globals,CharacterService, getGatheringData, looting, validateLevel } = require('../actionUtils');
 
 async function initGathering(skillName, character, args, activeTimeout, resolve, reject) {
   console.log(`init ${skillName}...`);
   const tier = args.tier;
   const gatheringData = getGatheringData(skillName, tier);
 
+  const characterSkill = await CharacterService.getSkill(character, skillName);
+
   try {
-    await validateLevel(character, skillName, gatheringData.level);
+    await validateLevel(character, characterSkill.level, gatheringData.level);
     console.log('validateLevel successfully');
   } catch (error) {
     console.log('Validation failed: ', error.message);
@@ -15,7 +17,7 @@ async function initGathering(skillName, character, args, activeTimeout, resolve,
   }
 
   console.log(`Validation complete. Init timeout ${skillName}...`);
-  let actionTime = gatheringData.time;
+  let actionTime = Math.floor(gatheringData.time / (1 + characterSkill.speed));
 
   const timeoutID = setTimeout(async () => {
     // after the delay we loot!
@@ -30,7 +32,7 @@ async function initGathering(skillName, character, args, activeTimeout, resolve,
     resolve('success!');
   }, Globals.getSpeedModifier() * actionTime);
 
-  console.log(`Init timeout complete. Waiting for loot ${skillName}...`);
+  console.log(`Init timeout with ${actionTime}ms complete. Waiting for loot ${skillName}...`);
   // setting a function to cancel the timeout
   function cancelTimeout() {
     console.log(`cancelling timeout ${skillName}...`);

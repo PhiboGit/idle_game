@@ -69,6 +69,11 @@ async function updateSkillLevel(character, update){
       const currentLevel = getFieldValue(characterDB, levelField) || 0
       if (currentLevel !== lvl) {
         levelUpdate[levelField] = lvl
+        let skillFieldPath = levelField.split('.')
+        skillFieldPath.pop()
+        skillFieldPath = skillFieldPath.join('.')
+        levelUpdate[`${skillFieldPath}.speed`] = GatheringExpTable.getSpeed(lvl)
+        levelUpdate[`${skillFieldPath}.luck`] = GatheringExpTable.getLuck(lvl)
         needsUpdate = true
       }
     }

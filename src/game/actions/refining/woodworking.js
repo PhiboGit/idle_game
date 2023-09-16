@@ -1,4 +1,4 @@
-const {Globals, validateLevel, validateIngredients, getRecipe, crafting } = require('../actionUtils')
+const {Globals,CharacterService, validateLevel, validateIngredients, getRecipe, crafting } = require('../actionUtils')
 
 const skillName = 'woodworking'
 
@@ -14,10 +14,11 @@ async function startWoodworking(character, args, activeTimeout) {
       return
     }
 
+		const characterSkill = await CharacterService.getSkill(character, skillName);
 		const selectedResources = new Set()
 		//check is required level to use and used the recipe ingredients correctly
 		try {
-      await validateLevel(character, skillName, recipe.level)
+      await validateLevel(character, characterSkill.level, recipe.level)
 			console.log('validateLevel successfully')
 			await validateIngredients(character, args.ingredients, recipe, selectedResources)
 			console.log('validateIngredients successfully')
@@ -31,7 +32,7 @@ async function startWoodworking(character, args, activeTimeout) {
 	// all the selected items are valid
 	console.log(`Validation complete. Init timeout ${skillName}...`)
 
-	let actionTime = recipe.time
+	let actionTime = Math.floor(recipe.time / (1 + characterSkill.speed));
 	const timeoutID = setTimeout(async () => {
 		// after the delay we craft!
 		try {
@@ -44,6 +45,8 @@ async function startWoodworking(character, args, activeTimeout) {
 		activeTimeout[character] = null
 		resolve('success!')
 	}, Globals.getSpeedModifier()*actionTime)
+
+	console.log(`Init timeout with ${actionTime}ms complete. Waiting for crafting ${skillName}...`);
 
 	// setting a function to cancel the timeout
 	function cancelTimeout() {

@@ -8,12 +8,10 @@ const {getGatheringData} = require('../data/gatheringResourceTable')
 /**
  * 
  * @param {String} character 
- * @param {String} skillName 
+ * @param {Number} characterSkillLevel 
  * @param {Number} requiredLevel 
  */
-async function validateLevel(character, skillName, requiredLevel) {
-  const characterSkill = await CharacterService.getSkill(character, skillName);
-  const characterSkillLevel = characterSkill.level;
+async function validateLevel(character, characterSkillLevel, requiredLevel) {
 
   if (characterSkillLevel < requiredLevel) {
     console.log(`${character} does not have the required level for ${skillName}. Is ${characterSkillLevel} but needs ${requiredLevel}`);

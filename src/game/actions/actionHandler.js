@@ -1,5 +1,5 @@
 const ActionManager = require('./actionManager')
-const {verify} = require('./actions')
+const {verify} = require('./actionVerifier')
 const {senderMediator} = require('../../routes/websocket/mediator')
 
 
