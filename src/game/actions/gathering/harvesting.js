@@ -23,13 +23,13 @@ async function startHarvesting(character, args, activeTimeout) {
 		}
 
 	console.log('init harvesting timeout...')
-	let gatheringTime = harvestingData.time
+	let actionTime = harvestingData.time
 	const timeoutID = setTimeout(async () => {
 		// after the delay we loot!
 		await calculatingGains(character, tier)
 		activeTimeout[character] = null
 		resolve('success!')
-	}, Globals.getSpeedModifier()*gatheringTime)
+	}, Globals.getSpeedModifier()*actionTime)
 
 	// setting a function to cancel the timeout
 	function cancelTimeout() {

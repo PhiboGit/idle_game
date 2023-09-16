@@ -5,7 +5,7 @@ const skill = {
   exp: {type: Number, default: 0},
   level: {type: Number, default: 0},
   luck: {type: Number, default: 0},
-  speedBonus: {type: Number, default: 0},
+  speed: {type: Number, default: 0},
 }
 
 const skills = {

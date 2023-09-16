@@ -23,13 +23,13 @@ async function startMining(character, args, activeTimeout) {
 		}
 
 	console.log('init mining timeout...')
-	let gatheringTime = miningData.time
+	let actionTime = miningData.time
 	const timeoutID = setTimeout(async () => {
 		// after the delay we loot!
 		await calculatingGains(character, tier)
 		activeTimeout[character] = null
 		resolve('success!')
-	}, Globals.getSpeedModifier()*gatheringTime)
+	}, Globals.getSpeedModifier()*actionTime)
 
 	// setting a function to cancel the timeout
 	function cancelTimeout() {
