@@ -1,4 +1,4 @@
-const {Globals,CharacterService, validateLevel, validateIngredients, getRecipe, crafting } = require('../actionUtils')
+const {Globals, validateLevel, validateIngredients, getRecipe, crafting } = require('../actionUtils')
 
 const skillName = 'woodworking'
 
@@ -33,7 +33,7 @@ async function startWoodworking(character, args, activeTimeout) {
 
 	let actionTime = recipe.time
 	const timeoutID = setTimeout(async () => {
-		// after the delay we loot!
+		// after the delay we craft!
 		try {
 			await crafting(character,skillName, recipeName, selectedResources)
 		} catch (error) {

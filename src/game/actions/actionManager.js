@@ -62,7 +62,7 @@ function enqueue(character, repeats) {
 		return
 	}
 	repeatsQueue.push(repeats)
-	CharacterService.update(character, {$set: { actionQueue: repeatsQueue }})
+	CharacterService.updateActionManager(character, {$set: { actionQueue: repeatsQueue }})
 	console.log(`Added to queue for ${character}: Queue length `, repeatsQueue.length)
 	console.log('current Queue: ',character, repeatsQueue.length)
 	// start the Queue
@@ -81,35 +81,35 @@ async function processQueue(character) {
 	while (repeatsQueue.length > 0) {
 		// gets the next object in the queue
 		const repeats = repeatsQueue.shift()
-		CharacterService.update(character, {$set: { actionQueue: repeatsQueue }})      
+		CharacterService.updateActionManager(character, {$set: { actionQueue: repeatsQueue }})      
 		try {
 			await startSequentialTimeouts(character,repeats)
-			CharacterService.update(character, {$set: { currentAction: null }})
+			CharacterService.updateActionManager(character, {$set: { currentAction: null }})
 			console.log('All timeouts completed.',character)
 		} catch (error) {
 			switch (error) {
 				case 'cancel':
 					console.error('Timeout canceled.', character, repeats)
-					CharacterService.update(character, { $set: { currentAction: null } })
+					CharacterService.updateActionManager(character, { $set: { currentAction: null } })
 					break
 				case 'level':
 					console.error('Level requirement not met!')
-					CharacterService.update(character, { $set: { currentAction: null } })
+					CharacterService.updateActionManager(character, { $set: { currentAction: null } })
 					break
 
 				case 'recipe':
 					console.error('Recipe does not exist')
-					CharacterService.update(character, { $set: { currentAction: null } })
+					CharacterService.updateActionManager(character, { $set: { currentAction: null } })
 					break
 
 				case 'ingredient':
 					console.error('Ingredients requirement not met!')
-					CharacterService.update(character, { $set: { currentAction: null } })
+					CharacterService.updateActionManager(character, { $set: { currentAction: null } })
 					break
 
 				case 'amount':
 					console.error('Ingredients amount requirement not met for character!')
-					CharacterService.update(character, { $set: { currentAction: null } })
+					CharacterService.updateActionManager(character, { $set: { currentAction: null } })
 					break
 				default:
 					throw error
@@ -126,7 +126,7 @@ async function startSequentialTimeouts(character, repeats) {
 	const callback = actionLookup[repeats.actionType]
 	    
   while (repeats.args.iterations > 0 || !repeats.args.limit) {
-		CharacterService.update(character, {$set: { currentAction: repeats }})
+		CharacterService.updateActionManager(character, {$set: { currentAction: repeats }})
 		console.log(`Iterations left: ${repeats.args.iterations}`)
 		const result = await callback(character, repeats.args, activeTimeout)
 		console.log(`Timeout completed. ${result}`)
@@ -170,7 +170,7 @@ function dequeue(character, index) {
 	}
 
 	const removedItem = repeatsQueue.splice(index, 1)
-	CharacterService.update(character, {$set: { actionQueue: repeatsQueue }})
+	CharacterService.updateActionManager(character, {$set: { actionQueue: repeatsQueue }})
 	console.log(`Dequeued item for ${character} at index ${index}:`, removedItem[0])
 	console.log('current Queue: ',character, repeatsQueue.length)
 }
