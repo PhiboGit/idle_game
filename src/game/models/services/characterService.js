@@ -41,22 +41,24 @@ async function increment(name, form){
  * @param {String} character 
  * @param {*} update The update object used by mongoose
  * @returns An object to use in mongoose '$set' to update the levels of a character
- */
+*/
 async function updateSkillLevel(character, update){
   let needsUpdate = false
-
-  // filter for exp fields
+  
+  // filter for skill exp fields
   const incFields = update['$inc']
   const expChanged = Object.keys(incFields).filter(field => field.includes('skills') && field.includes('exp'));
+  //filter for char exp
+  const charExpChanged = incFields['exp'];
   // early return if exp is not changed
-  if (!expChanged) {
+  if (!expChanged && !charExpChanged) {
     return null
   }
 
-  try {
-    const characterDB = await findCharacter(character)
-
-    levelUpdate = {}
+  const characterDB = await findCharacter(character)
+  levelUpdate = {}
+  
+  if (expChanged){
     for (const field of expChanged){
       const current_exp = getFieldValue(characterDB, field);
       const increment_exp = incFields[field]
@@ -77,12 +79,20 @@ async function updateSkillLevel(character, update){
         needsUpdate = true
       }
     }
+  }
+
+  if (charExpChanged){
+    const currentCharExp = getFieldValue(characterDB, 'exp')
+    const total_CharExp = currentCharExp + charExpChanged
+
+    const lvl = GatheringExpTable.getLevel(total_CharExp)
+    levelUpdate['level'] = lvl
+  }
+
+
     if (needsUpdate) {
       return levelUpdate
     }
-  } catch (error) {
-    console.log(error)
-  }  
 }
 
 
