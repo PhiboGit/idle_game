@@ -2,6 +2,8 @@ const {senderMediator} = require('./mediator')
 const CharacterService = require('../../game/models/services/characterService')
 const routeMessage = require('./messageRouter')
 
+const {gatheringResourcesData, gatheringEXPData, recipesData} = require('../../game/utils/dataLoader')
+
 class MessageReceiver{
   constructor(mediator) {
     this.mediator = mediator;
@@ -15,6 +17,7 @@ class MessageReceiver{
   init_EventHandler(data) {
     console.log('MessageReceiver.init', data);
     initializeCharacter(data.character)
+    initData(data.character)
   }
 
   message_EventHandler(data) {
@@ -53,6 +56,23 @@ async function initializeCharacter(charName) {
       } else {
           console.log('Character not found');
       }
+  } catch (error) {
+      console.error('Error fetching character:', error);
+  }
+}
+
+// move this down to the game files
+async function initData(charName) {
+  try {
+
+    const database = {
+      expTable: gatheringEXPData,
+      gatheringResourcesData,
+      recipesData
+    }  
+
+    senderMediator.publish('init_data', {character: charName, msg: database})
+      
   } catch (error) {
       console.error('Error fetching character:', error);
   }

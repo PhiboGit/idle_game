@@ -7,6 +7,7 @@ class MessageSender{
 
     // Subscribe to relevant events from the mediator
     this.mediator.subscribe('init', this.init_EventHandler.bind(this));
+    this.mediator.subscribe('init_data', this.initData_EventHandler.bind(this));
     this.mediator.subscribe('error', this.error_EventHandler.bind(this));
     this.mediator.subscribe('action_manager', this.actionManager_EventHandler.bind(this));
     this.mediator.subscribe('info', this.info_EventHandler.bind(this));
@@ -112,6 +113,19 @@ class MessageSender{
     const message = {
       type: 'init_character',
       activePlayer: this.mapCharWS.size,
+      data: data.msg,
+      
+    }
+
+    this.send(data.character, message)
+  }
+
+  initData_EventHandler(data) {
+    console.log('MessageSender event: "init_data" invoked.');
+    verifyData(data)
+    
+    const message = {
+      type: 'init_data',
       data: data.msg,
       
     }
