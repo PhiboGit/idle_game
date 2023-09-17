@@ -66,4 +66,6 @@ Do this to run the project:
 
  # Test with postman
 
- 
+ 1. download and install postman: https://www.postman.com/downloads/
+
+ 2. 
