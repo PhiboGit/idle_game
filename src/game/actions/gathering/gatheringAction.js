@@ -1,23 +1,12 @@
 const { Globals,CharacterService, getGatheringData, looting, validateLevel } = require('../actionUtils');
 
-async function initGathering(skillName, character, args, activeTimeout, resolve, reject) {
-  console.log(`init ${skillName}...`);
+async function initGathering(skillName, character, args, activeTimeout, resolve, reject, actionTime) {
+  console.log(`init timeout ${skillName}...`);
   const tier = args.tier;
-  const gatheringData = getGatheringData(skillName, tier);
-
-  const characterSkill = await CharacterService.getSkill(character, skillName);
-
-  try {
-    await validateLevel(character, characterSkill.level, gatheringData.level);
-    console.log('validateLevel successfully');
-  } catch (error) {
-    console.log('Validation failed: ', error.message);
-    reject(error.message);
-    return;
+  
+  if (!actionTime || actionTime < 2000){
+    actionTime = 2000;
   }
-
-  console.log(`Validation complete. Init timeout ${skillName}...`);
-  let actionTime = Math.floor(gatheringData.time / (1 + characterSkill.speed));
 
   const timeoutID = setTimeout(async () => {
     // after the delay we loot!
@@ -42,4 +31,27 @@ async function initGathering(skillName, character, args, activeTimeout, resolve,
   activeTimeout[character] = cancelTimeout;
 }
 
-module.exports = { initGathering };
+async function validateGathering(skillName, character, args, activeTimeout, resolve, reject){
+  console.log(`init ${skillName}...`);
+  const tier = args.tier;
+  const gatheringData = getGatheringData(skillName, tier);
+
+  const characterSkill = await CharacterService.getSkill(character, skillName);
+
+  try {
+    await validateLevel(character, characterSkill.level, gatheringData.level);
+    console.log('validateLevel successfully');
+  } catch (error) {
+    console.log('Validation failed: ', error.message);
+    reject(error.message);
+    return;
+  }
+
+  console.log(`Validation complete.`);
+  let actionTime = Math.floor(gatheringData.time / (1 + characterSkill.speed));
+
+  resolve(actionTime)
+  return 
+}
+
+module.exports = { initGathering, validateGathering};

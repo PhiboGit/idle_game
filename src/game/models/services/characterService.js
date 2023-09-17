@@ -10,22 +10,22 @@ const {senderMediator} = require('../../../routes/websocket/mediator')
  * Increments the characters values and updates the database.
  * It also updates the level when exp was incremented.
  * 
- * @param {String} name 
+ * @param {String} character 
  * @param {Object} form 
  */
-async function increment(name, form){
+async function increment(character, form){
   console.log("CharacterService.increment is processing the form...")
   const update = {}
 
   update['$inc'] = form
 
-  const levelUpdate = await updateSkillLevel(name, update)
+  const levelUpdate = await updateSkillLevel(character, update)
     if(levelUpdate){
       update['$set'] = levelUpdate
     }
   try {
-    const character = await Character.findOneAndUpdate(
-      {characterName: name},
+    const characterDB = await Character.findOneAndUpdate(
+      {characterName: character},
       update,
       { new: true }
       )
@@ -33,6 +33,7 @@ async function increment(name, form){
     console.log(error)
   }
   
+  senderMediator.publish('update_char', {character: character, msg: update})
 }
 
 /**

@@ -1,13 +1,13 @@
 const CharacterService = require('../models/services/characterService')
 
-const {startWoodcutting} = require('./gathering/woodcutting')
+const Woodcutting = require('./gathering/woodcutting')
 const {startMining} = require('./gathering/mining')
 const {startHarvesting} = require('./gathering/harvesting')
 const {startWoodworking} = require('./refining/woodworking')
 
 
 const actionLookup = {
-	'woodcutting': startWoodcutting,
+	'woodcutting': Woodcutting,
 	'mining': startMining,
 	'harvesting': startHarvesting,
 
@@ -126,9 +126,11 @@ async function startSequentialTimeouts(character, repeats) {
 	const callback = actionLookup[repeats.actionType]
 	    
   while (repeats.args.iterations > 0 || !repeats.args.limit) {
+		const time = await callback.validate(character, repeats.args)
+		repeats["time"] = time
 		CharacterService.updateActionManager(character, {$set: { currentAction: repeats }})
 		console.log(`Iterations left: ${repeats.args.iterations}`)
-		const result = await callback(character, repeats.args, activeTimeout)
+		const result = await callback.start(character, repeats.args, activeTimeout, time)
 		console.log(`Timeout completed. ${result}`)
 		repeats.counter++
 		console.log(`Iterations completed: ${repeats.counter}`)

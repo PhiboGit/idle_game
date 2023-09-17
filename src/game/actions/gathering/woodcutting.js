@@ -1,11 +1,18 @@
-const {initGathering} = require('./gatheringAction');
+const {initGathering, validateGathering} = require('./gatheringAction');
 
 const skillName = 'woodcutting';
 
-async function startWoodcutting(character, args, activeTimeout) {
+
+async function validate(character, args, activeTimeout) {
   return new Promise(async (resolve, reject) => {
-    initGathering(skillName, character, args, activeTimeout, resolve, reject);
+    validateGathering(skillName, character, args, activeTimeout, resolve, reject);
   });
 }
 
-module.exports = { startWoodcutting };
+async function start(character, args, activeTimeout, actionTime) {
+  return new Promise(async (resolve, reject) => {
+    initGathering(skillName, character, args, activeTimeout, resolve, reject, actionTime);
+  });
+}
+
+module.exports = {validate, start};

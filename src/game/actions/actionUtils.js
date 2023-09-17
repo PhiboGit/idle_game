@@ -14,7 +14,7 @@ const {getGatheringData} = require('../data/gatheringResourceTable')
 async function validateLevel(character, characterSkillLevel, requiredLevel) {
 
   if (characterSkillLevel < requiredLevel) {
-    console.log(`${character} does not have the required level for ${skillName}. Is ${characterSkillLevel} but needs ${requiredLevel}`);
+    console.log(`${character} does not have the required level. Is ${characterSkillLevel} but needs ${requiredLevel}`);
     throw new Error('level');
   }
 }

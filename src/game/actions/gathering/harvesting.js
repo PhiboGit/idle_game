@@ -1,11 +1,17 @@
-const {initGathering} = require('./gatheringAction');
+const {initGathering, validateGathering} = require('./gatheringAction');
 
 const skillName = 'harvesting';
 
-async function startHarvesting(character, args, activeTimeout) {
+async function validate(character, args, activeTimeout) {
   return new Promise(async (resolve, reject) => {
-    initGathering(skillName, character, args, activeTimeout, resolve, reject);
+    validateGathering(skillName, character, args, activeTimeout, resolve, reject);
   });
 }
 
-module.exports = { startHarvesting };
+async function start(character, args, activeTimeout, actionTime) {
+  return new Promise(async (resolve, reject) => {
+    initGathering(skillName, character, args, activeTimeout, resolve, reject, actionTime);
+  });
+}
+
+module.exports = {validate, start};
