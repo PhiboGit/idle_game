@@ -26,7 +26,7 @@ async function validateLevel(character, characterSkillLevel, requiredLevel) {
  * @param {Recipe} recipe 
  * @returns 
  */
-async function validateIngredients(character, userSelectedResources, recipe, selectedResources) {
+async function validateIngredients(character, userSelectedResources, recipe) {
   const characterDB = await CharacterService.findCharacter(character)
 
   for (const ingredientSlot of recipe.ingredients) {
@@ -48,7 +48,6 @@ async function validateIngredients(character, userSelectedResources, recipe, sel
           throw new Error('amount');
         }
 
-        selectedResources.add(item.resource)
         found = true
       }
     }
@@ -59,7 +58,7 @@ async function validateIngredients(character, userSelectedResources, recipe, sel
     }
   }
 
-  return selectedResources;
+  return true;
 }
 
 /**
@@ -86,7 +85,7 @@ async function crafting(character, skillName, recipeName, selectedResources) {
 	// and if the user has the required resource amount
 	for (const ingredientSlot of recipe.ingredients) {
 		for (const item of ingredientSlot.slot) {
-			if(selectedResources.has(item.resource)){
+			if(selectedResources.includes(item.resource)){
 				// the user has selected an item for this ingredient slot.
 				// is a selected resource, now check if character has the item
 				const inventoryValue = CharacterService.getFieldValue(characterDB, 'resources.' + item.resource) || 0

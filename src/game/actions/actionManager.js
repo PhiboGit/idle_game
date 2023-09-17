@@ -1,17 +1,11 @@
 const CharacterService = require('../models/services/characterService')
 
-const Woodcutting = require('./gathering/woodcutting')
-const {startMining} = require('./gathering/mining')
-const {startHarvesting} = require('./gathering/harvesting')
-const {startWoodworking} = require('./refining/woodworking')
-
-
 const actionLookup = {
-	'woodcutting': Woodcutting,
-	'mining': startMining,
-	'harvesting': startHarvesting,
+	'woodcutting': require('./gathering/woodcutting'),
+	'mining': require('./gathering/mining'),
+	'harvesting': require('./gathering/harvesting'),
 
-	'woodworking': startWoodworking
+	'woodworking': require('./refining/woodworking')
 }
 
 
@@ -62,7 +56,9 @@ function enqueue(character, repeats) {
 		return
 	}
 	repeatsQueue.push(repeats)
-	CharacterService.updateActionManager(character, {$set: { actionQueue: repeatsQueue }})
+	if (isQueueProcessRunning[character]){ 
+		CharacterService.updateActionManager(character, {$set: { actionQueue: repeatsQueue }})
+	}
 	console.log(`Added to queue for ${character}: Queue length `, repeatsQueue.length)
 	console.log('current Queue: ',character, repeatsQueue.length)
 	// start the Queue
@@ -77,7 +73,7 @@ async function processQueue(character) {
 	}
 	const repeatsQueue = actionQueue[character] // Queue to store repeats objects
 	isQueueProcessRunning[character] = true
-	
+	console.log('Queue is being processed...')
 	while (repeatsQueue.length > 0) {
 		// gets the next object in the queue
 		const repeats = repeatsQueue.shift()

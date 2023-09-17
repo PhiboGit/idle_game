@@ -3,9 +3,9 @@ const {initGathering, validateGathering} = require('./gatheringAction');
 const skillName = 'woodcutting';
 
 
-async function validate(character, args, activeTimeout) {
+async function validate(character, args) {
   return new Promise(async (resolve, reject) => {
-    validateGathering(skillName, character, args, activeTimeout, resolve, reject);
+    validateGathering(skillName, character, args, resolve, reject);
   });
 }
 
