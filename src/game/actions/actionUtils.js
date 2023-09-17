@@ -3,18 +3,18 @@ const CharacterService = require('../models/services/characterService')
 const {choice, rollDice} = require('../utils/randomDice')
 const {getRecipe} = require('../data/recipesData')
 
+const {getGatheringData} = require('../data/gatheringResourceTable')
+
 /**
  * 
  * @param {String} character 
- * @param {String} skillName 
+ * @param {Number} characterSkillLevel 
  * @param {Number} requiredLevel 
  */
-async function validateLevel(character, skillName, requiredLevel) {
-  const characterSkill = await CharacterService.getSkill(character, skillName);
-  const characterSkillLevel = characterSkill.level;
+async function validateLevel(character, characterSkillLevel, requiredLevel) {
 
   if (characterSkillLevel < requiredLevel) {
-    console.log(`${character} does not have the required level for ${skillName}. Is ${characterSkillLevel} but needs ${requiredLevel}`);
+    console.log(`${character} does not have the required level. Is ${characterSkillLevel} but needs ${requiredLevel}`);
     throw new Error('level');
   }
 }
@@ -26,7 +26,7 @@ async function validateLevel(character, skillName, requiredLevel) {
  * @param {Recipe} recipe 
  * @returns 
  */
-async function validateIngredients(character, userSelectedResources, recipe, selectedResources) {
+async function validateIngredients(character, userSelectedResources, recipe) {
   const characterDB = await CharacterService.findCharacter(character)
 
   for (const ingredientSlot of recipe.ingredients) {
@@ -48,7 +48,6 @@ async function validateIngredients(character, userSelectedResources, recipe, sel
           throw new Error('amount');
         }
 
-        selectedResources.add(item.resource)
         found = true
       }
     }
@@ -59,7 +58,7 @@ async function validateIngredients(character, userSelectedResources, recipe, sel
     }
   }
 
-  return selectedResources;
+  return true;
 }
 
 /**
@@ -86,7 +85,7 @@ async function crafting(character, skillName, recipeName, selectedResources) {
 	// and if the user has the required resource amount
 	for (const ingredientSlot of recipe.ingredients) {
 		for (const item of ingredientSlot.slot) {
-			if(selectedResources.has(item.resource)){
+			if(selectedResources.includes(item.resource)){
 				// the user has selected an item for this ingredient slot.
 				// is a selected resource, now check if character has the item
 				const inventoryValue = CharacterService.getFieldValue(characterDB, 'resources.' + item.resource) || 0
@@ -110,4 +109,34 @@ async function crafting(character, skillName, recipeName, selectedResources) {
 	return true
 }
 
-module.exports = {Globals, CharacterService, rollDice, choice, validateIngredients, validateLevel, getRecipe, crafting}
+/**
+ * Does everything after the action has finished.
+ * Calculating loot, exp gains, etc.
+ * 
+ * Then updates the character.
+ * 
+ * @param {String} character 
+ * @param {Number} tier 
+ */
+async function looting(character, skillName, tier) {
+	console.log('calculating loot and gains...')
+	const gatheringData = getGatheringData(skillName, tier)
+
+	// rolling the loot and calculating exp gains
+	const amount = rollDice(gatheringData.amount)
+	console.log(`${character} gathered ${amount} ${gatheringData.resourceName}`)
+	const characterExp = gatheringData.CharacterExp
+
+	
+	// filling out the form to increment the values of a character
+	const incrementData = {}
+
+	incrementData['exp'] = characterExp
+	incrementData[`skills.${skillName}.exp`] = gatheringData.exp
+	incrementData[`resources.${gatheringData.resourceName}`] = amount
+	
+	// At last update all the values for the character.
+	await CharacterService.increment(character, incrementData)
+}
+
+module.exports = {Globals, CharacterService, looting, rollDice, choice, validateIngredients, validateLevel, getRecipe, getGatheringData, crafting}

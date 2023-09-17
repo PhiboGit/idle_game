@@ -2,6 +2,7 @@
   "woodcutting": {
     "tiers": [
       {
+        "resourceName": "woodT1",
         "level": 0,
         "time": 20000,
         "amount": 4,
@@ -9,6 +10,7 @@
         "expChar": 5
       },
       {
+        "resourceName": "woodT2",
         "level": 25,
         "time": 40000,
         "amount": 4,
@@ -16,6 +18,7 @@
         "expChar": 10
       },
       {
+        "resourceName": "woodT3",
         "level": 50,
         "time": 80000,
         "amount": 4,
@@ -23,6 +26,7 @@
         "expChar": 15
       },
       {
+        "resourceName": "woodT4",
         "level": 75,
         "time": 120000,
         "amount": 4,
@@ -30,6 +34,7 @@
         "expChar": 20
       },
       {
+        "resourceName": "woodT5",
         "level": 100,
         "time": 180000,
         "amount": 4,
@@ -41,6 +46,7 @@
   "mining": {
     "tiers": [
       {
+        "resourceName": "oreT1",
         "level": 0,
         "time": 20000,
         "amount": 4,
@@ -48,6 +54,7 @@
         "expChar": 10
       },
       {
+        "resourceName": "oreT2",
         "level": 25,
         "time": 40000,
         "amount": 4,
@@ -55,6 +62,7 @@
         "expChar": 20
       },
       {
+        "resourceName": "oreT3",
         "level": 50,
         "time": 80000,
         "amount": 4,
@@ -62,6 +70,7 @@
         "expChar": 15
       },
       {
+        "resourceName": "oreT4",
         "level": 75,
         "time": 120000,
         "amount": 4,
@@ -69,6 +78,7 @@
         "expChar": 20
       },
       {
+        "resourceName": "oreT5",
         "level": 100,
         "time": 180000,
         "amount": 4,
@@ -80,6 +90,7 @@
   "harvesting": {
     "tiers": [
       {
+        "resourceName": "fiberT1",
         "level": 0,
         "time": 20000,
         "amount": 4,
@@ -87,6 +98,7 @@
         "expChar": 10
       },
       {
+        "resourceName": "fiberT2",
         "level": 25,
         "time": 40000,
         "amount": 4,
@@ -94,6 +106,7 @@
         "expChar": 20
       },
       {
+        "resourceName": "fiberT3",
         "level": 50,
         "time": 80000,
         "amount": 4,
@@ -101,6 +114,7 @@
         "expChar": 15
       },
       {
+        "resourceName": "fiberT4",
         "level": 75,
         "time": 120000,
         "amount": 4,
@@ -108,6 +122,7 @@
         "expChar": 20
       },
       {
+        "resourceName": "fiberT5",
         "level": 100,
         "time": 180000,
         "amount": 4,

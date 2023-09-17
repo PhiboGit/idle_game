@@ -9,6 +9,7 @@ const harvestingData = gatheringData.harvesting
 
 class GatheringResourceForm {
   constructor(data){
+    this.resourceName = data.resourceName
     this.level = data.level
     this.time = data.time
     this.amount = data.amount
@@ -52,4 +53,10 @@ function getHarvestingData(tier){
   return new GatheringResourceForm(harvestingData.tiers[tier-1])
 }
 
-module.exports = {getWoodcuttingData, getHarvestingData, getMiningData}
+function getGatheringData(name, tier){
+  if (name === 'harvesting') return getHarvestingData(tier)
+  if (name === 'mining') return getMiningData(tier)
+  if (name === 'woodcutting') return getWoodcuttingData(tier)
+}
+
+module.exports = {getGatheringData}

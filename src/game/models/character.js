@@ -47,7 +47,7 @@ CharacterSchema.pre('findOneAndUpdate', function () {
 
 		}
 	}
-	senderMediator.publish('update_char', {character: characterName, msg: update})
+	//senderMediator.publish('update_char', {character: characterName, msg: update})
 });
 
 

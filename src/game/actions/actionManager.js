@@ -1,17 +1,11 @@
 const CharacterService = require('../models/services/characterService')
 
-const {startWoodcutting} = require('./gathering/woodcutting')
-const {startMining} = require('./gathering/mining')
-const {startHarvesting} = require('./gathering/harvesting')
-const {startWoodworking} = require('./refining/woodworking')
-
-
 const actionLookup = {
-	'woodcutting': startWoodcutting,
-	'mining': startMining,
-	'harvesting': startHarvesting,
+	'woodcutting': require('./gathering/woodcutting'),
+	'mining': require('./gathering/mining'),
+	'harvesting': require('./gathering/harvesting'),
 
-	'woodworking': startWoodworking
+	'woodworking': require('./refining/woodworking')
 }
 
 
@@ -62,7 +56,9 @@ function enqueue(character, repeats) {
 		return
 	}
 	repeatsQueue.push(repeats)
-	CharacterService.update(character, {$set: { actionQueue: repeatsQueue }})
+	if (isQueueProcessRunning[character]){ 
+		CharacterService.updateActionManager(character, {$set: { actionQueue: repeatsQueue }})
+	}
 	console.log(`Added to queue for ${character}: Queue length `, repeatsQueue.length)
 	console.log('current Queue: ',character, repeatsQueue.length)
 	// start the Queue
@@ -77,39 +73,39 @@ async function processQueue(character) {
 	}
 	const repeatsQueue = actionQueue[character] // Queue to store repeats objects
 	isQueueProcessRunning[character] = true
-	
+	console.log('Queue is being processed...')
 	while (repeatsQueue.length > 0) {
 		// gets the next object in the queue
 		const repeats = repeatsQueue.shift()
-		CharacterService.update(character, {$set: { actionQueue: repeatsQueue }})      
+		CharacterService.updateActionManager(character, {$set: { actionQueue: repeatsQueue }})      
 		try {
 			await startSequentialTimeouts(character,repeats)
-			CharacterService.update(character, {$set: { currentAction: null }})
+			CharacterService.updateActionManager(character, {$set: { currentAction: null }})
 			console.log('All timeouts completed.',character)
 		} catch (error) {
 			switch (error) {
 				case 'cancel':
 					console.error('Timeout canceled.', character, repeats)
-					CharacterService.update(character, { $set: { currentAction: null } })
+					CharacterService.updateActionManager(character, { $set: { currentAction: null } })
 					break
 				case 'level':
 					console.error('Level requirement not met!')
-					CharacterService.update(character, { $set: { currentAction: null } })
+					CharacterService.updateActionManager(character, { $set: { currentAction: null } })
 					break
 
 				case 'recipe':
 					console.error('Recipe does not exist')
-					CharacterService.update(character, { $set: { currentAction: null } })
+					CharacterService.updateActionManager(character, { $set: { currentAction: null } })
 					break
 
 				case 'ingredient':
 					console.error('Ingredients requirement not met!')
-					CharacterService.update(character, { $set: { currentAction: null } })
+					CharacterService.updateActionManager(character, { $set: { currentAction: null } })
 					break
 
 				case 'amount':
 					console.error('Ingredients amount requirement not met for character!')
-					CharacterService.update(character, { $set: { currentAction: null } })
+					CharacterService.updateActionManager(character, { $set: { currentAction: null } })
 					break
 				default:
 					throw error
@@ -126,9 +122,11 @@ async function startSequentialTimeouts(character, repeats) {
 	const callback = actionLookup[repeats.actionType]
 	    
   while (repeats.args.iterations > 0 || !repeats.args.limit) {
-		CharacterService.update(character, {$set: { currentAction: repeats }})
+		const time = await callback.validate(character, repeats.args)
+		repeats["time"] = time
+		CharacterService.updateActionManager(character, {$set: { currentAction: repeats }})
 		console.log(`Iterations left: ${repeats.args.iterations}`)
-		const result = await callback(character, repeats.args, activeTimeout)
+		const result = await callback.start(character, repeats.args, activeTimeout, time)
 		console.log(`Timeout completed. ${result}`)
 		repeats.counter++
 		console.log(`Iterations completed: ${repeats.counter}`)
@@ -170,7 +168,7 @@ function dequeue(character, index) {
 	}
 
 	const removedItem = repeatsQueue.splice(index, 1)
-	CharacterService.update(character, {$set: { actionQueue: repeatsQueue }})
+	CharacterService.updateActionManager(character, {$set: { actionQueue: repeatsQueue }})
 	console.log(`Dequeued item for ${character} at index ${index}:`, removedItem[0])
 	console.log('current Queue: ',character, repeatsQueue.length)
 }

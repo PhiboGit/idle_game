@@ -13,6 +13,19 @@ class MessageSender{
     this.mediator.subscribe('broadcast_chat', this.chat_EventHandler.bind(this))
     this.mediator.subscribe('time', this.time_EventHandler.bind(this))
     this.mediator.subscribe('update_char', this.updateChar_EventHandler.bind(this))
+    this.mediator.subscribe('actionManager', this.actionManager_EventHandler.bind(this))
+  }
+
+  actionManager_EventHandler(data) {
+    console.log('MessageSender event: "actionManager" invoked.');
+    verifyData(data)
+    
+    const message = {
+      type: 'actionManager',
+      data: data.msg
+    }
+
+    this.send(data.character, message)
   }
 
   updateChar_EventHandler(data) {

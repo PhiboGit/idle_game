@@ -2,29 +2,30 @@ const { default: mongoose } = require('mongoose')
 
 const Character = require('../character')
 const GatheringExpTable = require('../../data/gatheringExpTable')
-const {CharacterForm_Incremental, getUpdate_IncObject} = require('../../models/characterForm')
+
+const {senderMediator} = require('../../../routes/websocket/mediator')
+
 
 /**
  * Increments the characters values and updates the database.
  * It also updates the level when exp was incremented.
  * 
- * @param {String} name 
- * @param {CharacterForm_Incremental} form 
+ * @param {String} character 
+ * @param {Object} form 
  */
-async function increment(name, form){
+async function increment(character, form){
   console.log("CharacterService.increment is processing the form...")
   const update = {}
 
-  const incObject = getUpdate_IncObject(form)
   update['$inc'] = form
 
-  const levelUpdate = await updateLevel(name, update)
+  const levelUpdate = await updateSkillLevel(character, update)
     if(levelUpdate){
       update['$set'] = levelUpdate
     }
   try {
-    const character = await Character.findOneAndUpdate(
-      {characterName: name},
+    const characterDB = await Character.findOneAndUpdate(
+      {characterName: character},
       update,
       { new: true }
       )
@@ -32,32 +33,35 @@ async function increment(name, form){
     console.log(error)
   }
   
+  senderMediator.publish('update_char', {character: character, msg: update})
 }
 
 /**
  * Finds the fields where exp was incremented and updates the corresponding level fields.
  * 
- * @param {String} name 
+ * @param {String} character 
  * @param {*} update The update object used by mongoose
  * @returns An object to use in mongoose '$set' to update the levels of a character
- */
-async function updateLevel(name, update){
+*/
+async function updateSkillLevel(character, update){
   let needsUpdate = false
-
-  // filter for exp fields
+  
+  // filter for skill exp fields
   const incFields = update['$inc']
   const expChanged = Object.keys(incFields).filter(field => field.includes('skills') && field.includes('exp'));
+  //filter for char exp
+  const charExpChanged = incFields['exp'];
   // early return if exp is not changed
-  if (!expChanged) {
+  if (!expChanged && !charExpChanged) {
     return null
   }
 
-  try {
-    const character = await findCharacter(name)
-
-    levelUpdate = {}
+  const characterDB = await findCharacter(character)
+  levelUpdate = {}
+  
+  if (expChanged){
     for (const field of expChanged){
-      const current_exp = getFieldValue(character, field);
+      const current_exp = getFieldValue(characterDB, field);
       const increment_exp = incFields[field]
       const total_exp = current_exp + increment_exp
       console.log(`LevelUpdate: ${field}: {current: ${current_exp}, inc: ${increment_exp}, exp: ${total_exp}}`)
@@ -65,27 +69,42 @@ async function updateLevel(name, update){
       const lvl = GatheringExpTable.getLevel(total_exp)
       const levelField = field.replace('exp', 'level')
       // the current level. if the fields does not exist it is 0.
-      const currentLevel = getFieldValue(character, levelField) || 0
+      const currentLevel = getFieldValue(characterDB, levelField) || 0
       if (currentLevel !== lvl) {
         levelUpdate[levelField] = lvl
+        let skillFieldPath = levelField.split('.')
+        skillFieldPath.pop()
+        skillFieldPath = skillFieldPath.join('.')
+        levelUpdate[`${skillFieldPath}.speed`] = GatheringExpTable.getSpeed(lvl)
+        levelUpdate[`${skillFieldPath}.luck`] = GatheringExpTable.getLuck(lvl)
         needsUpdate = true
       }
     }
+  }
+
+  if (charExpChanged){
+    const currentCharExp = getFieldValue(characterDB, 'exp')
+    const total_CharExp = currentCharExp + charExpChanged
+
+    const lvl = GatheringExpTable.getLevel(total_CharExp)
+    levelUpdate['level'] = lvl
+  }
+
+
     if (needsUpdate) {
       return levelUpdate
     }
-  } catch (error) {
-    console.log(error)
-  }  
 }
 
 
-async function update(character, update){
+async function updateActionManager(character, update){
   await Character.findOneAndUpdate(
     { characterName: character },
     update,
     { new: true }
   )
+
+  senderMediator.publish('actionManager', {character: character, msg: update})
 }
 
 async function getAll(){
@@ -146,4 +165,4 @@ async function getSkill(name, skill){
 
 
 
-module.exports = {increment, getSkill, findCharacter, getFieldValue, update, getAll}
+module.exports = {increment, getSkill, findCharacter, getFieldValue, updateActionManager, getAll}
