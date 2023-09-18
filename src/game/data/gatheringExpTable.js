@@ -10,7 +10,7 @@ const expTable = dataLoader.gatheringEXPData
  */
 function getLevel(exp){
   let level = 0;
-  table = expTable['Exp (total)']
+  table = expTable['Exp']
   for (const levelStr in table) {
       const expRequired = table[levelStr]
       if (exp >= expRequired) {

@@ -4,7 +4,7 @@ const path = require('path');
 
 const region_filepath = path.join(__dirname, '../data/regions.json');
 const gatheringResources_filepath = path.join(__dirname, '../data/gatheringResources.json');
-const gatheringEXP_filepath = path.join(__dirname, '../data/NewWorld_EXP.json')
+const gatheringEXP_filepath = path.join(__dirname, '../data/EXP.json')
 
 const recipes_filepath = path.join(__dirname, '../data/recipes.json')
 
