@@ -1,5 +1,9 @@
-function rollDice(range){
-    return Math.floor(Math.random() * range + 1)
+function rollDice(sides){
+    return Math.floor(Math.random() * sides + 1)
+}
+
+function rollRange(min, max){
+  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 function weightedChoice(events, size, weights) {
