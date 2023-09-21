@@ -1,4 +1,4 @@
-const {Globals,CharacterService, validateLevel, validateIngredients, getRecipe, crafting } = require('../actionUtils')
+const {Globals,CharacterService, validateLevel, validateIngredients, getRecipe, crafting } = require('./craftingUtils')
 
 async function validateCrafting(skillName, character, args, resolve, reject){
   console.log(`init Validation ${skillName}...`)

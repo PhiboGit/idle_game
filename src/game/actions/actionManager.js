@@ -5,9 +5,9 @@ const actionLookup = {
 	'mining': require('./gathering/mining'),
 	'harvesting': require('./gathering/harvesting'),
 
-	'woodworking': require('./refining/woodworking'),
-	'smelting': require('./refining/smelting'),
-	'weaving': require('./refining/weaving'),
+	'woodworking': require('./crafting/woodworking'),
+	'smelting': require('./crafting/smelting'),
+	'weaving': require('./crafting/weaving'),
 }
 
 

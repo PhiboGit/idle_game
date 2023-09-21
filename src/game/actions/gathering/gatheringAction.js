@@ -1,4 +1,4 @@
-const { Globals,CharacterService, getGatheringData, looting, validateLevel } = require('../actionUtils');
+const { Globals,CharacterService, getGatheringData, looting, validateLevel } = require('./gatheringUtils');
 
 async function validateGathering(skillName, character, args, resolve, reject){
   console.log(`init Validation ${skillName}...`)
