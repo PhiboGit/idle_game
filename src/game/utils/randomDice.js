@@ -81,4 +81,4 @@ function weightedChoiceRemoved(events, size, weights) {
   return choices;
 }
 
-module.exports = {weightedChoice,weightedChoiceRemoved, rollDice}
+module.exports = {weightedChoice,weightedChoiceRemoved, rollDice, rollRange}
