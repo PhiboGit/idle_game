@@ -13,17 +13,16 @@ const {getRecipe} = require('../../data/recipesData')
 async function validateIngredients(character, userSelectedResources, recipe) {
   const characterDB = await CharacterService.findCharacter(character)
 
-  for (const ingredientSlot of recipe.ingredients) {
+  const selected = new Set(userSelectedResources)
+  const valids = new Set()
+
+  const ingredients_upgrades = [...recipe.ingredients, ...recipe.upgrades]
+  for (const ingredientSlot of ingredients_upgrades) {
     let found = false;
 
     for (const item of ingredientSlot.slot) {
-      if (userSelectedResources.includes(item.resource)) {
+      if (selected.has(item.resource)) {
         console.log('found a matching resource');
-
-        if (found) {
-          console.log('SELECT maximum 1 INGREDIENT per SLOT')
-          throw new Error('ingredient');
-        }
 
         const inventoryValue = CharacterService.getFieldValue(characterDB, `resources.${item.resource}`) || 0;
 
@@ -33,6 +32,9 @@ async function validateIngredients(character, userSelectedResources, recipe) {
         }
 
         found = true
+        valids.add(item.resource)
+        selected.delete(item.resource)
+        break
       }
     }
 
@@ -40,6 +42,11 @@ async function validateIngredients(character, userSelectedResources, recipe) {
       console.log('NEED TO SELECT A REQUIRED INGREDIENT')
       throw new Error('ingredient');
     }
+  }
+
+  //every item from the user is valid
+  if (selected.size > 0){
+    throw new Error('ingredient');
   }
 
   return true;
