@@ -1,0 +1,180 @@
+{
+  "TreeT1" : {
+    "type": "roll",
+    "maxRoll": 1000000,
+    "luck": true,
+    "loot": [
+      {"roll": 0 ,"item": "woodT1", "min" : 4, "max": 10 },
+      {"roll": 995000 ,"item": "[LTID]Sap", "min" : 1, "max": 1 },
+      {"roll": 998000 ,"item": "[LTID]Charm", "min" : 1, "max": 1 },
+      {"roll": 1001000 ,"item": "[LTID]Stick", "min" : 1, "max": 1 }
+    ]
+  },
+  "TreeT2" : {
+    "type": "roll",
+    "maxRoll": 1000000,
+    "luck": true,
+    "loot": [
+      {"roll": 0 ,"item": "woodT2", "min" : 4, "max": 10 },
+      {"roll": 995000 ,"item": "[LTID]Sap", "min" : 1, "max": 1 },
+      {"roll": 998000 ,"item": "[LTID]Charm", "min" : 1, "max": 1 },
+      {"roll": 1001000 ,"item": "[LTID]Stick", "min" : 1, "max": 1 }
+    ]
+  },
+  "TreeT3" : {
+    "type": "roll",
+    "maxRoll": 1000000,
+    "luck": true,
+    "loot": [
+      {"roll": 0 ,"item": "woodT3", "min" : 4, "max": 10 },
+      {"roll": 995000 ,"item": "[LTID]Sap", "min" : 1, "max": 1 },
+      {"roll": 998000 ,"item": "[LTID]Charm", "min" : 1, "max": 1 },
+      {"roll": 1001000 ,"item": "[LTID]Stick", "min" : 1, "max": 1 }
+    ]
+  },
+  "TreeT4" : {
+    "type": "roll",
+    "maxRoll": 1000000,
+    "luck": true,
+    "loot": [
+      {"roll": 0 ,"item": "woodT4", "min" : 4, "max": 10 },
+      {"roll": 995000 ,"item": "[LTID]Sap", "min" : 1, "max": 1 },
+      {"roll": 998000 ,"item": "[LTID]Charm", "min" : 1, "max": 1 },
+      {"roll": 1001000 ,"item": "[LTID]Stick", "min" : 1, "max": 1 }
+    ]
+  },
+  "TreeT5" : {
+    "type": "roll",
+    "maxRoll": 1000000,
+    "luck": true,
+    "loot": [
+      {"roll": 0 ,"item": "woodT5", "min" : 4, "max": 10 },
+      {"roll": 995000 ,"item": "[LTID]Sap", "min" : 1, "max": 1 },
+      {"roll": 998000 ,"item": "[LTID]Charm", "min" : 1, "max": 1 },
+      {"roll": 1001000 ,"item": "[LTID]Stick", "min" : 1, "max": 1 }
+    ]
+  },
+
+  "VeinT1" : {
+    "type": "roll",
+    "maxRoll": 1000000,
+    "luck": true,
+    "loot": [
+      {"roll": 0 ,"item": "oreT1", "min" : 4, "max": 10 }
+    ]
+  },
+  "VeinT2" : {
+    "type": "roll",
+    "maxRoll": 1000000,
+    "luck": true,
+    "loot": [
+      {"roll": 0 ,"item": "oreT2", "min" : 4, "max": 10 }
+    ]
+  },
+  "VeinT3" : {
+    "type": "roll",
+    "maxRoll": 1000000,
+    "luck": true,
+    "loot": [
+      {"roll": 0 ,"item": "oreT3", "min" : 4, "max": 10 }
+    ]
+  },
+  "VeinT4" : {
+    "type": "roll",
+    "maxRoll": 1000000,
+    "luck": true,
+    "loot": [
+      {"roll": 0 ,"item": "oreT4", "min" : 4, "max": 10 }
+    ]
+  },
+  "VeinT5" : {
+    "type": "roll",
+    "maxRoll": 1000000,
+    "luck": true,
+    "loot": [
+      {"roll": 0 ,"item": "oreT5", "min" : 4, "max": 10 }
+    ]
+  },
+
+  "PlantT1" : {
+    "type": "roll",
+    "maxRoll": 1000000,
+    "luck": true,
+    "loot": [
+      {"roll": 0 ,"item": "fiberT1", "min" : 4, "max": 10 }
+    ]
+  },
+  "PlantT2" : {
+    "type": "roll",
+    "maxRoll": 1000000,
+    "luck": true,
+    "loot": [
+      {"roll": 0 ,"item": "fiberT2", "min" : 4, "max": 10 }
+    ]
+  },
+  "PlantT3" : {
+    "type": "roll",
+    "maxRoll": 1000000,
+    "luck": true,
+    "loot": [
+      {"roll": 0 ,"item": "fiberT3", "min" : 4, "max": 10 }
+    ]
+  },
+  "PlantT4" : {
+    "type": "roll",
+    "maxRoll": 1000000,
+    "luck": true,
+    "loot": [
+      {"roll": 0 ,"item": "fiberT4", "min" : 4, "max": 10 }
+    ]
+  },
+  "PlantT5" : {
+    "type": "roll",
+    "maxRoll": 1000000,
+    "luck": true,
+    "loot": [
+      {"roll": 0 ,"item": "fiberT5", "min" : 4, "max": 10 }
+    ]
+  },
+
+
+  
+  "Charm":{
+    "type": "weights",
+    "loot": [
+      {"weight": 1, "item": "miningSpeedCharm", "min" : 1, "max" :1},
+      {"weight": 1, "item": "miningExpCharm", "min" : 1, "max" :1},
+      {"weight": 1, "item": "miningLuckCharm", "min" : 1, "max" :1},
+      {"weight": 1, "item": "miningYieldCharm", "min" : 1, "max" :1},
+      {"weight": 1, "item": "strBonus", "min" : 1, "max" :1},
+      
+      {"weight": 1, "item": "woodcuttingSpeedCharm", "min" : 1, "max" :1},
+      {"weight": 1, "item": "woodcuttingExpCharm", "min" : 1, "max" :1},
+      {"weight": 1, "item": "woodcuttingLuckCharm", "min" : 1, "max" :1},
+      {"weight": 1, "item": "woodcuttingYieldCharm", "min" : 1, "max" :1},
+      {"weight": 1, "item": "conBonus", "min" : 1, "max" :1}
+    ]
+  },
+  
+  "Sap":{
+    "type": "weights",
+    "loot": [
+      {"weight": 30, "item": null, "min" : 1, "max" :1},
+      {"weight": 35, "item": "sap_uncommon", "min" : 1, "max" :1},
+      {"weight": 20, "item": "sap_rare", "min" : 1, "max" :1},
+      {"weight": 10, "item": "sap_epic", "min" : 1, "max" :1},
+      {"weight": 5, "item": "sap_legendary", "min" : 1, "max" :1}
+    ]
+  },
+  
+  "Stick":{
+    "type": "weights",
+    "tierLimit": [55, 80, 90, 96, 100],
+    "loot": [
+      {"weight": 50, "item": "stick_uncommon", "min" : 1, "max" :1},
+      {"weight": 30, "item": "stick_rare", "min" : 1, "max" :1},
+      {"weight": 15, "item": "stick_epic", "min" : 1, "max" :1},
+      {"weight": 5, "item": "stick_legendary", "min" : 1, "max" :1}
+    ]
+  }
+}

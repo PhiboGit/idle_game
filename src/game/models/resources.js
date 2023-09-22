@@ -42,8 +42,44 @@ const refinedMaterials = {
   'linenT5': {type: Number, default: 0},
 }
 
+const charms = {
+  'woodcuttingSpeedCharm': {type: Number, default: 0}, 
+  'woodcuttingExpCharm': {type: Number, default: 0}, 
+  'woodcuttingLuckCharm': {type: Number, default: 0}, 
+  'woodcuttingYieldCharm': {type: Number, default: 0},
+
+  'miningSpeedCharm': {type: Number, default: 0}, 
+  'miningExpCharm': {type: Number, default: 0}, 
+  'miningLuckCharm': {type: Number, default: 0}, 
+  'miningYieldCharm': {type: Number, default: 0},
+
+  'harvestingSpeedCharm': {type: Number, default: 0}, 
+  'harvestingExpCharm': {type: Number, default: 0}, 
+  'harvestingLuckCharm': {type: Number, default: 0}, 
+  'harvestingYieldCharm': {type: Number, default: 0}, 
+}
+
+const statBonuses = {
+  'strBonus': {type: Number, default: 0},
+  'conBonus': {type: Number, default: 0},  
+}
 
 
-const resources = { ...gatheredMaterials, ...refinedMaterials}
+const sap ={
+  'sap_uncommon': {type: Number, default: 0}, 
+  'sap_rare': {type: Number, default: 0}, 
+  'sap_epic': {type: Number, default: 0}, 
+  'sap_legendary': {type: Number, default: 0}, 
+}
+
+const stick ={
+  'stick_uncommon': {type: Number, default: 0}, 
+  'stick_rare': {type: Number, default: 0}, 
+  'stick_epic': {type: Number, default: 0}, 
+  'stick_legendary': {type: Number, default: 0}, 
+}
+
+
+const resources = { ...gatheredMaterials, ...refinedMaterials, ...charms, ...statBonuses, ...sap, ...stick}
 
 module.exports = {resources}
