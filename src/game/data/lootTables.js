@@ -4,7 +4,7 @@ const {lootTables} = require('../utils/dataLoader')
 function rollTable(table, luck){
 
   roll = rollDice(table.maxRoll) + (table.luck ? luck : 0)
-  console.log(roll)
+  console.log('rollTable: ', roll)
 
   const re = []
   for (const loot of table.loot){

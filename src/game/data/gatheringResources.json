@@ -7,7 +7,8 @@
         "time": 20000,
         "amount": 4,
         "exp": 10,
-        "expChar": 5
+        "expChar": 5,
+        "lootTable": "TreeT1"
       },
       {
         "resourceName": "woodT2",
@@ -15,7 +16,8 @@
         "time": 40000,
         "amount": 4,
         "exp": 20,
-        "expChar": 10
+        "expChar": 10,
+        "lootTable": "TreeT2"
       },
       {
         "resourceName": "woodT3",
@@ -23,7 +25,8 @@
         "time": 80000,
         "amount": 4,
         "exp": 50,
-        "expChar": 15
+        "expChar": 15,
+        "lootTable": "TreeT3"
       },
       {
         "resourceName": "woodT4",
@@ -31,7 +34,8 @@
         "time": 120000,
         "amount": 4,
         "exp": 100,
-        "expChar": 20
+        "expChar": 20,
+        "lootTable": "TreeT4"
       },
       {
         "resourceName": "woodT5",
@@ -39,7 +43,8 @@
         "time": 180000,
         "amount": 4,
         "exp": 150,
-        "expChar": 30
+        "expChar": 30,
+        "lootTable": "TreeT5"
       }
     ]
   },
@@ -51,7 +56,8 @@
         "time": 20000,
         "amount": 4,
         "exp": 50,
-        "expChar": 10
+        "expChar": 10,
+        "lootTable": "VeinT1"
       },
       {
         "resourceName": "oreT2",
@@ -59,7 +65,8 @@
         "time": 40000,
         "amount": 4,
         "exp": 150,
-        "expChar": 20
+        "expChar": 20,
+        "lootTable": "VeinT2"
       },
       {
         "resourceName": "oreT3",
@@ -67,7 +74,8 @@
         "time": 80000,
         "amount": 4,
         "exp": 500,
-        "expChar": 15
+        "expChar": 15,
+        "lootTable": "VeinT3"
       },
       {
         "resourceName": "oreT4",
@@ -75,7 +83,8 @@
         "time": 120000,
         "amount": 4,
         "exp": 50,
-        "expChar": 20
+        "expChar": 20,
+        "lootTable": "VeinT4"
       },
       {
         "resourceName": "oreT5",
@@ -83,7 +92,8 @@
         "time": 180000,
         "amount": 4,
         "exp": 2500,
-        "expChar": 30
+        "expChar": 30,
+        "lootTable": "VeinT5"
       }
     ]
   },
@@ -95,7 +105,8 @@
         "time": 20000,
         "amount": 4,
         "exp": 50,
-        "expChar": 10
+        "expChar": 10,
+        "lootTable": "PlantT1"
       },
       {
         "resourceName": "fiberT2",
@@ -103,7 +114,8 @@
         "time": 40000,
         "amount": 4,
         "exp": 150,
-        "expChar": 20
+        "expChar": 20,
+        "lootTable": "PlantT2"
       },
       {
         "resourceName": "fiberT3",
@@ -111,7 +123,8 @@
         "time": 80000,
         "amount": 4,
         "exp": 500,
-        "expChar": 15
+        "expChar": 15,
+        "lootTable": "PlantT3"
       },
       {
         "resourceName": "fiberT4",
@@ -119,7 +132,8 @@
         "time": 120000,
         "amount": 4,
         "exp": 50,
-        "expChar": 20
+        "expChar": 20,
+        "lootTable": "PlantT4"
       },
       {
         "resourceName": "fiberT5",
@@ -127,7 +141,8 @@
         "time": 180000,
         "amount": 4,
         "exp": 2500,
-        "expChar": 30
+        "expChar": 30,
+        "lootTable": "PlantT5"
       }
     ]
   }

@@ -145,14 +145,14 @@ function getFieldValue(doc, fieldPath) {
 
 /**
  * 
- * @param {String} name 
+ * @param {String} character 
  * @param {String} skill 
  * @returns 
  */
-async function getSkill(name, skill){
+async function getSkill(character, skill){
   const select = `skills.${skill}`
 
-  const characterSkill = await Character.findOne({characterName: name}, select).lean()
+  const characterSkill = await Character.findOne({characterName: character}, select).lean()
 
   const defaultSkill = {
       exp: characterSkill.skills?.[skill]?.exp || 0,

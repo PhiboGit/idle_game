@@ -15,6 +15,7 @@ class GatheringResourceForm {
     this.amount = data.amount
     this.exp = data.exp
     this.CharacterExp = data.expChar
+    this.lootTable = data.lootTable
   }
 }
 
