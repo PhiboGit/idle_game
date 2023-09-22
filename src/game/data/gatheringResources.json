@@ -7,7 +7,7 @@
         "time": 20000,
         "amount": 4,
         "exp": 10,
-        "expChar": 5,
+        "expChar": 10,
         "lootTable": "TreeT1"
       },
       {
@@ -15,8 +15,8 @@
         "level": 25,
         "time": 40000,
         "amount": 4,
-        "exp": 20,
-        "expChar": 10,
+        "exp": 15,
+        "expChar": 15,
         "lootTable": "TreeT2"
       },
       {
@@ -24,8 +24,8 @@
         "level": 50,
         "time": 80000,
         "amount": 4,
-        "exp": 50,
-        "expChar": 15,
+        "exp": 20,
+        "expChar": 20,
         "lootTable": "TreeT3"
       },
       {
@@ -33,8 +33,8 @@
         "level": 75,
         "time": 120000,
         "amount": 4,
-        "exp": 100,
-        "expChar": 20,
+        "exp": 25,
+        "expChar": 25,
         "lootTable": "TreeT4"
       },
       {
@@ -42,7 +42,7 @@
         "level": 100,
         "time": 180000,
         "amount": 4,
-        "exp": 150,
+        "exp": 30,
         "expChar": 30,
         "lootTable": "TreeT5"
       }
@@ -55,7 +55,7 @@
         "level": 0,
         "time": 20000,
         "amount": 4,
-        "exp": 50,
+        "exp": 10,
         "expChar": 10,
         "lootTable": "VeinT1"
       },
@@ -64,8 +64,8 @@
         "level": 25,
         "time": 40000,
         "amount": 4,
-        "exp": 150,
-        "expChar": 20,
+        "exp": 15,
+        "expChar": 15,
         "lootTable": "VeinT2"
       },
       {
@@ -73,8 +73,8 @@
         "level": 50,
         "time": 80000,
         "amount": 4,
-        "exp": 500,
-        "expChar": 15,
+        "exp": 20,
+        "expChar": 20,
         "lootTable": "VeinT3"
       },
       {
@@ -82,8 +82,8 @@
         "level": 75,
         "time": 120000,
         "amount": 4,
-        "exp": 50,
-        "expChar": 20,
+        "exp": 25,
+        "expChar": 25,
         "lootTable": "VeinT4"
       },
       {
@@ -91,7 +91,7 @@
         "level": 100,
         "time": 180000,
         "amount": 4,
-        "exp": 2500,
+        "exp": 30,
         "expChar": 30,
         "lootTable": "VeinT5"
       }
@@ -104,7 +104,7 @@
         "level": 0,
         "time": 20000,
         "amount": 4,
-        "exp": 50,
+        "exp": 10,
         "expChar": 10,
         "lootTable": "PlantT1"
       },
@@ -113,8 +113,8 @@
         "level": 25,
         "time": 40000,
         "amount": 4,
-        "exp": 150,
-        "expChar": 20,
+        "exp": 15,
+        "expChar": 15,
         "lootTable": "PlantT2"
       },
       {
@@ -122,8 +122,8 @@
         "level": 50,
         "time": 80000,
         "amount": 4,
-        "exp": 500,
-        "expChar": 15,
+        "exp": 20,
+        "expChar": 20,
         "lootTable": "PlantT3"
       },
       {
@@ -131,8 +131,8 @@
         "level": 75,
         "time": 120000,
         "amount": 4,
-        "exp": 50,
-        "expChar": 20,
+        "exp": 25,
+        "expChar": 25,
         "lootTable": "PlantT4"
       },
       {
@@ -140,7 +140,7 @@
         "level": 100,
         "time": 180000,
         "amount": 4,
-        "exp": 2500,
+        "exp": 30,
         "expChar": 30,
         "lootTable": "PlantT5"
       }
