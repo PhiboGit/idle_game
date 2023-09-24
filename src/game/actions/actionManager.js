@@ -8,6 +8,7 @@ const actionLookup = {
 	'woodworking': require('./crafting/woodworking'),
 	'smelting': require('./crafting/smelting'),
 	'weaving': require('./crafting/weaving'),
+	'toolsmith': require('./crafting/toolsmith'),
 }
 
 

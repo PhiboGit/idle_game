@@ -13,15 +13,17 @@ const {senderMediator} = require('../../../routes/websocket/mediator')
  * @param {String} character 
  * @param {Object} form 
  */
-async function increment(character, form){
+async function increment(character, incrementForm = {}, setForm= {}, pushForm={} ){
   console.log("CharacterService.increment is processing the form...")
   const update = {}
 
-  update['$inc'] = form
+  update['$inc'] = incrementForm
+  update['$set'] = setForm
+  update['$push'] = pushForm
 
   const levelUpdate = await updateSkillLevel(character, update)
     if(levelUpdate){
-      update['$set'] = levelUpdate
+      update['$set'] = { ...update['$set'], ...levelUpdate }
     }
   try {
     const characterDB = await Character.findOneAndUpdate(
@@ -117,8 +119,9 @@ async function getAll(){
  * @returns 
  */
 async function findCharacter(charName){
-  const character =  await Character.findOne({ characterName: charName }).lean()
-  return character
+  const character =  await Character.findOne({ characterName: charName })
+  const populate = character.populate('items')
+  return populate
 }
 
 /**

@@ -8,6 +8,7 @@ const craftingActions = [
   'woodworking',
   'smelting',
   'weaving',
+  'toolsmith'
 ]
 
 

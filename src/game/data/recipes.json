@@ -1,4 +1,20 @@
 {
+  "weavingRecipes": {
+    "linenT1":{
+      "amount": 1,
+      "level": 0,
+      "time": 20000,
+      "exp": 10,
+      "characterExp": 5,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "fiberT1", "amount": 10}
+          ]}
+      ],
+      "upgrades": []
+    }
+  },
   "woodworkingRecipes": {
     "plankT1":{
       "amount": 1,
@@ -100,32 +116,33 @@
       "upgrades": []
     }
   },
-
+  
   "toolsmithRecipes": {
-    "pickaxeT3":{
+    "pickaxeT1":{
       "amount": 1,
-      "level": 50,
+      "tier": 1,
+      "level": 0,
       "time": 20000,
       "exp": 10,
       "characterExp": 5,
       "ingredients": [
         {"required": true,
         "slot": [
-          {"resource": "ingotT3", "amount": 5},
-          {"resource": "uncommenOreT3", "amount": 1},
-          {"resource": "rareOreT3", "amount": 1},
-          {"resource": "legendaryOreT3", "amount": 1},
-          {"resource": "epicOreT3", "amount": 1}
+          {"resource": "ingotT1", "amount": 5},
+          {"resource": "uncommenOreT1", "amount": 1},
+          {"resource": "rareOreT1", "amount": 1},
+          {"resource": "legendaryOreT1", "amount": 1},
+          {"resource": "epicOreT1", "amount": 1}
         ]},
-
+  
         {"required": true,
         "slot": [
-          {"resource": "plankT3", "amount": 3}
+          {"resource": "plankT1", "amount": 3}
           ]},
           
         {"required": true,
         "slot": [
-          {"resource": "linenT3", "amount": 5}
+          {"resource": "linenT1", "amount": 5}
         ]} 
       ],
       "upgrades": [

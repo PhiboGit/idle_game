@@ -50,6 +50,7 @@ async function initCrafting(skillName, character, args, activeTimeout, resolve, 
 	const timeoutID = setTimeout(async () => {
 		// after the delay we craft!
 		try {
+      // The most important part, the crafting iteself. here are the items created and consumed
 			await crafting(character,skillName, recipeName, args.ingredients)
 		} catch (error) {
 			console.log('crafting failed: ', error.message)
