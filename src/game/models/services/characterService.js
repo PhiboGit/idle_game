@@ -90,6 +90,7 @@ async function updateSkillLevel(character, update){
 
     const lvl = GatheringExpTable.getLevel(total_CharExp)
     levelUpdate['level'] = lvl
+    needsUpdate = true
   }
 
 
