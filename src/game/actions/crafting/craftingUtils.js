@@ -101,12 +101,13 @@ async function crafting(character, skillName, recipeName, selectedResources) {
   // every used item is now getting removed
   
   //now add the crafted item
-  if(resourcesSkills.includes(skillName)){
+  // if the item is stackable
+  if(!recipe.unique){
     // just increment the crafted resource item
 	  incrementData[`resources.${recipeName}`] = recipe.amount
 
   // if it is a unique item
-  } else if (uniqueItemSkills.includes(skillName)){
+  } else if (recipe.unique){
     const characterSkill = await CharacterService.getSkill(character, skillName)
     const item_id = await craft(skillName, characterSkill.level, recipeName, selectedResources)
     pushData['items'] = item_id
