@@ -63,7 +63,7 @@ async function updateSkillLevel(character, update){
   
   if (expChanged){
     for (const field of expChanged){
-      const current_exp = getFieldValue(characterDB, field);
+      const current_exp = getFieldValue(characterDB, field) || 0;
       const increment_exp = incFields[field]
       const total_exp = current_exp + increment_exp
       console.log(`LevelUpdate: ${field}: {current: ${current_exp}, inc: ${increment_exp}, exp: ${total_exp}}`)
@@ -85,7 +85,7 @@ async function updateSkillLevel(character, update){
   }
 
   if (charExpChanged){
-    const currentCharExp = getFieldValue(characterDB, 'exp')
+    const currentCharExp = getFieldValue(characterDB, 'exp') || 0
     const total_CharExp = currentCharExp + charExpChanged
 
     const lvl = GatheringExpTable.getLevel(total_CharExp)
@@ -136,10 +136,11 @@ function getFieldValue(doc, fieldPath) {
   // traversing down the fieldPath
   let value = doc;
   for (const part of fieldParts) {
-      if (value && value.hasOwnProperty(part)) {
+    console.log("CharacterService field access: traversing... " + part)
+      if (true) {
           value = value[part];
       } else {
-        console.log("CharacterService field access: Invalid field " + part);
+        console.log("CharacterService field access: Invalid field: " + part);
         return null
       }
   }
