@@ -126,6 +126,8 @@
   "toolsmithRecipes": {
     "pickaxeT1":{
       "unique":true,
+      "type": "tool",
+      "subtype": "pickaxe",
       "amount": 1,
       "tier": 1,
       "level": 0,

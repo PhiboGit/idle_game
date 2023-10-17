@@ -1,7 +1,7 @@
 const {Globals, CharacterService, rollDice, validateLevel} = require('../actionUtils')
 
 const {getRecipe} = require('../../data/recipesData')
-const {craft} = require('../../models/items/pickaxe')
+const {craft} = require('../../models/items/tool')
 
 const resourcesSkills = ['woodworking', 'smelting', 'weaving']
 const uniqueItemSkills = ['toolsmith', 'weaponsmith', 'engineer']
@@ -106,10 +106,10 @@ async function crafting(character, skillName, recipeName, selectedResources) {
     // just increment the crafted resource item
 	  incrementData[`resources.${recipeName}`] = recipe.amount
 
-  // if it is a unique item
+  // if it is a unique item, we need to craft it
   } else if (recipe.unique){
     const characterSkill = await CharacterService.getSkill(character, skillName)
-    const item_id = await craft(skillName, characterSkill.level, recipeName, selectedResources)
+    const item_id = await craft(recipe, selectedResources, characterSkill)
     pushData['items'] = item_id
   }
 	// At last update all the values for the character.
