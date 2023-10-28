@@ -1,0 +1,44 @@
+{
+  "sap_uncommon": {
+    "name": "",
+    "description": "",
+    "craftingBonus": 10
+  },
+  "sap_rare":{
+
+  },
+  "sap_epic":{
+    
+  },
+  "sap_legendary":{
+    
+  },
+
+
+  "stick_uncommon": {
+
+  },
+  "stick_rare":{
+
+  },
+  "stick_epic":{
+    
+  },
+  "stick_legendary":{
+    
+  },
+
+
+  "ore_uncommon": {
+
+  },
+  "ore_rare":{
+
+  },
+  "ore_epic":{
+    
+  },
+  "ore_legendary":{
+    
+  }
+}

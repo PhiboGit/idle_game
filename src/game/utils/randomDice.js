@@ -78,6 +78,7 @@ function adjustWeights(weights, start, end) {
 
 
 function weightedChoiceRemoved(events, size, weights) {
+  if (size <= 0) return []
   let eventsCopy = events.slice();
   let weightsCopy = (weights != null) ? weights.slice() : new Array(events.length).fill(1);
   if (eventsCopy.length !== weightsCopy.length) {

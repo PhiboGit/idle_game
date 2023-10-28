@@ -59,9 +59,12 @@ const charms = {
   'harvestingYieldCharm': {type: Number, default: 0}, 
 }
 
-const statBonuses = {
-  'strBonus': {type: Number, default: 0},
-  'conBonus': {type: Number, default: 0},  
+const statCharms = {
+  'strCharm': {type: Number, default: 0},
+  'conCharm': {type: Number, default: 0},  
+  'intCharm': {type: Number, default: 0},  
+  'dexCharm': {type: Number, default: 0},  
+  'focCharm': {type: Number, default: 0},  
 }
 
 
@@ -80,6 +83,6 @@ const stick ={
 }
 
 
-const resources = { ...gatheredMaterials, ...refinedMaterials, ...charms, ...statBonuses, ...sap, ...stick}
+const resources = { ...gatheredMaterials, ...refinedMaterials, ...charms, ...statCharms, ...sap, ...stick}
 
 module.exports = {resources}

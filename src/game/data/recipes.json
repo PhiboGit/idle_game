@@ -137,11 +137,7 @@
       "ingredients": [
         {"required": true,
         "slot": [
-          {"resource": "ingotT1", "amount": 5},
-          {"resource": "uncommenOreT1", "amount": 1},
-          {"resource": "rareOreT1", "amount": 1},
-          {"resource": "legendaryOreT1", "amount": 1},
-          {"resource": "epicOreT1", "amount": 1}
+          {"resource": "ingotT1", "amount": 5}
         ]},
   
         {"required": true,

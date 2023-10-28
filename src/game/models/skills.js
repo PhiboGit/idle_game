@@ -6,6 +6,12 @@ const skill = {
   level: {type: Number, default: 0},
   luck: {type: Number, default: 0},
   speed: {type: Number, default: 0},
+  equipment: {
+    tool: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+    },
+  }
 }
 
 const skills = {
