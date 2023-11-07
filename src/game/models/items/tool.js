@@ -1,6 +1,7 @@
-const {Item} = require('../item')
+const Item = require('../item')
 const {weightedChoice, adjustWeights, rollDice, rollRange, weightedChoiceRemoved} = require('../../utils/randomDice')
 const {getRecipe} = require('../../data/recipesData')
+const {getCraftingMaterials} = require('../../data/items/craftingMaterials')
 
 
 class Tool extends Item {
@@ -29,13 +30,14 @@ const numberOfBonus = {
   "legendary": 4
 }
 const bonuses = ['speed', 'luck', 'yield', 'exp']
-const rarityWeights = [260, 150, 65, 20, 5] // 0 - 500
-const defaultWindow = [0, 200]
+const rarityWeights = [8000, 1500, 400, 90, 10] // 0 - 10000; 1 = 0.001
+const defaultWindow = [0, 0]
+
 
 const toolSpeed = {
   "T1":{
     "common": {
-    "min": 0,
+    "min": -10,
     "max": 0,
     },
     "uncommon": {
@@ -254,12 +256,23 @@ async function craft(recipe, selectedResources, characterSkill){
   const skillLevel = characterSkill.level
   const skillLuck = characterSkill.luck
   
+  let startWindow = defaultWindow[0] + (skillLevel * 10)
+  let endWindow = defaultWindow[1]
+
+  for (const selectedItem of selectedResources) {
+     const item = getCraftingMaterials(selectedItem)
+     if (!item) continue
+     if (item["craftingBonus"]){
+      startWindow += item["craftingBonus"]
+     }
+
+
+  }
+
   console.log("Weights: " + rarityWeights)
   console.log("Window: " + defaultWindow[0] + " " + defaultWindow[1])
   
   // get rarity
-  let startWindow = defaultWindow[0] + Math.floor(skillLevel / 2)
-  let endWindow = defaultWindow[1] - skillLevel
   console.log("Window: " + startWindow + " " + endWindow)
   const weights = adjustWeights(rarityWeights, startWindow, endWindow)
   console.log("Weights: " + weights)
@@ -295,6 +308,7 @@ async function craft(recipe, selectedResources, characterSkill){
     // Now, update the corresponding property in the Tool object
     if (bonus === 'speed') {
       tool.properties.speedBonus = value;
+      tool.properties.speed = tool.properties.speedBonus + tool.properties.speed
     } else if (bonus === 'luck') {
       tool.properties.luckBonus = value;
     } else if (bonus === 'yield') {
@@ -306,9 +320,9 @@ async function craft(recipe, selectedResources, characterSkill){
 
   console.log(tool)
 
-  //const toolDB = await tool.save()
+  const toolDB = await tool.save()
 
-  //return toolDB._id
+  return toolDB._id
 }
 
 
@@ -316,7 +330,7 @@ const recipeTest = getRecipe('toolsmith', 'pickaxeT1')
 const selectedResourcesTest = [
   "plankT1",
   "linenT1",
-  "ingotT1",
+  "ore_rare",
   "miningSpeedCharm"
 ]
 const characterSkillTest = {

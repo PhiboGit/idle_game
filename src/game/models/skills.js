@@ -23,6 +23,8 @@ const skills = {
   weaving: skill,
   smelting:skill,
 
+  toolsmith: skill,
+
 }
 
 module.exports = {skills};

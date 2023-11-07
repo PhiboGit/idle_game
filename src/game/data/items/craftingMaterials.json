@@ -1,8 +1,7 @@
 {
   "sap_uncommon": {
     "name": "",
-    "description": "",
-    "craftingBonus": 10
+    "description": ""
   },
   "sap_rare":{
 
@@ -16,29 +15,67 @@
 
 
   "stick_uncommon": {
-
+    "name": "Mossy Twig",
+    "description": "",
+    "craftingBonus": 2000
   },
   "stick_rare":{
-
+    "name": "Glimmering Stick",
+    "description": "",
+    "craftingBonus": 2250
   },
   "stick_epic":{
-    
+    "name": "Petrified Branch",
+    "description": "",
+    "craftingBonus": 2400
   },
   "stick_legendary":{
-    
+    "name": "Ancient Hardwood",
+    "description": "",
+    "craftingBonus": 2500
   },
 
 
   "ore_uncommon": {
-
+    "name": "",
+    "description": "",
+    "craftingBonus": 2000
   },
   "ore_rare":{
-
+    "name": "",
+    "description": "",
+    "craftingBonus": 2250
   },
   "ore_epic":{
-    
+    "name": "",
+    "description": "",
+    "craftingBonus": 2400
   },
   "ore_legendary":{
-    
+    "name": "",
+    "description": "",
+    "craftingBonus": 2500
+  },
+
+
+  "fiber_uncommon": {
+    "name": "",
+    "description": "",
+    "craftingBonus": 2000
+  },
+  "fiber_rare":{
+    "name": "",
+    "description": "",
+    "craftingBonus": 2250
+  },
+  "fiber_epic":{
+    "name": "",
+    "description": "",
+    "craftingBonus": 2400
+  },
+  "fiber_legendary":{
+    "name": "",
+    "description": "",
+    "craftingBonus": 2500
   }
 }

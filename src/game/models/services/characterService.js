@@ -1,6 +1,7 @@
 const { default: mongoose } = require('mongoose')
 
 const Character = require('../character')
+const Item = require('../item')
 const GatheringExpTable = require('../../data/gatheringExpTable')
 
 const {senderMediator} = require('../../../routes/websocket/mediator')
@@ -29,13 +30,21 @@ async function increment(character, incrementForm = {}, setForm= {}, pushForm={}
     const characterDB = await Character.findOneAndUpdate(
       {characterName: character},
       update,
-      { new: true }
+      //{ new: true }
       )
+    if (pushForm['items']){
+      const item = await Item.findById(pushForm['items'])
+      senderMediator.publish('items', {character: character, msg: {items: [item]} })
+    }
   } catch (error) {
     console.log(error)
   }
   
   senderMediator.publish('update_char', {character: character, msg: update})
+
+  
+  
+  
 }
 
 /**

@@ -33,6 +33,7 @@ async function validateCrafting(skillName, character, args, resolve, reject){
   if (!actionTime || actionTime < 2000){
     actionTime = 2000;
   }
+  actionTime = Globals.getSpeedModifier() * actionTime
 
   resolve(actionTime)
   return
@@ -59,7 +60,7 @@ async function initCrafting(skillName, character, args, activeTimeout, resolve, 
 		}
 		activeTimeout[character] = null
 		resolve('success!')
-	}, Globals.getSpeedModifier()*actionTime)
+	}, actionTime)
 
 	console.log(`Init timeout with ${actionTime}ms complete. Waiting for crafting ${skillName}...`);
 
