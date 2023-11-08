@@ -6,12 +6,13 @@ const {senderMediator} = require('../../routes/websocket/mediator')
 function handleCancel(character, msg) {
   if(!(msg && 
     msg.type && typeof msg.type === 'string' && msg.type === 'cancel' && 
-    msg.index && typeof msg.index === 'number' && Number.isInteger(msg.index)
+    msg.index && typeof msg.index === 'number' && Number.isInteger(msg.index) &&
+    msg.index >= -1 && msg.index <= 4
     )){
     senderMediator.publish('error', {character: character,
       msg: {message: "The submitted form for type: 'cancel' is not valid!",
             info: {
-             index: 'Number/Integer: -1 to 5, -1 is the current running action, else the index of the Queue.',
+             index: 'Number/Integer: -1 to 4, -1 is the current running action, else the index of the Queue.',
            }}})
     return
   }
@@ -33,4 +34,8 @@ function handleAction(character, msg) {
   ActionManager.add(character, msg.actionType, msg.args)
 }
 
-module.exports = {handleCancel, handleAction}
+function handleEquip(){
+
+}
+
+module.exports = {handleCancel, handleAction, handleEquip}

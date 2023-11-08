@@ -5,6 +5,7 @@ const {senderMediator} = require('./mediator')
 const messageRoutes = {
   'action': ActionHandler.handleAction,
   'cancel': ActionHandler.handleCancel,
+  'equip': ActionHandler.handleEquip,
   'getTime': handleGetTime,
   'broadcast': handleBroadcast,
 };

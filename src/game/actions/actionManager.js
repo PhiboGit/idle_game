@@ -54,7 +54,7 @@ function enqueue(character, repeats) {
 	repeatsQueue = actionQueue[character]
 	
 	// action queue size limit
-	if (repeatsQueue.length >= 3){
+	if (repeatsQueue.length >= 5){
 		console.log('Queue is full!', repeatsQueue)
 		return
 	}
