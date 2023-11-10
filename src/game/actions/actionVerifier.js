@@ -12,7 +12,7 @@ const craftingActions = [
 ]
 
 const equipmentSlots = [
-  'tool'
+  "tool"
 ]
 
 
@@ -130,7 +130,7 @@ function verifyEquip(msg){
     msg.type && typeof msg.type === 'string' && msg.type === 'equip' &&
     msg.args &&
     msg.args.itemID && typeof msg.args.itemID === 'string' && 
-    msg.args.skill && typeof msg.args.skill === 'string' && actionTypes.includes(msg.args.skill) &&
+    msg.args.skill && typeof msg.args.skill === 'string' && gatheringActions.includes(msg.args.skill) &&
     msg.args.slot && typeof msg.args.slot === 'string' && equipmentSlots.includes(msg.args.slot)
     )){
       return true

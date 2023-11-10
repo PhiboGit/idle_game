@@ -210,18 +210,34 @@ async function equipSkillItem(character, itemID, skillName, slotType){
   senderMediator.publish('equipment', {character: character, msg: update})
 }
 
-async function getAllItemsFromCharacter(character){
-  const select = `items`
+async function getAllItemsFromCharacter(character) {
+  const select = 'items';
 
-  const items = await Character.findOne({characterName: character}, select).lean()
+  const characterData = await Character.findOne({ characterName: character }, select).lean();
 
-  return items.items
+  // Extract the ObjectIds from the array as strings
+  const itemIds = characterData.items.map(item => String(item._id));
+  return itemIds;
 }
 
 async function getItem(item_id){
-  const item = await Item.findById(item_id, { _id: 1 }).lean();
+  const item = await Item.findById(item_id).lean();
 
   return item
 }
 
-module.exports = {increment, getSkill, findCharacter, getFieldValue, updateActionManager, getAll, getItem, equipSkillItem, getAllItemsFromCharacter}
+async function getActiveAction(character){
+  const char = await Character.findOne({characterName: character}).lean()
+
+  const currentAction = char.currentAction
+
+  let runningActionName = ""
+
+  if(currentAction){
+    runningActionName = currentAction.actionType
+  }
+
+  return runningActionName
+}
+
+module.exports = {increment, getSkill, findCharacter, getFieldValue, updateActionManager, getAll, getItem, equipSkillItem, getAllItemsFromCharacter, getActiveAction}
