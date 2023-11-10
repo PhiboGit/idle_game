@@ -207,7 +207,7 @@ async function equipSkillItem(character, itemID, skillName, slotType){
     options
   )
 
-  senderMediator.publish('equipment', {character: character, msg: update})
+  senderMediator.publish('update_char', {character: character, msg: update})
 }
 
 async function getAllItemsFromCharacter(character) {
