@@ -1,7 +1,29 @@
 const CharacterService = require('../models/services/characterService')
-const {verifyEquip} = require('./actionVerifier')
 const {senderMediator} = require('../../routes/websocket/mediator')
 
+const validSkills = [
+  'woodcutting', 
+  'mining',
+  'harvesting'
+]
+
+const equipmentSlots = [
+  "tool"
+]
+
+function verifyEquip(msg){
+  if((msg && 
+    msg.type && typeof msg.type === 'string' && msg.type === 'equip' &&
+    msg.args &&
+    msg.args.itemID && typeof msg.args.itemID === 'string' && 
+    msg.args.skill && typeof msg.args.skill === 'string' && validSkills.includes(msg.args.skill) &&
+    msg.args.slot && typeof msg.args.slot === 'string' && equipmentSlots.includes(msg.args.slot)
+    )){
+      return true
+    }
+  console.info('Invalid args for equip')
+  return false
+}
 
 async function handleEquip(character, msg){
   console.log("Handling Equip submission...")

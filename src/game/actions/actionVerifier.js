@@ -11,10 +11,6 @@ const craftingActions = [
   'toolsmith'
 ]
 
-const equipmentSlots = [
-  "tool"
-]
-
 
 const actionTypes =  [...craftingActions, ...gatheringActions]
 
@@ -125,18 +121,6 @@ function verifyCraftingArgs(args){
 	return false
 }
 
-function verifyEquip(msg){
-  if((msg && 
-    msg.type && typeof msg.type === 'string' && msg.type === 'equip' &&
-    msg.args &&
-    msg.args.itemID && typeof msg.args.itemID === 'string' && 
-    msg.args.skill && typeof msg.args.skill === 'string' && gatheringActions.includes(msg.args.skill) &&
-    msg.args.slot && typeof msg.args.slot === 'string' && equipmentSlots.includes(msg.args.slot)
-    )){
-      return true
-    }
-  console.info('Invalid args for equip')
-  return false
-}
 
-module.exports = {verifyAction, verifyEquip}
+
+module.exports = {verifyAction}
