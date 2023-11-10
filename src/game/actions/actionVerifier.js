@@ -1,7 +1,7 @@
 const gatheringActions = [
   'woodcutting', 
   'mining',
-  'harvesting',
+  'harvesting'
 ]
 
 const craftingActions = [
@@ -11,10 +11,14 @@ const craftingActions = [
   'toolsmith'
 ]
 
+const equipmentSlots = [
+  'tool'
+]
+
 
 const actionTypes =  [...craftingActions, ...gatheringActions]
 
-function verify(msg){
+function verifyAction(msg){
 
   /**
    *  should have:
@@ -121,4 +125,18 @@ function verifyCraftingArgs(args){
 	return false
 }
 
-module.exports = {verify}
+function verifyEquip(msg){
+  if((msg && 
+    msg.type && typeof msg.type === 'string' && msg.type === 'equip' &&
+    msg.args &&
+    msg.args.itemID && typeof msg.args.itemID === 'string' && 
+    msg.args.skill && typeof msg.args.skill === 'string' && actionTypes.includes(msg.args.skill) &&
+    msg.args.slot && typeof msg.args.slot === 'string' && equipmentSlots.includes(msg.args.slot)
+    )){
+      return true
+    }
+  console.info('Invalid args for equip')
+  return false
+}
+
+module.exports = {verifyAction, verifyEquip}

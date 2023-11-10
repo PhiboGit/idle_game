@@ -10,6 +10,7 @@ const skill = {
     tool: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Item', // Reference to the Item model
+      default: null
     },
   }
 }

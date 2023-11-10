@@ -44,10 +44,6 @@ async function initCrafting(skillName, character, args, activeTimeout, resolve, 
 
 	const recipeName = args.recipe
 
-  if (!actionTime || actionTime < 2000){
-    actionTime = 2000;
-  }
-
 	const timeoutID = setTimeout(async () => {
 		// after the delay we craft!
 		try {

@@ -5,10 +5,11 @@ const {getCraftingMaterials} = require('../../data/items/craftingMaterials')
 
 
 class Tool extends Item {
-  constructor(subtype, tier, rarity, speed, speedBonus=0, luckBonus=0, yieldBonus=0, expBonus=0) {
+  constructor(subtype, level, tier, rarity, speed, speedBonus=0, luckBonus=0, yieldBonus=0, expBonus=0) {
     super();
     this.type = 'tool';
     this.subtype = subtype;
+    this.level = level;
     this.tier = tier;
     this.rarity = rarity;
     this.properties = {
@@ -252,6 +253,7 @@ async function craft(recipe, selectedResources, characterSkill){
   const type = recipe["type"]
   const subtype = recipe["subtype"]
   const tier = recipe["tier"]
+  const level = recipe["equipLevel"]
   
   const skillLevel = characterSkill.level
   const skillLuck = characterSkill.luck
@@ -282,7 +284,7 @@ async function craft(recipe, selectedResources, characterSkill){
   let speed = rollRange(toolSpeed[`T${tier}`][rarity]["min"], toolSpeed[`T${tier}`][rarity]["max"]) 
   
   // craft item
-  const tool = new Tool(subtype, tier, rarity, speed)
+  const tool = new Tool(subtype, level, tier, rarity, speed)
   
   //get bonuses
   let rolledBonus = []

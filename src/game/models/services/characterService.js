@@ -166,22 +166,62 @@ function getFieldValue(doc, fieldPath) {
 async function getSkill(character, skill){
   const select = `skills.${skill}`
 
-  const characterSkill = await Character.findOne({characterName: character}, select).populate('items').lean()
+  const characterSkill = await Character.findOne({characterName: character}, select).lean()
 
-  const defaultSkill = {
-      exp: characterSkill.skills?.[skill]?.exp || 0,
-      level: characterSkill.skills?.[skill]?.level || 0,
-      luck: characterSkill.skills?.[skill]?.luck || 0,
-      speed: characterSkill.skills?.[skill]?.speed || 0,
-      equipment: {
-        tool: {
-          
-        }
+  
+  const skillSheet = {
+    exp: characterSkill.skills?.[skill]?.exp || 0,
+    level: characterSkill.skills?.[skill]?.level || 0,
+    luck: characterSkill.skills?.[skill]?.luck || 0,
+    speed: characterSkill.skills?.[skill]?.speed || 0,
+    equipment: {
+      tool: {
+        
       }
     }
-  return defaultSkill
+  }
+
+  const toolID = characterSkill.skills?.[skill]?.equipment?.tool
+  if (toolID) {
+    // If toolId exists, retrieve the tool from the Item model and include the id
+    const tool = await getItem(toolID)
+    skillSheet.equipment.tool = tool || {};
+  }
+  return skillSheet
 }
 
+async function equipSkillItem(character, itemID, skillName, slotType){
 
+  let update = {}
 
-module.exports = {increment, getSkill, findCharacter, getFieldValue, updateActionManager, getAll}
+  update['$set'] = {
+    [`skills.${skillName}.equipment.${slotType}`]: itemID,
+  };
+
+  const options = {
+    upsert: true, // Create the document if it doesn't exist
+  };
+  await Character.findOneAndUpdate(
+    { characterName: character },
+    update,
+    options
+  )
+
+  senderMediator.publish('equipment', {character: character, msg: update})
+}
+
+async function getAllItemsFromCharacter(character){
+  const select = `items`
+
+  const items = await Character.findOne({characterName: character}, select).lean()
+
+  return items.items
+}
+
+async function getItem(item_id){
+  const item = await Item.findById(item_id, { _id: 1 }).lean();
+
+  return item
+}
+
+module.exports = {increment, getSkill, findCharacter, getFieldValue, updateActionManager, getAll, getItem, equipSkillItem, getAllItemsFromCharacter}
