@@ -328,19 +328,19 @@ async function craft(recipe, selectedResources, characterSkill){
 }
 
 
-const recipeTest = getRecipe('toolsmith', 'pickaxeT1')
-const selectedResourcesTest = [
-  "plankT1",
-  "linenT1",
-  "ore_rare",
-  "miningSpeedCharm"
-]
-const characterSkillTest = {
-  exp: 0,
-  level: 200,
-  luck: 0,
-  speed: 0,
-}
-craft(recipeTest, selectedResourcesTest, characterSkillTest)
+// const recipeTest = getRecipe('toolsmith', 'pickaxeT1')
+// const selectedResourcesTest = [
+//   "plankT1",
+//   "linenT1",
+//   "ore_rare",
+//   "miningSpeedCharm"
+// ]
+// const characterSkillTest = {
+//   exp: 0,
+//   level: 200,
+//   luck: 0,
+//   speed: 0,
+// }
+// craft(recipeTest, selectedResourcesTest, characterSkillTest)
 
 module.exports = {craft}

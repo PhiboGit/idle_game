@@ -70,12 +70,12 @@ async function validateIngredients(character, userSelectedResources, recipe) {
 async function crafting(character, skillName, recipeName, selectedResources) {
   console.log('crafting in progress...')
   const recipe = getRecipe(skillName,recipeName)
-  
+  const characterSkill = await CharacterService.getSkill(character, skillName);
 	// filling out the form to increment the values of a character
 	const incrementData = {}
   const pushData = {}
-  incrementData['exp'] = recipe.characterExp
-  incrementData[`skills.${skillName}.exp`] = recipe.exp
+  incrementData['exp'] = recipe.characterExp 
+  incrementData[`skills.${skillName}.exp`] = Math.floor(recipe.exp * ( 1 + characterSkill.exp))
   
   // check ingredients
   const characterDB = await CharacterService.findCharacter(character)

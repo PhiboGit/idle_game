@@ -165,28 +165,30 @@ function getFieldValue(doc, fieldPath) {
  */
 async function getSkill(character, skill){
   const select = `skills.${skill}`
-
   const characterSkill = await Character.findOne({characterName: character}, select).lean()
-
   
   const skillSheet = {
-    exp: characterSkill.skills?.[skill]?.exp || 0,
     level: characterSkill.skills?.[skill]?.level || 0,
     luck: characterSkill.skills?.[skill]?.luck || 0,
     speed: characterSkill.skills?.[skill]?.speed || 0,
-    equipment: {
-      tool: {
-        
-      }
-    }
+    yield: 0,
+    exp:  0,
   }
-
+  
   const toolID = characterSkill.skills?.[skill]?.equipment?.tool
   if (toolID) {
-    // If toolId exists, retrieve the tool from the Item model and include the id
-    const tool = await getItem(toolID)
-    skillSheet.equipment.tool = tool || {};
+    // If toolId exists, add stats to the skillsheet
+    const tool = await Item.findById(item_id)
+
+    skillSheet.speed += (tool.properties?.speed || 0) / 100
+    skillSheet.speed += (tool.properties?.speedBonus || 0) / 100
+    skillSheet.yield += (tool.properties?.yieldBonus || 0) / 100
+    skillSheet.exp += (tool.properties?.expBonus || 0) / 100
+
+    skillSheet.luck += tool.properties?.luckBonus || 0
   }
+
+  
   return skillSheet
 }
 
