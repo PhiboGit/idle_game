@@ -32,7 +32,7 @@ const numberOfBonus = {
 }
 const bonuses = ['speed', 'luck', 'yield', 'exp']
 const rarityWeights = [8000, 1500, 400, 90, 10] // 0 - 10000; 1 = 0.001
-const defaultWindow = [0, 0]
+const defaultWindow = [0, 2000]
 
 
 const toolSpeed = {
@@ -258,8 +258,9 @@ async function craft(recipe, selectedResources, characterSkill){
   const skillLevel = characterSkill.level
   const skillLuck = characterSkill.luck
   
-  let startWindow = defaultWindow[0] + (skillLevel * 10)
-  let endWindow = defaultWindow[1]
+  // at level 75 the endWindow is 0, unlocks uncommon, rare,... later
+  let endWindow = defaultWindow[1] - Math.floor(defaultWindow[1] * (Math.min(75, skillLevel) / 75 ))
+  let startWindow = defaultWindow[0] + Math.min(2000, 16 * Math.max(0, skillLevel - 75))
 
   for (const selectedItem of selectedResources) {
      const item = getCraftingMaterials(selectedItem)
@@ -286,7 +287,7 @@ async function craft(recipe, selectedResources, characterSkill){
   // craft item
   const tool = new Tool(subtype, level, tier, rarity, speed)
   
-  //get bonuses
+  //get bonus
   let rolledBonus = []
   for (const bonusCharm of selectedResources) {
     if (bonusCharm.includes('SpeedCharm')){
@@ -337,7 +338,7 @@ async function craft(recipe, selectedResources, characterSkill){
 // ]
 // const characterSkillTest = {
 //   exp: 0,
-//   level: 200,
+//   level: 10,
 //   luck: 0,
 //   speed: 0,
 // }
