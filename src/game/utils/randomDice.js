@@ -47,12 +47,17 @@ function adjustWeights(weights, start, end) {
     // No adjustment needed, return the weights as-is
     return weights.slice();
   }
+  if (start < 0) {
+    start = 0;
+  }
+  if (end < 0) {
+    end = 0;
+  }
 
   const adjustedWeights = weights.slice(); // Create a copy of the weights array
 
-  let remainderStart = start
-  let remainderEnd = end
   // Adjust the weights based on the specified start
+  let remainderStart = start
   for (let i = 0; i < adjustedWeights.length; i++) {
     if (adjustedWeights[i] >= remainderStart){
       adjustedWeights[i] -= remainderStart
@@ -61,8 +66,9 @@ function adjustWeights(weights, start, end) {
     remainderStart -= adjustedWeights[i]
     adjustedWeights[i] = 0
   }
-
+  
   // from end
+  let remainderEnd = end
   for (let i = adjustedWeights.length-1; i >=0; i--) {
     if (adjustedWeights[i] >= remainderEnd){
       adjustedWeights[i] -= remainderEnd
