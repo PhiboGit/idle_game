@@ -178,7 +178,7 @@ async function getSkill(character, skill){
   const toolID = characterSkill.skills?.[skill]?.equipment?.tool
   if (toolID) {
     // If toolId exists, add stats to the skillsheet
-    const tool = await Item.findById(item_id)
+    const tool = await Item.findById(toolID)
 
     skillSheet.speed += (tool.properties?.speed || 0) / 100
     skillSheet.speed += (tool.properties?.speedBonus || 0) / 100
@@ -208,8 +208,21 @@ async function equipSkillItem(character, itemID, skillName, slotType){
     update,
     options
   )
-
   senderMediator.publish('update_char', {character: character, msg: update})
+  
+  if (itemID){
+    // if the item exists, bind the item
+    let updateItem = {}
+    updateItem['$set'] = {['soulbound']: true}
+    const item = await Item.findByIdAndUpdate(
+      itemID,
+      updateItem,
+      { new: true }
+    )
+    if(item) {
+      senderMediator.publish('items', {character: character, msg: {items: [item]} })
+    }
+  }
 }
 
 async function getAllItemsFromCharacter(character) {
