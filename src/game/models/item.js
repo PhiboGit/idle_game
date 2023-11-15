@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 
 const itemSchema = new mongoose.Schema({
-  type: String, // e.g., tool, armor, weapon
-  subtype: String, // e.g., 'axe', 'sickle', 'fishing_rod', 'helm', 'chestplate', 'boots'
-  level: Number,
-  tier: Number,
-  rarity: String,
+  type: {type: String, default: "item"}, // e.g., tool, armor, weapon
+  subtype: {type: String, default: "item"}, // e.g., 'axe', 'sickle', 'fishing_rod', 'helm', 'chestplate', 'boots'
+  level: {type: Number, default: 0},
+  soulbound: {type: Boolean, default: false},
+  tier: {type: Number, default: 1},
+  rarity: {type: String, default: "common"},
   properties: mongoose.Schema.Types.Mixed, // Store item-specific properties as key-value pairs
 },
 { collection: 'items' })
