@@ -42,6 +42,12 @@ async function handleEquip(character, msg){
   const skillSlot = msg.args.skill
   const equipSlot = msg.args.slot
 
+  if(itemID == "null"){
+    console.log("Handling Equip successfully!")
+    CharacterService.equipSkillItem(character, null, skillSlot, equipSlot)
+    return
+  }
+
   const items = await CharacterService.getAllItemsFromCharacter(character)
 
 
