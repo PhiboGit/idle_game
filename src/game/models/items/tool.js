@@ -5,7 +5,7 @@ const {getCraftingMaterials} = require('../../data/items/craftingMaterials')
 
 
 class Tool extends Item {
-  constructor(subtype, level, tier, rarity, speed, speedBonus=0, luckBonus=0, yieldBonus=0, expBonus=0) {
+  constructor(subtype, level, tier, rarity, baseSpeed=0, speedBonus=0, luckBonus=0, yieldBonus=0, expBonus=0) {
     super();
     this.type = 'tool';
     this.subtype = subtype;
@@ -13,7 +13,8 @@ class Tool extends Item {
     this.tier = tier;
     this.rarity = rarity;
     this.properties = {
-      speed,
+      speed: baseSpeed,
+      baseSpeed,
       speedBonus,
       luckBonus,
       yieldBonus,
@@ -23,7 +24,7 @@ class Tool extends Item {
 }
 
 const rarityEvents = ['common', 'uncommon', 'rare', 'epic', 'legendary']
-const numberOfBonus = {
+const rarityToNumber = {
   "common": 0,
   "uncommon": 1,
   "rare": 2,
@@ -35,221 +36,91 @@ const rarityWeights = [8000, 1500, 400, 90, 10] // 0 - 10000; 1 = 0.001
 const defaultWindow = [0, 2000]
 
 
-const toolSpeed = {
-  "T1":{
-    "common": {
-    "min": -10,
-    "max": 0,
-    },
-    "uncommon": {
-      "min": 0,
-      "max": 10,
-    },
-    "rare": {
-      "min": 10,
-      "max": 20,
-    },
-    "epic": {
-      "min": 20,
-      "max": 30,
-    },
-    "legendary": {
-      "min": 30,
-      "max": 50,
-    }
-  },
+const toolSpeed = [
+// com, unc, rar, epi, leg, max
+  [  0,   5,  10,  20,  30,  50], //T1
+  [  5,  20,  45,  60,  75, 100], //T2
+  [ 20,  45,  70,  95, 120, 150], //T3
+  [ 45,  70, 100, 130, 160, 200], //T4
+  [ 70, 100, 140, 180, 220, 300], //T5
+];
 
-  "T2":{
-    "common": {
-    "min": 0,
-    "max": 20,
-    },
-    "uncommon": {
-      "min": 20,
-      "max": 45,
-    },
-    "rare": {
-      "min": 45,
-      "max": 60,
-    },
-    "epic": {
-      "min": 60,
-      "max": 75,
-    },
-    "legendary": {
-      "min": 75,
-      "max": 100,
-    }
-  },
 
-  "T3":{
-    "common": {
-    "min": 20,
-    "max": 45,
-    },
-    "uncommon": {
-      "min": 45,
-      "max": 70,
-    },
-    "rare": {
-      "min": 70,
-      "max": 95,
-    },
-    "epic": {
-      "min": 95,
-      "max": 120,
-    },
-    "legendary": {
-      "min": 120,
-      "max": 150,
-    }
-  },
-
-  "T4":{
-    "common": {
-    "min": 45,
-    "max": 70,
-    },
-    "uncommon": {
-      "min": 70,
-      "max": 100,
-    },
-    "rare": {
-      "min": 100,
-      "max": 130,
-    },
-    "epic": {
-      "min": 130,
-      "max": 160,
-    },
-    "legendary": {
-      "min": 160,
-      "max": 200,
-    }
-  },
-
-  "T5":{
-    "common": {
-    "min": 70,
-    "max": 100,
-    },
-    "uncommon": {
-      "min": 100,
-      "max": 140,
-    },
-    "rare": {
-      "min": 140,
-      "max": 180,
-    },
-    "epic": {
-      "min": 180,
-      "max": 220,
-    },
-    "legendary": {
-      "min": 220,
-      "max": 300,
-    }
-  }
+const toolBonus = {
+  "speed":
+    //com,  unc,  rar,  epi,  leg
+    [0.33, 0.33, 0.33, 0.33, 0.33],
+  "luck":
+    //com,  unc,  rar,  epi,  leg
+    [500, 1000, 1500, 2000, 2500],
+  "exp": 
+    //com, unc, rar, epi, leg
+    [5,  10,  15,  20,  25],
+  "yield":
+    //com, unc, rar, epi, leg
+    [  1,   2,   3,   4,  5]
 }
 
-const toolBonuses = {
-  "speed": {
-    "common": {
-      "min": 1,
-      "max": 10,
-    },
-    "uncommon": {
-      "min": 10,
-      "max": 20,
-    },
-    "rare": {
-      "min": 20,
-      "max": 35,
-    },
-    "epic": {
-      "min": 35,
-      "max": 50,
-    },
-    "legendary": {
-      "min": 50,
-      "max": 70,
-    }
-  },
+function getBaseSpeed(tier, rarity) {
+  // Access the values from the two-dimensional array
+  const min = toolSpeed[tier - 1][rarity]
+  const max = toolSpeed[tier - 1][rarity + 1]
 
-  "luck": {
-    "common": {
-      "min": 1,
-      "max": 10,
-    },
-    "uncommon": {
-      "min": 11,
-      "max": 20,
-    },
-    "rare": {
-      "min": 21,
-      "max": 30,
-    },
-    "epic": {
-      "min": 31,
-      "max": 40,
-    },
-    "legendary": {
-      "min": 41,
-      "max": 50,
-    }
-  },
+  // Roll a random number within the specified range
+  return rollRange(min, max);
+}
 
-  "exp": {
-    "common": {
-      "min": 1,
-      "max": 10,
-    },
-    "uncommon": {
-      "min": 11,
-      "max": 20,
-    },
-    "rare": {
-      "min": 21,
-      "max": 30,
-    },
-    "epic": {
-      "min": 31,
-      "max": 40,
-    },
-    "legendary": {
-      "min": 41,
-      "max": 50,
+function applyBonus(tool, selectedResources){
+  const rarity = tool.rarity
+  //get bonus
+  let rolledBonus = []
+  for (const bonusCharm of selectedResources) {
+    if (bonusCharm.includes('SpeedCharm')){
+      rolledBonus.push('speed')
+    } else if (bonusCharm.includes('LuckCharm')){
+      rolledBonus.push('luck')
+    } else if (bonusCharm.includes('YieldCharm')){
+      rolledBonus.push('yield')
+    } else if (bonusCharm.includes('ExpCharm')){
+      rolledBonus.push('exp')
     }
-  },
+  }
+  // execlude selected bonus
+  const filterdBonuses = bonuses.filter(bonus => !rolledBonus.includes(bonus))
+  // roll the bonus
+  rolledBonus = rolledBonus.concat(weightedChoiceRemoved(filterdBonuses, rarityToNumber[rarity] - rolledBonus.length))
+  console.log( "rolledBonus" , rolledBonus)
 
-  "yield": {
-    "common": {
-      "min": 1,
-      "max": 10,
-    },
-    "uncommon": {
-      "min": 11,
-      "max": 20,
-    },
-    "rare": {
-      "min": 21,
-      "max": 30,
-    },
-    "epic": {
-      "min": 31,
-      "max": 40,
-    },
-    "legendary": {
-      "min": 41,
-      "max": 50,
+  rolledBonus.forEach(bonus => {
+    switch (bonus) {
+      case 'speed':
+        // speedBonus is a multiplier to the base speed, rounded up
+        const speedMultiplier = toolBonus.speed[rarityToNumber[rarity]];
+        tool.properties.speedBonus = Math.floor(tool.properties.baseSpeed * speedMultiplier) + 1;
+        // increment speed
+        tool.properties.speed += tool.properties.speedBonus;
+        break;
+  
+      case 'luck':
+        tool.properties.luckBonus = toolBonus.luck[rarityToNumber[rarity]];
+        break;
+  
+      case 'yield':
+        tool.properties.yieldBonus = toolBonus.yield[rarityToNumber[rarity]];
+        break;
+  
+      case 'exp':
+        tool.properties.expBonus = toolBonus.exp[rarityToNumber[rarity]];
+        break;
+  
+      default:
+        // Handle any unexpected bonus
+        console.error(`Unknown bonus type: ${bonus}`);
     }
-  },
+  })
 }
 
 async function craft(recipe, selectedResources, characterSkill){
-
-  
-  
   const type = recipe["type"]
   const subtype = recipe["subtype"]
   const tier = recipe["tier"]
@@ -268,8 +139,6 @@ async function craft(recipe, selectedResources, characterSkill){
      if (item["craftingBonus"]){
       startWindow += item["craftingBonus"]
      }
-
-
   }
 
   console.log("Weights: " + rarityWeights)
@@ -282,44 +151,12 @@ async function craft(recipe, selectedResources, characterSkill){
   const rarity = weightedChoice(rarityEvents, 1, weights)[0]
   
   // get base speed
-  let speed = rollRange(toolSpeed[`T${tier}`][rarity]["min"], toolSpeed[`T${tier}`][rarity]["max"]) 
+  const baseSpeed = getBaseSpeed(tier, rarityToNumber[rarity])
   
   // craft item
-  const tool = new Tool(subtype, level, tier, rarity, speed)
-  
-  //get bonus
-  let rolledBonus = []
-  for (const bonusCharm of selectedResources) {
-    if (bonusCharm.includes('SpeedCharm')){
-      rolledBonus.push('speed')
-    } else if (bonusCharm.includes('LuckCharm')){
-      rolledBonus.push('luck')
-    } else if (bonusCharm.includes('YieldCharm')){
-      rolledBonus.push('yield')
-    } else if (bonusCharm.includes('ExpCharm')){
-      rolledBonus.push('exp')
-    }
-  }
-  console.log( "all Boni" , bonuses)
-  console.log( "fixed Boni" , rolledBonus)
-  const filterdBonuses = bonuses.filter(bonus => !rolledBonus.includes(bonus))
-  console.log( "rollable boni" , filterdBonuses)
-  rolledBonus = rolledBonus.concat(weightedChoiceRemoved(filterdBonuses, numberOfBonus[rarity]- rolledBonus.length))
-  console.log( "rolledBonus" , rolledBonus)
-  rolledBonus.forEach(bonus => {
-    const value = rollRange(toolBonuses[bonus][rarity]["min"], toolBonuses[bonus][rarity]["max"]);
-    // Now, update the corresponding property in the Tool object
-    if (bonus === 'speed') {
-      tool.properties.speedBonus = value;
-      tool.properties.speed = tool.properties.speedBonus + tool.properties.speed
-    } else if (bonus === 'luck') {
-      tool.properties.luckBonus = value;
-    } else if (bonus === 'yield') {
-      tool.properties.yieldBonus = value;
-    } else if (bonus === 'exp') {
-      tool.properties.expBonus = value;
-    }
-  })
+  const tool = new Tool(subtype, level, tier, rarity, baseSpeed)
+  console.log(tool)
+  applyBonus(tool, selectedResources)
 
   console.log(tool)
 
