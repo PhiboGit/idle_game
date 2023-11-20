@@ -31,12 +31,9 @@ const rarityToNumber = {
   "epic": 3,
   "legendary": 4
 }
-const bonuses = ['speed', 'luck', 'yield', 'exp']
-const rarityWeights = [8000, 1500, 400, 90, 10] // 0 - 10000; 1 = 0.001
-const defaultWindow = [0, 2000]
 
-
-const toolSpeed = [
+function getBaseSpeed(tier, rarity) {
+  const toolSpeed = [
 // com, unc, rar, epi, leg, max
   [  0,   5,  10,  20,  30,  50], //T1
   [  5,  20,  45,  60,  75, 100], //T2
@@ -44,33 +41,33 @@ const toolSpeed = [
   [ 45,  70, 100, 130, 160, 200], //T4
   [ 70, 100, 140, 180, 220, 300], //T5
 ];
-
-
-const toolBonus = {
-  "speed":
-    //com,  unc,  rar,  epi,  leg
-    [0.33, 0.33, 0.33, 0.33, 0.33],
-  "luck":
-    //com,  unc,  rar,  epi,  leg
-    [500, 1000, 1500, 2000, 2500],
-  "exp": 
-    //com, unc, rar, epi, leg
-    [5,  10,  15,  20,  25],
-  "yield":
-    //com, unc, rar, epi, leg
-    [  1,   2,   3,   4,  5]
-}
-
-function getBaseSpeed(tier, rarity) {
   // Access the values from the two-dimensional array
-  const min = toolSpeed[tier - 1][rarity]
-  const max = toolSpeed[tier - 1][rarity + 1]
-
+  const min = toolSpeed[tier - 1][rarityToNumber[rarity]]
+  const max = toolSpeed[tier - 1][rarityToNumber[rarity] + 1]
+  
   // Roll a random number within the specified range
   return rollRange(min, max);
 }
 
+
+
 function applyBonus(tool, selectedResources){
+  const bonuses = ['speed', 'luck', 'yield', 'exp']
+
+  const toolBonus = {
+    "speed":
+    //com,  unc,  rar,  epi,  leg
+    [0.33, 0.33, 0.33, 0.33, 0.33],
+    "luck":
+    //com,  unc,  rar,  epi,  leg
+    [500, 1000, 1500, 2000, 2500],
+    "yield":
+    //com, unc, rar, epi, leg
+    [  1,   2,   3,   4,  5],
+    "exp": 
+    //com, unc, rar, epi, leg
+    [5,  10,  15,  20,  25]
+  }
   const rarity = tool.rarity
   //get bonus
   let rolledBonus = []
@@ -90,7 +87,7 @@ function applyBonus(tool, selectedResources){
   // roll the bonus
   rolledBonus = rolledBonus.concat(weightedChoiceRemoved(filterdBonuses, rarityToNumber[rarity] - rolledBonus.length))
   console.log( "rolledBonus" , rolledBonus)
-
+  
   rolledBonus.forEach(bonus => {
     switch (bonus) {
       case 'speed':
@@ -100,43 +97,40 @@ function applyBonus(tool, selectedResources){
         // increment speed
         tool.properties.speed += tool.properties.speedBonus;
         break;
-  
+        
       case 'luck':
         tool.properties.luckBonus = toolBonus.luck[rarityToNumber[rarity]];
         break;
-  
+        
       case 'yield':
         tool.properties.yieldBonus = toolBonus.yield[rarityToNumber[rarity]];
         break;
-  
+          
       case 'exp':
         tool.properties.expBonus = toolBonus.exp[rarityToNumber[rarity]];
         break;
-  
+              
       default:
         // Handle any unexpected bonus
         console.error(`Unknown bonus type: ${bonus}`);
-    }
-  })
-}
+      }
+    })
+  }
 
-async function craft(recipe, selectedResources, characterSkill){
-  const type = recipe["type"]
-  const subtype = recipe["subtype"]
-  const tier = recipe["tier"]
-  const level = recipe["equipLevel"]
-  
-  const skillLevel = characterSkill.level
-  const skillLuck = characterSkill.luck
-  
-  // at level 75 the endWindow is 0, unlocks uncommon, rare,... later
-  let endWindow = defaultWindow[1] - Math.floor(defaultWindow[1] * (Math.min(75, skillLevel) / 75 ))
-  let startWindow = defaultWindow[0] + Math.min(2000, 16 * Math.max(0, skillLevel - 75))
 
-  for (const selectedItem of selectedResources) {
-     const item = getCraftingMaterials(selectedItem)
-     if (!item) continue
-     if (item["craftingBonus"]){
+  
+  function getRarity(skillLevel, selectedResources){
+    const rarityWeights = [8000, 1500, 400, 90, 10] // 0 - 10000; 1 = 0.001
+    const defaultWindow = [0, 2000]
+
+    // at level 75 the endWindow is 0, unlocks uncommon, rare,... later
+    let endWindow = defaultWindow[1] - Math.floor(defaultWindow[1] * (Math.min(75, skillLevel) / 75 ))
+    let startWindow = defaultWindow[0] + Math.min(2000, 16 * Math.max(0, skillLevel - 75))
+    
+    for (const selectedItem of selectedResources) {
+      const item = getCraftingMaterials(selectedItem)
+      if (!item) continue
+      if (item["craftingBonus"]){
       startWindow += item["craftingBonus"]
      }
   }
@@ -149,14 +143,41 @@ async function craft(recipe, selectedResources, characterSkill){
   const weights = adjustWeights(rarityWeights, startWindow, endWindow)
   console.log("Weights: " + weights)
   const rarity = weightedChoice(rarityEvents, 1, weights)[0]
+  return rarity
+}
+
+async function craft(recipeName, recipe, selectedIngredients, characterSkill){
+  const type = recipe["type"]
+  const subtype = recipe["subtype"]
+  const tier = recipe["tier"]
+  const level = recipe["equipLevel"]
+  
+  const skillLevel = characterSkill.level
+  const skillLuck = characterSkill.luck
+  
+  
+  const rarity = getRarity(skillLevel, selectedIngredients)
+
+  return `${recipeName}_${rarity}`
+}
+
+async function upgrade(recipeName, recipe, selectedUpgrades, characterSkill){
+  const type = recipe["type"]
+  const subtype = recipe["subtype"]
+  const tier = recipe["tier"]
+  const level = recipe["equipLevel"]
+  
+  const skillLevel = characterSkill.level
+  const skillLuck = characterSkill.luck
+
+  const rarity = selectedUpgrades.find(str => str.includes(recipeName))?.split("_")[1]
   
   // get base speed
-  const baseSpeed = getBaseSpeed(tier, rarityToNumber[rarity])
+  const baseSpeed = getBaseSpeed(tier, rarity)
   
   // craft item
   const tool = new Tool(subtype, level, tier, rarity, baseSpeed)
-  console.log(tool)
-  applyBonus(tool, selectedResources)
+  applyBonus(tool, selectedUpgrades)
 
   console.log(tool)
 
@@ -165,20 +186,4 @@ async function craft(recipe, selectedResources, characterSkill){
   return toolDB._id
 }
 
-
-// const recipeTest = getRecipe('toolsmith', 'pickaxeT1')
-// const selectedResourcesTest = [
-//   "plankT1",
-//   "linenT1",
-//   "ore_rare",
-//   "miningSpeedCharm"
-// ]
-// const characterSkillTest = {
-//   exp: 0,
-//   level: 10,
-//   luck: 0,
-//   speed: 0,
-// }
-// craft(recipeTest, selectedResourcesTest, characterSkillTest)
-
-module.exports = {craft}
+module.exports = {craft, upgrade}

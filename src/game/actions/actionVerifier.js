@@ -98,29 +98,39 @@ function verifyCraftingArgs(args){
 		args.iterations > 0 &&
 
     args.hasOwnProperty("limit") &&
-		typeof args.limit === 'boolean' &&
-
-    args.hasOwnProperty("ingredients") &&
-    Array.isArray(args.ingredients) &&
-    args.ingredients.length <= 10 &&
-    args.ingredients.every(item => typeof item === 'string') &&
-
-    args.hasOwnProperty("upgrades") &&
-    Array.isArray(args.upgrades) &&
-    args.upgrades.length <= 10 &&
-    args.upgrades.every(item => typeof item === 'string')
+		typeof args.limit === 'boolean'  &&
+    
+    args.hasOwnProperty("task") &&
+    typeof args.task === 'string'
 		){
-      // Remove duplicates from ingredients and upgrades arrays in place
+      if (
+        args.task == "crafting" &&
+        args.hasOwnProperty("ingredients") &&
+        !args.hasOwnProperty("upgrades") &&
+        Array.isArray(args.ingredients) &&
+        args.ingredients.length <= 10 &&
+        args.ingredients.every(item => typeof item === 'string')
+      ){
+      // Remove duplicates from ingredients arrays in place
       args.ingredients = [...new Set(args.ingredients)];
-      args.upgrades = [...new Set(args.upgrades)];
-
-  
       return true
+      }
+
+      else if(
+        args.task == "upgrading" &&
+        !args.hasOwnProperty("ingredients") &&
+        args.hasOwnProperty("upgrades") &&
+        Array.isArray(args.ingredients) &&
+        args.ingredients.length <= 10 &&
+        args.ingredients.every(item => typeof item === 'string')
+      ){
+        // Remove duplicates from ingredients arrays in place
+        args.upgrades = [...new Set(args.upgrades)];
+        return true
+      }
     }
 	console.info('Invalid args for crafting')
 	return false
 }
-
-
 
 module.exports = {verifyAction}

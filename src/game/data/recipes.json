@@ -152,6 +152,16 @@
         ]} 
       ],
       "upgrades": [
+        {"required": true,
+        "slot": [
+          {"resource": "pickaxeT1_common", "amount": 1},
+          {"resource": "pickaxeT1_uncommon", "amount": 1},
+          {"resource": "pickaxeT1_rare", "amount": 1},
+          {"resource": "pickaxeT1_epic", "amount": 1},
+          {"resource": "pickaxeT1_legendary", "amount": 1}
+          ]},
+
+
         {"required": false,
         "slot": [
           {"resource": "miningLuckCharm", "amount": 1},

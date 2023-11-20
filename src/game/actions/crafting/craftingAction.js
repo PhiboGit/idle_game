@@ -16,7 +16,7 @@ async function validateCrafting(skillName, character, args, resolve, reject){
     try {
       await validateLevel(character, characterSkill.level, recipe.level)
       console.log('validateLevel successfully')
-      await validateIngredients(character, args.ingredients, recipe)
+      await validateIngredients(character, args, recipe)
       console.log('validateIngredients successfully')
     } catch (error) {
       console.log('Validation failed: ', error.message)
@@ -48,7 +48,7 @@ async function initCrafting(skillName, character, args, activeTimeout, resolve, 
 		// after the delay we craft!
 		try {
       // The most important part, the crafting iteself. here are the items created and consumed
-			await crafting(character,skillName, recipeName, args.ingredients)
+			await crafting(character, skillName, args.task, recipeName, args.ingredients, args.upgrades)
 		} catch (error) {
 			console.log('crafting failed: ', error.message)
       reject(error.message);

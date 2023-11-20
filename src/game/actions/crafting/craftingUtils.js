@@ -1,7 +1,7 @@
 const {Globals, CharacterService, rollDice, validateLevel} = require('../actionUtils')
 
 const {getRecipe} = require('../../data/recipesData')
-const {craft} = require('../../models/items/tool')
+const {craft, upgrade} = require('../../models/items/tool')
 
 const resourcesSkills = ['woodworking', 'smelting', 'weaving']
 const uniqueItemSkills = ['toolsmith', 'weaponsmith', 'engineer']
@@ -9,17 +9,28 @@ const uniqueItemSkills = ['toolsmith', 'weaponsmith', 'engineer']
 /**
  * 
  * @param {String} character 
- * @param {Set} userSelectedResources 
+ * @param {Set} userSelectedIngredients 
  * @param {Recipe} recipe 
  * @returns 
  */
-async function validateIngredients(character, userSelectedResources, recipe) {
+async function validateIngredients(character, args, recipe) {
   const characterDB = await CharacterService.findCharacter(character)
-
-  const selected = new Set(userSelectedResources)
+  let selected = new Set()
+  let ingredients_upgrades = []
+  switch (args.task) {
+    case "crafting":
+      selected = new Set(args.ingredients)
+      ingredients_upgrades = recipe.ingredients
+      break;
+    case "upgrading":
+      selected = new Set(args.upgrades)
+      ingredients_upgrades = recipe.upgrades
+      break
+    default:
+      break;
+  }
   const valids = new Set()
 
-  const ingredients_upgrades = [...recipe.ingredients, ...recipe.upgrades]
   for (const ingredientSlot of ingredients_upgrades) {
     let found = false;
 
@@ -37,6 +48,7 @@ async function validateIngredients(character, userSelectedResources, recipe) {
         found = true
         valids.add(item.resource)
         selected.delete(item.resource)
+        // can only selected one matching resource per slot
         break
       }
     }
@@ -65,9 +77,10 @@ async function validateIngredients(character, userSelectedResources, recipe) {
  * @param {String} character 
  * @param {String} skillName 
  * @param {String} recipeName
- * @param {Set} selectedResources 
+ * @param {Set} selectedIngredients
+ * @param {Set} selectedUpgrades 
  */
-async function crafting(character, skillName, recipeName, selectedResources) {
+async function crafting(character, skillName, task, recipeName, selectedIngredients, selectedUpgrades) {
   console.log('crafting in progress...')
   const recipe = getRecipe(skillName,recipeName)
   const characterSkill = await CharacterService.getSkill(character, skillName);
@@ -81,13 +94,14 @@ async function crafting(character, skillName, recipeName, selectedResources) {
   const characterDB = await CharacterService.findCharacter(character)
   // checks if the userSelectedResources are valid for the recipe
 	// and if the user has the required resource amount
-  const ingredients_upgrades = [...recipe.ingredients, ...recipe.upgrades]
-	for (const ingredientSlot of ingredients_upgrades) {
+  const ingredients = recipe.ingredients
+  const selectedResources = [...selectedIngredients, ...selectedUpgrades]
+	for (const ingredientSlot of ingredients) {
 		for (const item of ingredientSlot.slot) {
 			if(selectedResources.includes(item.resource)){
 				// the user has selected an item for this ingredient slot.
 				// is a selected resource, now check if character has the item
-				const inventoryValue = CharacterService.getFieldValue(characterDB, 'resources.' + item.resource) || 0
+				const inventoryValue = CharacterService.getFieldValue(characterDB, `resources.${item.resource}`) || 0
 				
 				if(inventoryValue < item.amount){
 					// the user does not have the required amount of resources
@@ -106,11 +120,17 @@ async function crafting(character, skillName, recipeName, selectedResources) {
     // just increment the crafted resource item
 	  incrementData[`resources.${recipeName}`] = recipe.amount
 
-  // if it is a unique item, we need to craft it
+  // if it is a unique item, we need to craft or upgrade it
   } else if (recipe.unique){
     const characterSkill = await CharacterService.getSkill(character, skillName)
-    const item_id = await craft(recipe, selectedResources, characterSkill)
-    pushData['items'] = item_id
+    if (task == "crafting"){
+      const itemName = await craft(recipeName, recipe, selectedIngredients, characterSkill)
+      incrementData[`resources.${itemName}`] = recipe.amount
+    }
+    else if(task == "upgrading"){
+      const item_id = await upgrade(recipeName, recipe, selectedUpgrades, characterSkill)
+      pushData['items'] = item_id
+    }
   }
 	// At last update all the values for the character.
 	await CharacterService.increment(character, incrementData, {}, pushData)
