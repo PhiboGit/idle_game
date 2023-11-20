@@ -30,7 +30,10 @@ async function increment(character, incrementForm = {}, setForm= {}, pushForm={}
     const characterDB = await Character.findOneAndUpdate(
       {characterName: character},
       update,
-      //{ new: true }
+      { 
+        //new: true,
+        upsert: true // only for dev, to not delete, recreate database
+       }
       )
     if (pushForm['items']){
       const item = await Item.findById(pushForm['items'])
@@ -201,7 +204,7 @@ async function equipSkillItem(character, itemID, skillName, slotType){
   };
 
   const options = {
-    upsert: true, // Create the document if it doesn't exist
+    upsert: true, // only for dev, to not delete, recreate database
   };
   await Character.findOneAndUpdate(
     { characterName: character },
