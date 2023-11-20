@@ -120,9 +120,9 @@ function verifyCraftingArgs(args){
         args.task == "upgrading" &&
         !args.hasOwnProperty("ingredients") &&
         args.hasOwnProperty("upgrades") &&
-        Array.isArray(args.ingredients) &&
-        args.ingredients.length <= 10 &&
-        args.ingredients.every(item => typeof item === 'string')
+        Array.isArray(args.upgrades) &&
+        args.upgrades.length <= 10 &&
+        args.upgrades.every(item => typeof item === 'string')
       ){
         // Remove duplicates from ingredients arrays in place
         args.upgrades = [...new Set(args.upgrades)];
