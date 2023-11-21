@@ -81,8 +81,17 @@ async function crafting(character, skillName, task, recipeName, selectedResource
   const characterDB = await CharacterService.findCharacter(character)
   // checks if the selectedResources are valid for the recipe
 	// and if the user has the required resource amount
-  const ingredients = recipe.ingredients
-	for (const ingredientSlot of ingredients) {
+  let resources
+  switch (task) {
+    case "crafting":
+      resources = recipe.resources      
+      break;
+    case "upgrading":
+      resources = recipe.upgrades
+    default:
+      break;
+  }
+	for (const ingredientSlot of resources) {
 		for (const item of ingredientSlot.slot) {
 			if(selectedResources.includes(item.resource)){
 				// the user has selected an item for this ingredient slot.
