@@ -8,6 +8,7 @@ const actionLookup = {
 	'woodworking': require('./crafting/woodworking'),
 	'smelting': require('./crafting/smelting'),
 	'weaving': require('./crafting/weaving'),
+	'toolsmith': require('./crafting/toolsmith'),
 }
 
 
@@ -46,23 +47,23 @@ function add(character, actionType, args){
   enqueue(character, actionObject)
 }
 
-function enqueue(character, repeats) {
+function enqueue(character, actionObject) {
 	if(!actionQueue[character]){
 		actionQueue[character] = []
 	}
-	repeatsQueue = actionQueue[character]
+	let actionQ = actionQueue[character]
 	
 	// action queue size limit
-	if (repeatsQueue.length >= 3){
-		console.log('Queue is full!', repeatsQueue)
+	if (actionQ.length >= 5){
+		console.log('Queue is full!', actionQ)
 		return
 	}
-	repeatsQueue.push(repeats)
+	actionQ.push(actionObject)
 	if (isQueueProcessRunning[character]){ 
-		CharacterService.updateActionManager(character, {$set: { actionQueue: repeatsQueue }})
+		CharacterService.updateActionManager(character, {$set: { actionQueue: actionQ }})
 	}
-	console.log(`Added to queue for ${character}: Queue length `, repeatsQueue.length)
-	console.log('current Queue: ',character, repeatsQueue.length)
+	console.log(`Added to queue for ${character}: Queue length `, actionQ.length)
+	console.log('current Queue: ',character, actionQ.length)
 	// start the Queue
 	processQueue(character)
 }

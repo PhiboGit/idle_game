@@ -59,9 +59,12 @@ const charms = {
   'harvestingYieldCharm': {type: Number, default: 0}, 
 }
 
-const statBonuses = {
-  'strBonus': {type: Number, default: 0},
-  'conBonus': {type: Number, default: 0},  
+const statCharms = {
+  'strCharm': {type: Number, default: 0},
+  'conCharm': {type: Number, default: 0},  
+  'intCharm': {type: Number, default: 0},  
+  'dexCharm': {type: Number, default: 0},  
+  'focCharm': {type: Number, default: 0},  
 }
 
 
@@ -79,7 +82,40 @@ const stick ={
   'stick_legendary': {type: Number, default: 0}, 
 }
 
+const pickaxe = {
+  "pickaxeT1_common": {type: Number, default: 0},
+  "pickaxeT1_uncommon": {type: Number, default: 0},
+  "pickaxeT1_rare": {type: Number, default: 0},
+  "pickaxeT1_epic": {type: Number, default: 0},
+  "pickaxeT1_legendary": {type: Number, default: 0},
 
-const resources = { ...gatheredMaterials, ...refinedMaterials, ...charms, ...statBonuses, ...sap, ...stick}
+  "pickaxeT2_common": {type: Number, default: 0},
+  "pickaxeT2_uncommon": {type: Number, default: 0},
+  "pickaxeT2_rare": {type: Number, default: 0},
+  "pickaxeT2_epic": {type: Number, default: 0},
+  "pickaxeT2_legendary": {type: Number, default: 0},
+
+  "pickaxeT3_common": {type: Number, default: 0},
+  "pickaxeT3_uncommon": {type: Number, default: 0},
+  "pickaxeT3_rare": {type: Number, default: 0},
+  "pickaxeT3_epic": {type: Number, default: 0},
+  "pickaxeT3_legendary": {type: Number, default: 0},
+
+  "pickaxeT4_common": {type: Number, default: 0},
+  "pickaxeT4_uncommon": {type: Number, default: 0},
+  "pickaxeT4_rare": {type: Number, default: 0},
+  "pickaxeT4_epic": {type: Number, default: 0},
+  "pickaxeT4_legendary": {type: Number, default: 0},
+
+  "pickaxeT5_common": {type: Number, default: 0},
+  "pickaxeT5_uncommon": {type: Number, default: 0},
+  "pickaxeT5_rare": {type: Number, default: 0},
+  "pickaxeT5_epic": {type: Number, default: 0},
+  "pickaxeT5_legendary": {type: Number, default: 0},
+}
+
+const items = {...pickaxe}
+
+const resources = { ...gatheredMaterials, ...refinedMaterials, ...charms, ...statCharms, ...sap, ...stick,...items}
 
 module.exports = {resources}

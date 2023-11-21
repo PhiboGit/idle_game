@@ -146,13 +146,13 @@
       {"weight": 1, "item": "miningExpCharm", "min" : 1, "max" :1},
       {"weight": 1, "item": "miningLuckCharm", "min" : 1, "max" :1},
       {"weight": 1, "item": "miningYieldCharm", "min" : 1, "max" :1},
-      {"weight": 1, "item": "strBonus", "min" : 1, "max" :1},
+      {"weight": 1, "item": "strCharm", "min" : 1, "max" :1},
       
       {"weight": 1, "item": "woodcuttingSpeedCharm", "min" : 1, "max" :1},
       {"weight": 1, "item": "woodcuttingExpCharm", "min" : 1, "max" :1},
       {"weight": 1, "item": "woodcuttingLuckCharm", "min" : 1, "max" :1},
       {"weight": 1, "item": "woodcuttingYieldCharm", "min" : 1, "max" :1},
-      {"weight": 1, "item": "conBonus", "min" : 1, "max" :1}
+      {"weight": 1, "item": "conCharm", "min" : 1, "max" :1}
     ]
   },
   
@@ -169,7 +169,9 @@
   
   "Stick":{
     "type": "weights",
-    "tierLimit": [55, 80, 90, 96, 100],
+    "limitByLuck": [0 , 1200, 3000, 5000, 7500 ],
+    "startLimit":  [0, 0, 0, 0, 0],
+    "endLimit":    [45, 20, 10, 4 , 0],
     "loot": [
       {"weight": 50, "item": "stick_uncommon", "min" : 1, "max" :1},
       {"weight": 30, "item": "stick_rare", "min" : 1, "max" :1},

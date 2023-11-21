@@ -1,4 +1,4 @@
-const {rollDice, rollRange, weightedChoice} = require('../utils/randomDice')
+const {rollDice, rollRange, adjustWeights, weightedChoice} = require('../utils/randomDice')
 const {lootTables} = require('../utils/dataLoader')
 
 function rollTable(table, luck){
@@ -16,14 +16,33 @@ function rollTable(table, luck){
 }
 
 
-function weightTable(table, size){
-  const weights  = []
+function weightTable(table, size, luck){
+  
+  
+  let weights  = []
   const events = []
   for (const loot of table.loot){
     events.push(loot)
     weights.push(loot.weight)
   }
+  
+  //check if it is limited
+  const limitByLuck = table["limitByLuck"]
+  const startLimit = table["startLimit"]
+  const endLimit = table["endLimit"]
+  if (limitByLuck && startLimit && endLimit) {
+    let index = 0
+    for (let i = 0; i < limitByLuck.length; i++) {
+      if (luck >= limitByLuck[i]){
+        index = i
+      } else {
+        break
+      }
+    }
 
+    weights = adjustWeights(weights, startLimit[index], endLimit[index])
+    console.log(weights)
+  }
   const results = weightedChoice(events, size, weights)
 
   const re = []
@@ -60,7 +79,7 @@ function parseLootTable(tableName, size= 1, luck = 0) {
         }
       }
     } else if (table.type === "weights") {
-      const rolls = weightTable(table, size);
+      const rolls = weightTable(table, size, luck);
       for (const roll of rolls) {
         if (roll.item.startsWith("[LTID]")) {
           const subTable = lootTables[roll.item.substring(6)];
@@ -77,10 +96,12 @@ function parseLootTable(tableName, size= 1, luck = 0) {
   if (!table) {
     throw new Error(`Couldn't find table: ${tableName}`)
   }
+
+  // start the recursive function
   parseTable(table, size, luck);
   return results;
 }
 
-//console.log(parseLootTable("treeT1", 1, 1000000))
+//console.log(parseLootTable("Stick", 1, 1500))
 
 module.exports = {parseLootTable}

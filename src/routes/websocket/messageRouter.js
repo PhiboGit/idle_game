@@ -1,10 +1,12 @@
 const ActionHandler = require('../../game/actions/actionHandler')
+const EquipHandler = require('../../game/actions/equipHandler')
 const {senderMediator} = require('./mediator')
 
 // Define a configuration object for message routing
 const messageRoutes = {
   'action': ActionHandler.handleAction,
   'cancel': ActionHandler.handleCancel,
+  'equip': EquipHandler.handleEquip,
   'getTime': handleGetTime,
   'broadcast': handleBroadcast,
 };

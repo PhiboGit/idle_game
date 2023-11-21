@@ -1,6 +1,7 @@
 const { default: mongoose } = require('mongoose')
 
 const Character = require('../character')
+const Item = require('../item')
 const GatheringExpTable = require('../../data/gatheringExpTable')
 
 const {senderMediator} = require('../../../routes/websocket/mediator')
@@ -13,27 +14,40 @@ const {senderMediator} = require('../../../routes/websocket/mediator')
  * @param {String} character 
  * @param {Object} form 
  */
-async function increment(character, form){
+async function increment(character, incrementForm = {}, setForm= {}, pushForm={} ){
   console.log("CharacterService.increment is processing the form...")
   const update = {}
 
-  update['$inc'] = form
+  update['$inc'] = incrementForm
+  update['$set'] = setForm
+  update['$push'] = pushForm
 
   const levelUpdate = await updateSkillLevel(character, update)
     if(levelUpdate){
-      update['$set'] = levelUpdate
+      update['$set'] = { ...update['$set'], ...levelUpdate }
     }
   try {
     const characterDB = await Character.findOneAndUpdate(
       {characterName: character},
       update,
-      { new: true }
+      { 
+        //new: true,
+        upsert: true // only for dev, to not delete, recreate database
+       }
       )
+    if (pushForm['items']){
+      const item = await Item.findById(pushForm['items'])
+      senderMediator.publish('items', {character: character, msg: {items: [item]} })
+    }
   } catch (error) {
     console.log(error)
   }
   
   senderMediator.publish('update_char', {character: character, msg: update})
+
+  
+  
+  
 }
 
 /**
@@ -61,7 +75,7 @@ async function updateSkillLevel(character, update){
   
   if (expChanged){
     for (const field of expChanged){
-      const current_exp = getFieldValue(characterDB, field);
+      const current_exp = getFieldValue(characterDB, field) || 0;
       const increment_exp = incFields[field]
       const total_exp = current_exp + increment_exp
       console.log(`LevelUpdate: ${field}: {current: ${current_exp}, inc: ${increment_exp}, exp: ${total_exp}}`)
@@ -83,11 +97,12 @@ async function updateSkillLevel(character, update){
   }
 
   if (charExpChanged){
-    const currentCharExp = getFieldValue(characterDB, 'exp')
+    const currentCharExp = getFieldValue(characterDB, 'exp') || 0
     const total_CharExp = currentCharExp + charExpChanged
 
     const lvl = GatheringExpTable.getLevel(total_CharExp)
     levelUpdate['level'] = lvl
+    needsUpdate = true
   }
 
 
@@ -117,8 +132,9 @@ async function getAll(){
  * @returns 
  */
 async function findCharacter(charName){
-  const character =  await Character.findOne({ characterName: charName }).lean()
-  return character
+  const character =  await Character.findOne({ characterName: charName })
+  const populate = character.populate('items')
+  return populate
 }
 
 /**
@@ -132,10 +148,11 @@ function getFieldValue(doc, fieldPath) {
   // traversing down the fieldPath
   let value = doc;
   for (const part of fieldParts) {
-      if (value && value.hasOwnProperty(part)) {
+    console.log("CharacterService field access: traversing... " + part)
+      if (true) {
           value = value[part];
       } else {
-        console.log("CharacterService field access: Invalid field " + part);
+        console.log("CharacterService field access: Invalid field: " + part);
         return null
       }
   }
@@ -151,18 +168,94 @@ function getFieldValue(doc, fieldPath) {
  */
 async function getSkill(character, skill){
   const select = `skills.${skill}`
-
   const characterSkill = await Character.findOne({characterName: character}, select).lean()
+  
+  const skillSheet = {
+    level: characterSkill.skills?.[skill]?.level || 0,
+    luck: characterSkill.skills?.[skill]?.luck || 0,
+    speed: characterSkill.skills?.[skill]?.speed || 0,
+    yield: 0,
+    exp:  0,
+  }
+  
+  const toolID = characterSkill.skills?.[skill]?.equipment?.tool
+  if (toolID) {
+    // If toolId exists, add stats to the skillsheet
+    const tool = await Item.findById(toolID)
 
-  const defaultSkill = {
-      exp: characterSkill.skills?.[skill]?.exp || 0,
-      level: characterSkill.skills?.[skill]?.level || 0,
-      luck: characterSkill.skills?.[skill]?.luck || 0,
-      speed: characterSkill.skills?.[skill]?.speed || 0,
-    }
-  return defaultSkill
+    skillSheet.speed += (tool.properties?.speed || 0) / 100
+    skillSheet.speed += (tool.properties?.speedBonus || 0) / 100
+    skillSheet.yield += (tool.properties?.yieldBonus || 0) / 100
+    skillSheet.exp += (tool.properties?.expBonus || 0) / 100
+
+    skillSheet.luck += tool.properties?.luckBonus || 0
+  }
+
+  
+  return skillSheet
 }
 
+async function equipSkillItem(character, itemID, skillName, slotType){
 
+  let update = {}
 
-module.exports = {increment, getSkill, findCharacter, getFieldValue, updateActionManager, getAll}
+  update['$set'] = {
+    [`skills.${skillName}.equipment.${slotType}`]: itemID,
+  };
+
+  const options = {
+    upsert: true, // only for dev, to not delete, recreate database
+  };
+  await Character.findOneAndUpdate(
+    { characterName: character },
+    update,
+    options
+  )
+  senderMediator.publish('update_char', {character: character, msg: update})
+  
+  if (itemID){
+    // if the item exists, bind the item
+    let updateItem = {}
+    updateItem['$set'] = {['soulbound']: true}
+    const item = await Item.findByIdAndUpdate(
+      itemID,
+      updateItem,
+      { new: true }
+    )
+    if(item) {
+      senderMediator.publish('items', {character: character, msg: {items: [item]} })
+    }
+  }
+}
+
+async function getAllItemsFromCharacter(character) {
+  const select = 'items';
+
+  const characterData = await Character.findOne({ characterName: character }, select).lean();
+
+  // Extract the ObjectIds from the array as strings
+  const itemIds = characterData.items.map(item => String(item._id));
+  return itemIds;
+}
+
+async function getItem(item_id){
+  const item = await Item.findById(item_id).lean();
+
+  return item
+}
+
+async function getActiveAction(character){
+  const char = await Character.findOne({characterName: character}).lean()
+
+  const currentAction = char.currentAction
+
+  let runningActionName = ""
+
+  if(currentAction){
+    runningActionName = currentAction.actionType
+  }
+
+  return runningActionName
+}
+
+module.exports = {increment, getSkill, findCharacter, getFieldValue, updateActionManager, getAll, getItem, equipSkillItem, getAllItemsFromCharacter, getActiveAction}

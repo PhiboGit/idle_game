@@ -1,0 +1,42 @@
+{
+  "conCharm":{
+
+  },
+  "strCharm":{
+
+  },
+  "intCharm":{
+    
+  },
+  "dexCharm":{
+    
+  },
+  "focCharm":{
+    
+  },
+
+  "miningSpeedCharm": {
+
+  },
+  "miningExpCharm":{
+
+  },
+  "miningLuckCharm":{
+
+  },
+  "miningYieldCharm":{
+
+  },
+  "woodcuttingSpeedCharm":{
+
+  },
+  "woodcuttingExpCharm":{
+
+  },
+  "woodcuttingLuckCharm":{
+
+  },
+  "woodcuttingYieldCharm":{
+
+  }
+}

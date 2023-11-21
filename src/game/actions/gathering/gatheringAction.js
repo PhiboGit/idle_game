@@ -23,6 +23,8 @@ async function validateGathering(skillName, character, args, resolve, reject){
     actionTime = 2000;
   }
 
+  actionTime = Globals.getSpeedModifier() * actionTime
+
   resolve(actionTime)
   return 
 }
@@ -31,10 +33,6 @@ async function validateGathering(skillName, character, args, resolve, reject){
 async function initGathering(skillName, character, args, activeTimeout, resolve, reject, actionTime) {
   console.log(`init timeout ${skillName}...`);
   const tier = args.tier;
-  
-  if (!actionTime || actionTime < 2000){
-    actionTime = 2000;
-  }
 
   const timeoutID = setTimeout(async () => {
     // after the delay we loot!
@@ -47,7 +45,7 @@ async function initGathering(skillName, character, args, activeTimeout, resolve,
     }
     activeTimeout[character] = null;
     resolve('success!');
-  }, Globals.getSpeedModifier() * actionTime);
+  }, actionTime);
 
   console.log(`Init timeout with ${actionTime}ms complete. Waiting for loot ${skillName}...`);
   // setting a function to cancel the timeout

@@ -1,6 +1,24 @@
 {
+  "weavingRecipes": {
+    "linenT1":{
+      "unique":false,
+      "amount": 1,
+      "level": 0,
+      "time": 20000,
+      "exp": 10,
+      "characterExp": 5,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "fiberT1", "amount": 10}
+          ]}
+      ],
+      "upgrades": []
+    }
+  },
   "woodworkingRecipes": {
     "plankT1":{
+      "unique":false,
       "amount": 1,
       "level": 0,
       "time": 20000,
@@ -16,6 +34,7 @@
     },
 
     "plankT2":{
+      "unique":false,
       "amount": 1,
       "level": 25,
       "time": 20000,
@@ -39,6 +58,7 @@
 
   "smeltingRecipes": {
     "coal":{
+      "unique":false,
       "amount": 20,
       "level": 0,
       "time": 20000,
@@ -55,6 +75,7 @@
     },
 
     "ingotT1":{
+      "unique":false,
       "amount": 1,
       "level": 0,
       "time": 20000,
@@ -76,6 +97,7 @@
     },
 
     "ingotT2":{
+      "unique":false,
       "amount": 1,
       "level": 0,
       "time": 20000,
@@ -100,35 +122,46 @@
       "upgrades": []
     }
   },
-
+  
   "toolsmithRecipes": {
-    "pickaxeT3":{
+    "pickaxeT1":{
+      "unique":true,
+      "type": "tool",
+      "subtype": "pickaxe",
+      "tier": 1,
+      "equipLevel": 0,
       "amount": 1,
-      "level": 50,
+      "level": 0,
       "time": 20000,
       "exp": 10,
       "characterExp": 5,
       "ingredients": [
         {"required": true,
         "slot": [
-          {"resource": "ingotT3", "amount": 5},
-          {"resource": "uncommenOreT3", "amount": 1},
-          {"resource": "rareOreT3", "amount": 1},
-          {"resource": "legendaryOreT3", "amount": 1},
-          {"resource": "epicOreT3", "amount": 1}
+          {"resource": "ingotT1", "amount": 5}
         ]},
-
+  
         {"required": true,
         "slot": [
-          {"resource": "plankT3", "amount": 3}
+          {"resource": "plankT1", "amount": 3}
           ]},
           
         {"required": true,
         "slot": [
-          {"resource": "linenT3", "amount": 5}
+          {"resource": "linenT1", "amount": 5}
         ]} 
       ],
       "upgrades": [
+        {"required": true,
+        "slot": [
+          {"resource": "pickaxeT1_common", "amount": 1},
+          {"resource": "pickaxeT1_uncommon", "amount": 1},
+          {"resource": "pickaxeT1_rare", "amount": 1},
+          {"resource": "pickaxeT1_epic", "amount": 1},
+          {"resource": "pickaxeT1_legendary", "amount": 1}
+          ]},
+
+
         {"required": false,
         "slot": [
           {"resource": "miningLuckCharm", "amount": 1},

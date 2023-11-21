@@ -14,12 +14,18 @@ const CharacterSchema = new mongoose.Schema(
 			unique: true,
 			index: true,
 			},
-		level: Number,
-		exp: Number,
+		level: {type: Number, default: 0},
+		exp: {type: Number, default: 0},
 		currentAction: {type: Object, default: null},
 		actionQueue: [Object],
     resources,
 		skills,
+		items: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Item', // Reference to the Item model
+			},
+		],
 	},
 	{ collection: 'characters' }
 )
@@ -40,11 +46,6 @@ CharacterSchema.pre('findOneAndUpdate', function () {
 			const value = updateFields[key][property]
 			console.log(`Middleware hook: {key: ${key}, name: ${characterName}, field: ${property}, value: ${value}}`);
 			update[key].push({field: property, value: value});
-			
-			if (property === 'exp'){
-				
-			}
-
 		}
 	}
 	//senderMediator.publish('update_char', {character: characterName, msg: update})

@@ -16,8 +16,14 @@ async function validateCrafting(skillName, character, args, resolve, reject){
     try {
       await validateLevel(character, characterSkill.level, recipe.level)
       console.log('validateLevel successfully')
-      await validateIngredients(character, args.ingredients, recipe)
-      console.log('validateIngredients successfully')
+      if (args.task == "crafting"){
+        await validateIngredients(character, args.ingredients, recipe.ingredients)
+        console.log('validate Ingredients successfully')
+      }
+      else if (args.task == "upgrading"){
+        await validateIngredients(character, args.upgrades, recipe.upgrades)
+        console.log('validate Upgrades successfully')
+      }
     } catch (error) {
       console.log('Validation failed: ', error.message)
       reject(error.message);
@@ -33,6 +39,7 @@ async function validateCrafting(skillName, character, args, resolve, reject){
   if (!actionTime || actionTime < 2000){
     actionTime = 2000;
   }
+  actionTime = Globals.getSpeedModifier() * actionTime
 
   resolve(actionTime)
   return
@@ -43,14 +50,12 @@ async function initCrafting(skillName, character, args, activeTimeout, resolve, 
 
 	const recipeName = args.recipe
 
-  if (!actionTime || actionTime < 2000){
-    actionTime = 2000;
-  }
-
 	const timeoutID = setTimeout(async () => {
 		// after the delay we craft!
 		try {
-			await crafting(character,skillName, recipeName, args.ingredients)
+      // The most important part, the crafting iteself. here are the items created and consumed
+      // TODO: parameters
+			await crafting(character, skillName, args.task, recipeName, args.ingredients? args.ingredients : args.upgrades)
 		} catch (error) {
 			console.log('crafting failed: ', error.message)
       reject(error.message);
@@ -58,7 +63,7 @@ async function initCrafting(skillName, character, args, activeTimeout, resolve, 
 		}
 		activeTimeout[character] = null
 		resolve('success!')
-	}, Globals.getSpeedModifier()*actionTime)
+	}, actionTime)
 
 	console.log(`Init timeout with ${actionTime}ms complete. Waiting for crafting ${skillName}...`);
 

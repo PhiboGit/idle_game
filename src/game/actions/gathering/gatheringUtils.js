@@ -1,6 +1,7 @@
 const {Globals, CharacterService, rollDice, validateLevel} = require('../actionUtils')
 const {getGatheringData} = require('../../data/gatheringResourceTable')
 const {parseLootTable} = require('../../data/lootTables')
+const { skills } = require('../../models/skills')
 
 
 /**
@@ -24,12 +25,12 @@ async function looting(character, skillName, tier) {
 	// rolling the loot
 	for (const loot of lootBag){
 		console.log(`${character} looted ${loot.amount} ${loot.item}`)
-		incrementData[`resources.${loot.item}`] = loot.amount
+		incrementData[`resources.${loot.item}`] = Math.floor(loot.amount * (1 + skill.yield))
 	}
 	
 	// and calculating exp gains
 	incrementData['exp'] = gatheringData.CharacterExp
-	incrementData[`skills.${skillName}.exp`] = gatheringData.exp
+	incrementData[`skills.${skillName}.exp`] = Math.floor(gatheringData.exp * (1 + skill.exp))
 	
 	// At last update all the values for the character.
 	await CharacterService.increment(character, incrementData)
