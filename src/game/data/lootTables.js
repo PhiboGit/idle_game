@@ -96,6 +96,8 @@ function parseLootTable(tableName, size= 1, luck = 0) {
   if (!table) {
     throw new Error(`Couldn't find table: ${tableName}`)
   }
+
+  // start the recursive function
   parseTable(table, size, luck);
   return results;
 }
