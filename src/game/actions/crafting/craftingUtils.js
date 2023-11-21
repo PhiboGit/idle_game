@@ -84,7 +84,7 @@ async function crafting(character, skillName, task, recipeName, selectedResource
   let resources
   switch (task) {
     case "crafting":
-      resources = recipe.resources      
+      resources = recipe.ingredients      
       break;
     case "upgrading":
       resources = recipe.upgrades
