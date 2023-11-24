@@ -28,11 +28,11 @@ function verifyAction(msg){
       msg.hasOwnProperty("actionType") && typeof msg.actionType === 'string' &&
       msg.hasOwnProperty("task") && typeof msg.task === 'string' &&
       
-      args.hasOwnProperty("iterations") && typeof args.iterations === 'number' &&
-      Number.isInteger(args.iterations) &&
-      args.iterations > 0 &&
+      msg.hasOwnProperty("iterations") && typeof msg.iterations === 'number' &&
+      Number.isInteger(msg.iterations) &&
+      msg.iterations > 0 &&
       
-      args.hasOwnProperty("limit") && typeof args.limit === 'boolean' &&
+      msg.hasOwnProperty("limit") && typeof msg.limit === 'boolean' &&
       msg.hasOwnProperty("args"))){
         console.log('Invalid msg! msg doees not have property {type: "action", actionType: String, task: String, args:{...}}')
         return false
