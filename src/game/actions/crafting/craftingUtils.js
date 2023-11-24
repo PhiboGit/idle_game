@@ -10,6 +10,7 @@ const {getRecipe} = require('../../data/recipesData')
  * @returns 
  */
 async function validateIngredients(character, selectedResources, recipeResources) {
+  console.log(`Validate selected resources for recipe`, selectedResources);
   const characterDB = await CharacterService.findCharacter(character)
   let selected = new Set(selectedResources)
   const valids = new Set()
@@ -24,7 +25,7 @@ async function validateIngredients(character, selectedResources, recipeResources
         const inventoryValue = CharacterService.getFieldValue(characterDB, `resources.${item.resource}`) || 0;
 
         if (inventoryValue < item.amount) {
-          console.log(`${character} does not have the required ingredients. has ${inventoryValue} ${item.resource} but needs ${item.amount}`);
+          console.log(`${character} does not have the required resources. has ${inventoryValue} ${item.resource} but needs ${item.amount}`);
           throw new Error('amount');
         }
 
@@ -37,7 +38,7 @@ async function validateIngredients(character, selectedResources, recipeResources
     }
 
     if (ingredientSlot.required && !found) {
-      console.log('NEED TO SELECT A REQUIRED INGREDIENT')
+      console.log('NEED TO SELECT A REQUIRED RESOURCE!')
       throw new Error('ingredient');
     }
   }
@@ -51,7 +52,8 @@ async function validateIngredients(character, selectedResources, recipeResources
   return true;
 }
 
-async function verifyRecipe(character,skillName,recipeName, selectedResources ){
+async function verifyRecipe(character,task, skillName,recipeName, selectedResources ){
+  console.log(`Verify recipe...`);
   const characterSkill = await CharacterService.getSkill(character, skillName);
   const recipe = getRecipe(skillName, recipeName)
   if(!recipe) {
@@ -62,8 +64,19 @@ async function verifyRecipe(character,skillName,recipeName, selectedResources ){
   // validate the selected resources with the recipe
   validateLevel(characterSkill.level, recipe.level)
   console.log(`${character} has the required level!`);
-    
-  await validateIngredients(character, selectedResources, recipe.ingredients)
+  
+  let resources
+  switch (task) {
+    case "crafting":
+      resources = recipe.ingredients
+      break;
+    case "upgrading":
+      resources = recipe.upgrades
+      break
+    default:
+      break;
+  }
+  await validateIngredients(character, selectedResources, resources)
   console.log(`Validation recipe complete.`)  
 }
 

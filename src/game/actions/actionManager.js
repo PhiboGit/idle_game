@@ -2,6 +2,7 @@ const CharacterService = require('../models/services/characterService')
 
 const actionLookup = {
 	'crafting': require('./crafting/crafting'),
+	'upgrading': require('./crafting/crafting'),
 	'gathering': require('./gathering/gathering'),
 }
 

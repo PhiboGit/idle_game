@@ -2,7 +2,7 @@ const CharacterService = require('../../models/services/characterService')
 const {getRecipe} = require('../../data/recipesData')
 const {verifyRecipe} = require('./craftingUtils')
 const {getActionTime, initAction} = require('../actionUtils')
-
+const {craft, upgrade} = require('../../models/items/tool')
 
 async function validate(character, actionObject) {
   return new Promise(async (resolve, reject) => {
@@ -13,7 +13,7 @@ async function validate(character, actionObject) {
     console.log(`init Validation ${skillName}-${task}...`)
 
     try {
-      await verifyRecipe(character, skillName, recipeName, selectedResources)
+      await verifyRecipe(character,task, skillName, recipeName, selectedResources)
     } catch (error) {
       console.log('Validation failed: ', error.message)
       reject(error.message);
