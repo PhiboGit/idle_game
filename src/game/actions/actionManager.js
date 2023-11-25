@@ -1,14 +1,10 @@
 const CharacterService = require('../models/services/characterService')
 
 const actionLookup = {
-	'woodcutting': require('./gathering/woodcutting'),
-	'mining': require('./gathering/mining'),
-	'harvesting': require('./gathering/harvesting'),
-
-	'woodworking': require('./crafting/woodworking'),
-	'smelting': require('./crafting/smelting'),
-	'weaving': require('./crafting/weaving'),
-	'toolsmith': require('./crafting/toolsmith'),
+	'crafting': require('./crafting/crafting'),
+	'upgrading': require('./crafting/crafting'),
+	'gathering': require('./gathering/gathering'),
+	'enchanting': require('./enchanting/enchanting')
 }
 
 
@@ -40,8 +36,16 @@ async function init(){
 
 init()
 
-function add(character, actionType, args){
-  const actionObject = {actionType:actionType, args: args, counter: 0}
+function add(character, msg){
+  const actionObject = {
+		counter: 0,
+		type: msg.type,
+		actionType: msg.actionType, 
+		task: msg.task,
+		limit: msg.limit,
+		iterations:msg.iterations,
+		args: msg.args
+	}
   console.log(`ActionManager.add: ${character} `, JSON.stringify(actionObject))
     
   enqueue(character, actionObject)
@@ -51,19 +55,19 @@ function enqueue(character, actionObject) {
 	if(!actionQueue[character]){
 		actionQueue[character] = []
 	}
-	let actionQ = actionQueue[character]
+	let characterActionQ = actionQueue[character]
 	
 	// action queue size limit
-	if (actionQ.length >= 5){
-		console.log('Queue is full!', actionQ)
+	if (characterActionQ.length >= 5){
+		console.log('Queue is full!', characterActionQ)
 		return
 	}
-	actionQ.push(actionObject)
+	characterActionQ.push(actionObject)
 	if (isQueueProcessRunning[character]){ 
-		CharacterService.updateActionManager(character, {$set: { actionQueue: actionQ }})
+		CharacterService.updateActionManager(character, {$set: { actionQueue: characterActionQ }})
 	}
-	console.log(`Added to queue for ${character}: Queue length `, actionQ.length)
-	console.log('current Queue: ',character, actionQ.length)
+	console.log(`Added to queue for ${character}: Queue length `, characterActionQ.length)
+	console.log('current Queue: ',character, characterActionQ.length)
 	// start the Queue
 	processQueue(character)
 }
@@ -71,24 +75,25 @@ function enqueue(character, actionObject) {
 
 async function processQueue(character) {
 	if (isQueueProcessRunning[character]) {
+		// the character has already a running action
 		console.log('Queue is already being processed.')
 		return
 	}
-	const repeatsQueue = actionQueue[character] // Queue to store repeats objects
+	const characterActionQ = actionQueue[character] // Queue to store repeats objects
 	isQueueProcessRunning[character] = true
 	console.log('Queue is being processed...')
-	while (repeatsQueue.length > 0) {
+	while (characterActionQ.length > 0) {
 		// gets the next object in the queue
-		const repeats = repeatsQueue.shift()
-		CharacterService.updateActionManager(character, {$set: { actionQueue: repeatsQueue }})      
+		const actionObject = characterActionQ.shift()
+		CharacterService.updateActionManager(character, {$set: { actionQueue: characterActionQ }})      
 		try {
-			await startSequentialTimeouts(character,repeats)
+			await startSequentialTimeouts(character,actionObject)
 			CharacterService.updateActionManager(character, {$set: { currentAction: null }})
 			console.log('All timeouts completed.',character)
 		} catch (error) {
 			switch (error) {
 				case 'cancel':
-					console.error('Timeout canceled.', character, repeats)
+					console.error('Timeout canceled.', character, actionObject)
 					CharacterService.updateActionManager(character, { $set: { currentAction: null } })
 					break
 				case 'level':
@@ -119,24 +124,24 @@ async function processQueue(character) {
 	isQueueProcessRunning[character] = false
 }
 
-async function startSequentialTimeouts(character, repeats) {
-	console.log('startSequentialTimeouts: ', repeats)
+async function startSequentialTimeouts(character, actionObject) {
+	console.log('startSequentialTimeouts: ', actionObject)
 
-	const callback = actionLookup[repeats.actionType]
+	const actionClass = actionLookup[actionObject.task]
 	    
-  while (repeats.args.iterations > 0 || !repeats.args.limit) {
-		const time = await callback.validate(character, repeats.args)
-		repeats["time"] = time
-		CharacterService.updateActionManager(character, {$set: { currentAction: repeats }})
-		console.log(`Iterations left: ${repeats.args.iterations}`)
-		const result = await callback.start(character, repeats.args, activeTimeout, time)
+  while (actionObject.iterations > 0 || !actionObject.limit) {
+		const time = await actionClass.validate(character, actionObject)
+		actionObject["actionTime"] = time
+		CharacterService.updateActionManager(character, {$set: { currentAction: actionObject }})
+		console.log(`Iterations left: ${actionObject.iterations}`)
+		const result = await actionClass.start(character, actionObject, activeTimeout)
 		console.log(`Timeout completed. ${result}`)
-		repeats.counter++
-		console.log(`Iterations completed: ${repeats.counter}`)
-		repeats.args.iterations--
+		actionObject.counter++
+		console.log(`Iterations completed: ${actionObject.counter}`)
+		actionObject.iterations--
 	}
     
-	console.log('startSequentialTimeouts completed: ', repeats)
+	console.log('startSequentialTimeouts completed: ', actionObject)
 }
 
 function cancelAction(character, index) {

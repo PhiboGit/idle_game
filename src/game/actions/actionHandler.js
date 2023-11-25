@@ -30,7 +30,7 @@ function handleAction(character, msg) {
     return
   }
 
-  ActionManager.add(character, msg.actionType, msg.args)
+  ActionManager.add(character, msg)
 }
 
 module.exports = {handleCancel, handleAction}

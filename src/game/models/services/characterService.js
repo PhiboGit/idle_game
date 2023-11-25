@@ -98,14 +98,15 @@ async function updateSkillLevel(character, update){
 
   if (charExpChanged){
     const currentCharExp = getFieldValue(characterDB, 'exp') || 0
+    const currentLevel = getFieldValue(characterDB, 'level') || 0
     const total_CharExp = currentCharExp + charExpChanged
 
     const lvl = GatheringExpTable.getLevel(total_CharExp)
-    levelUpdate['level'] = lvl
-    needsUpdate = true
+    if (currentLevel !== lvl) {
+      levelUpdate['level'] = lvl
+      needsUpdate = true
+    }
   }
-
-
     if (needsUpdate) {
       return levelUpdate
     }
