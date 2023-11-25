@@ -4,6 +4,7 @@ const actionLookup = {
 	'crafting': require('./crafting/crafting'),
 	'upgrading': require('./crafting/crafting'),
 	'gathering': require('./gathering/gathering'),
+	'enchanting': require('./enchanting/enchanting')
 }
 
 

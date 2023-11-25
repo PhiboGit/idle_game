@@ -8,6 +8,8 @@ const availableActions = {
   "weaving": ["crafting"],
 
   "toolsmith": ["crafting", "upgrading"],
+
+  "enchanter": ["enchanting"]
 }
 
 function verifyAction(msg){
@@ -44,7 +46,7 @@ function verifyAction(msg){
     return false
   }
 
-  // can do the task here
+  // the selected profession can do the task
   if(!availableActions[msg.actionType].includes(msg.task)){
     console.log(`Invalid msg! Invalid task "${msg.task}" for this actionType "${msg.actionType}"`)
     return false
@@ -61,6 +63,8 @@ function verifyAction(msg){
     case "upgrading":
       return verifyUpgradingArgs(msg.args)
       break
+    case "enchanting":
+      return verifyEnchantingArgs(msg.args)
     default:
       console.log(`Invalid msg! Invalid task "${msg.task}" for this actionType "${msg.actionType}"`)
       return false
@@ -83,7 +87,7 @@ function verifyGatheringArgs(args){
 		){
 			return true
 		}
-	console.info('Invalid args for gathering')
+	console.info('Invalid args for gathering!')
 	return false
 }
 
@@ -110,7 +114,7 @@ function verifyCraftingArgs(args){
       args.ingredients = [...new Set(args.ingredients)];
       return true
     }
-	console.info('Invalid args for crafting')
+	console.info('Invalid args for crafting!')
 	return false
 }
 
@@ -138,7 +142,21 @@ function verifyUpgradingArgs(args){
       args.upgrades = [...new Set(args.upgrades)];
       return true
     }
-	console.info('Invalid args for upgrading')
+	console.info('Invalid args for upgrading!')
+	return false
+}
+
+function verifyEnchantingArgs(args){
+  if(
+    args.hasOwnProperty("itemId") &&
+		typeof args.itemId === 'string' &&
+		
+    args.hasOwnProperty("enchantingResource") &&
+		typeof args.enchantingResource === 'string'
+		){
+			return true
+		}
+	console.info('Invalid args for enchanting!')
 	return false
 }
 
