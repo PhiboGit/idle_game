@@ -2,6 +2,8 @@ const CharacterService = require('../../models/services/characterService')
 const {getActionTime, validateLevel, initAction} = require('../actionUtils');
 const { getGatheringData } = require('../../data/gatheringResourceTable');
 const {parseLootTable} = require('../../data/lootTables')
+const {rollRange} = require('../../utils/randomDice');
+const { skills } = require('../../models/skills');
 
 async function validate(character, actionObject) {
   return new Promise(async (resolve, reject) => {
@@ -58,9 +60,15 @@ async function gathering(character, skillName, tier) {
 
 	const gatheringData = getGatheringData(skillName, tier)
 	const skill = await CharacterService.getSkill(character, skillName)
-	const lootBag = parseLootTable(gatheringData.lootTable,1, skill.luck)
+  
+  let minAmount = gatheringData.amountMin
+  let maxAmount = gatheringData.amountMax + skill.yield
+  const amount = rollRange(minAmount, maxAmount)
 
-	// rolling the loot
+  incrementData[`resources.${gatheringData.resourceName}`] = Math.floor(amount)
+
+	// rolling the rare loot table
+	const lootBag = parseLootTable(gatheringData.lootTable,1, skill.luck)
 	for (const loot of lootBag){
 		console.log(`${character} looted ${loot.amount} ${loot.item}`)
 		incrementData[`resources.${loot.item}`] = Math.floor(loot.amount * (1 + skill.yield))

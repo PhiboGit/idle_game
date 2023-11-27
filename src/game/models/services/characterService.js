@@ -186,7 +186,7 @@ async function getSkill(character, skill){
 
     skillSheet.speed += (tool.properties?.speed || 0) / 100
     skillSheet.speed += (tool.properties?.speedBonus || 0) / 100
-    skillSheet.yield += (tool.properties?.yieldBonus || 0) / 100
+    skillSheet.yield += (tool.properties?.yieldBonus || 0)
     skillSheet.exp += (tool.properties?.expBonus || 0) / 100
 
     skillSheet.luck += tool.properties?.luckBonus || 0

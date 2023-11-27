@@ -12,7 +12,8 @@ class GatheringResourceForm {
     this.resourceName = data.resourceName
     this.level = data.level
     this.time = data.time
-    this.amount = data.amount
+    this.amountMin = data.amountMin
+    this.amountMax = data.amountMax
     this.exp = data.exp
     this.CharacterExp = data.expChar
     this.lootTable = data.lootTable
