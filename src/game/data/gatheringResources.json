@@ -5,7 +5,6 @@
         "resourceName": "woodT1",
         "level": 0,
         "time": 20000,
-        "amount": 4,
         "exp": 10,
         "expChar": 10,
         "lootTable": "TreeT1"
@@ -14,7 +13,6 @@
         "resourceName": "woodT2",
         "level": 25,
         "time": 40000,
-        "amount": 4,
         "exp": 15,
         "expChar": 15,
         "lootTable": "TreeT2"
@@ -23,7 +21,6 @@
         "resourceName": "woodT3",
         "level": 50,
         "time": 80000,
-        "amount": 4,
         "exp": 20,
         "expChar": 20,
         "lootTable": "TreeT3"
@@ -32,7 +29,6 @@
         "resourceName": "woodT4",
         "level": 75,
         "time": 120000,
-        "amount": 4,
         "exp": 25,
         "expChar": 25,
         "lootTable": "TreeT4"
@@ -41,7 +37,6 @@
         "resourceName": "woodT5",
         "level": 100,
         "time": 180000,
-        "amount": 4,
         "exp": 30,
         "expChar": 30,
         "lootTable": "TreeT5"
@@ -54,7 +49,6 @@
         "resourceName": "oreT1",
         "level": 0,
         "time": 20000,
-        "amount": 4,
         "exp": 10,
         "expChar": 10,
         "lootTable": "VeinT1"
@@ -63,7 +57,6 @@
         "resourceName": "oreT2",
         "level": 25,
         "time": 40000,
-        "amount": 4,
         "exp": 15,
         "expChar": 15,
         "lootTable": "VeinT2"
@@ -72,7 +65,6 @@
         "resourceName": "oreT3",
         "level": 50,
         "time": 80000,
-        "amount": 4,
         "exp": 20,
         "expChar": 20,
         "lootTable": "VeinT3"
@@ -81,7 +73,6 @@
         "resourceName": "oreT4",
         "level": 75,
         "time": 120000,
-        "amount": 4,
         "exp": 25,
         "expChar": 25,
         "lootTable": "VeinT4"
@@ -90,7 +81,6 @@
         "resourceName": "oreT5",
         "level": 100,
         "time": 180000,
-        "amount": 4,
         "exp": 30,
         "expChar": 30,
         "lootTable": "VeinT5"
@@ -103,7 +93,6 @@
         "resourceName": "fiberT1",
         "level": 0,
         "time": 20000,
-        "amount": 4,
         "exp": 10,
         "expChar": 10,
         "lootTable": "PlantT1"
@@ -112,7 +101,6 @@
         "resourceName": "fiberT2",
         "level": 25,
         "time": 40000,
-        "amount": 4,
         "exp": 15,
         "expChar": 15,
         "lootTable": "PlantT2"
@@ -121,7 +109,6 @@
         "resourceName": "fiberT3",
         "level": 50,
         "time": 80000,
-        "amount": 4,
         "exp": 20,
         "expChar": 20,
         "lootTable": "PlantT3"
@@ -130,7 +117,6 @@
         "resourceName": "fiberT4",
         "level": 75,
         "time": 120000,
-        "amount": 4,
         "exp": 25,
         "expChar": 25,
         "lootTable": "PlantT4"
@@ -139,7 +125,6 @@
         "resourceName": "fiberT5",
         "level": 100,
         "time": 180000,
-        "amount": 4,
         "exp": 30,
         "expChar": 30,
         "lootTable": "PlantT5"
