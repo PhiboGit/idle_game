@@ -1,0 +1,32 @@
+{
+  "T1": {
+    "level": 0,
+    "time": 10000,
+    "exp": 10,
+    "expChar": 10
+  },
+  "T2": {
+    "level": 25,
+    "time": 10000,
+    "exp": 15,
+    "expChar": 15
+  },
+  "T3": {
+    "level": 50,
+    "time": 10000,
+    "exp": 20,
+    "expChar": 20
+  },
+  "T4": {
+    "level": 75,
+    "time": 10000,
+    "exp": 25,
+    "expChar": 25
+  },
+  "T5": {
+    "level": 100,
+    "time": 10000,
+    "exp": 30,
+    "expChar": 30
+  }
+}

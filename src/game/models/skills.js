@@ -26,6 +26,8 @@ const skills = {
 
   toolsmith: skill,
 
+  enchanter: skill,
+
 }
 
 module.exports = {skills};

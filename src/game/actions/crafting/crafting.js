@@ -34,8 +34,8 @@ async function start(character, actionObject, activeTimeout) {
   return new Promise(async (resolve, reject) => {
     const skillName = actionObject.actionType
     const task = actionObject.task
-    const recipeName = actionObject.args.recipe
     const actionTime = actionObject.actionTime
+    const recipeName = actionObject.args.recipe
     const selectedResources = actionObject.args.ingredients? actionObject.args.ingredients : actionObject.args.upgrades
     initAction(resolve, reject, activeTimeout, character, actionTime, crafting, [character, skillName, task, recipeName, selectedResources])
   });
@@ -62,7 +62,7 @@ async function crafting(character, skillName, task, recipeName, selectedResource
 	// filling out the form to increment the values of a character
 	const incrementData = {}
   const pushData = {}
-  incrementData['exp'] = recipe.characterExp 
+  incrementData['exp'] = recipe.expChar 
   incrementData[`skills.${skillName}.exp`] = Math.floor(recipe.exp * ( 1 + characterSkill.exp))
   
   // check ingredients
@@ -113,7 +113,7 @@ async function crafting(character, skillName, task, recipeName, selectedResource
     }
     else if(task == "upgrading"){
       const item_id = await upgrade(recipeName, recipe, selectedResources, characterSkill)
-      pushData['items'] = item_id
+      pushData['items'] = [item_id]
     }
   }
 	// At last update all the values for the character.

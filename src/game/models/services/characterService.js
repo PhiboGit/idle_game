@@ -36,18 +36,18 @@ async function increment(character, incrementForm = {}, setForm= {}, pushForm={}
        }
       )
     if (pushForm['items']){
-      const item = await Item.findById(pushForm['items'])
-      senderMediator.publish('items', {character: character, msg: {items: [item]} })
+      await itemUpdate(character, pushForm['items'])
     }
   } catch (error) {
     console.log(error)
   }
   
   senderMediator.publish('update_char', {character: character, msg: update})
+}
 
-  
-  
-  
+async function itemUpdate(character, itemIds){
+  const items = await Item.find({'_id': {$in: itemIds}})
+  senderMediator.publish('items', {character: character, msg: {items: items} })
 }
 
 /**
@@ -240,7 +240,7 @@ async function getAllItemsFromCharacter(character) {
 }
 
 async function getItem(item_id){
-  const item = await Item.findById(item_id).lean();
+  const item = await Item.findById(item_id)
 
   return item
 }
@@ -259,4 +259,4 @@ async function getActiveAction(character){
   return runningActionName
 }
 
-module.exports = {increment, getSkill, findCharacter, getFieldValue, updateActionManager, getAll, getItem, equipSkillItem, getAllItemsFromCharacter, getActiveAction}
+module.exports = {increment, getSkill, findCharacter, getFieldValue, updateActionManager, getAll, getItem, equipSkillItem, getAllItemsFromCharacter, getActiveAction, itemUpdate}

@@ -6,7 +6,7 @@
       "level": 0,
       "time": 20000,
       "exp": 10,
-      "characterExp": 5,
+      "expChar": 5,
       "ingredients": [
         {"required": true,
         "slot": [
@@ -23,7 +23,7 @@
       "level": 0,
       "time": 20000,
       "exp": 10,
-      "characterExp": 5,
+      "expChar": 5,
       "ingredients": [
         {"required": true,
         "slot": [
@@ -39,7 +39,7 @@
       "level": 25,
       "time": 20000,
       "exp": 10,
-      "characterExp": 5,
+      "expChar": 5,
       "ingredients": [
         {"required": true,
           "slot": [
@@ -63,7 +63,7 @@
       "level": 0,
       "time": 20000,
       "exp": 10,
-      "characterExp": 5,
+      "expChar": 5,
       "ingredients": [
         {"required": true,
           "slot": [
@@ -80,7 +80,7 @@
       "level": 0,
       "time": 20000,
       "exp": 10,
-      "characterExp": 5,
+      "expChar": 5,
       "ingredients": [
         {"required": true,
           "slot": [
@@ -102,7 +102,7 @@
       "level": 0,
       "time": 20000,
       "exp": 10,
-      "characterExp": 5,
+      "expChar": 5,
       "ingredients": [
         {"required": true,
           "slot": [
@@ -134,7 +134,7 @@
       "level": 0,
       "time": 20000,
       "exp": 10,
-      "characterExp": 5,
+      "expChar": 5,
       "ingredients": [
         {"required": true,
         "slot": [

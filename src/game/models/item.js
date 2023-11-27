@@ -7,6 +7,7 @@ const itemSchema = new mongoose.Schema({
   soulbound: {type: Boolean, default: false},
   tier: {type: Number, default: 1},
   rarity: {type: String, default: "common"},
+  enchantingLevel: {type: Number, default:0},
   properties: mongoose.Schema.Types.Mixed, // Store item-specific properties as key-value pairs
 },
 { collection: 'items' })

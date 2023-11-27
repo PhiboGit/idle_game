@@ -152,7 +152,12 @@ function verifyEnchantingArgs(args){
 		typeof args.itemId === 'string' &&
 		
     args.hasOwnProperty("enchantingResource") &&
-		typeof args.enchantingResource === 'string'
+		typeof args.enchantingResource === 'string' &&
+
+    args.hasOwnProperty("enchantingLevelLimit") &&
+    typeof args.enchantingLevelLimit === 'number' &&
+    Number.isInteger(args.enchantingLevelLimit) &&
+    args.enchantingLevelLimit >= 1 
 		){
 			return true
 		}
