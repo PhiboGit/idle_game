@@ -2,7 +2,8 @@ const CharacterService = require('../../models/services/characterService')
 const {getRecipe} = require('../../data/recipesData')
 const {verifyRecipe} = require('./craftingUtils')
 const {getActionTime, initAction} = require('../actionUtils')
-const {craft, upgrade} = require('../../models/items/tool')
+const {craft} = require('../../models/items/itemCraft')
+const {upgradeTool} = require('../../models/items/tool/toolUpgrade')
 
 async function validate(character, actionObject) {
   return new Promise(async (resolve, reject) => {
@@ -108,12 +109,20 @@ async function crafting(character, skillName, task, recipeName, selectedResource
   } else if (recipe.unique){
     const characterSkill = await CharacterService.getSkill(character, skillName)
     if (task == "crafting"){
-      const itemName = await craft(recipeName, recipe, selectedResources, characterSkill)
+      const itemName = craft(recipeName, recipe, selectedResources, characterSkill)
       incrementData[`resources.${itemName}`] = recipe.amount
     }
     else if(task == "upgrading"){
-      const item_id = await upgrade(recipeName, recipe, selectedResources, characterSkill)
-      pushData['items'] = [item_id]
+      switch (recipe.type) {
+        case "tool":
+          const item_id = await upgradeTool(recipeName, recipe, selectedResources, characterSkill)
+          pushData['items'] = [item_id]
+          break;
+      
+        default:
+          console.error(`Unable to upgrade ${recipe.type}!`)
+          break;
+      }
     }
   }
 	// At last update all the values for the character.

@@ -1,7 +1,7 @@
 const CharacterService = require('../../models/services/characterService')
 const {enchantingProfession} = require('../../utils/dataLoader')
 const {getActionTime, initAction} = require('../actionUtils')
-const {enchant} = require('../../models/items/tool')
+const {enchantTool} = require('../../models/items/tool/toolEnchant')
 
 async function validate(character, actionObject) {
   return new Promise(async (resolve, reject) => {
@@ -96,7 +96,15 @@ async function enchanting(character, skillName, task, itemId, enchantingResource
   }
   incrementData[`resources.${item.resource}`] = -1
   
-  await enchant(item, enchantingResource, characterSkill)
+  switch (item.type) {
+    case "tool":
+      await enchantTool(item, enchantingResource, characterSkill)
+      break;
+  
+    default:
+      console.error(`Cannot enchant ${item.type}!`);
+      break;
+  }
 	// At last update all the values for the character.
 	await CharacterService.increment(character, incrementData, {}, {})
   await CharacterService.itemUpdate(character, [item._id])
