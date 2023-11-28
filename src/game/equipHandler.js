@@ -1,5 +1,5 @@
-const CharacterService = require('../models/services/characterService')
-const {senderMediator} = require('../../routes/websocket/mediator')
+const CharacterService = require('./models/services/characterService')
+const {senderMediator} = require('../routes/websocket/mediator')
 
 const validSkills = [
   'woodcutting', 
@@ -11,11 +11,17 @@ const equipmentSlots = [
   "tool"
 ]
 
+const validSubtype = {
+  "mining": ["pickaxe"],
+  "woodcutting": ["axe"],
+  "harvesting": ["sickle"],
+}
+
 function verifyEquip(msg){
   if((msg && 
     msg.type && typeof msg.type === 'string' && msg.type === 'equip' &&
     msg.args &&
-    msg.args.itemID && typeof msg.args.itemID === 'string' && 
+    msg.args.itemId && typeof msg.args.itemId === 'string' && 
     msg.args.skill && typeof msg.args.skill === 'string' && validSkills.includes(msg.args.skill) &&
     msg.args.slot && typeof msg.args.slot === 'string' && equipmentSlots.includes(msg.args.slot)
     )){
@@ -38,11 +44,12 @@ async function handleEquip(character, msg){
   }
   console.log("Handling Equip submission is valid. Trying to equip item...")
 
-  const itemID = msg.args.itemID
+  const itemId = msg.args.itemId
   const skillSlot = msg.args.skill
   const equipSlot = msg.args.slot
 
-  if(itemID == "null"){
+  // to unequip an item
+  if(itemId == "null"){
     console.log("Handling Equip successfully!")
     CharacterService.equipSkillItem(character, null, skillSlot, equipSlot)
     return
@@ -51,7 +58,7 @@ async function handleEquip(character, msg){
   const items = await CharacterService.getAllItemsFromCharacter(character)
 
 
-  if(!(items.includes(itemID))){
+  if(!(items.includes(itemId))){
     senderMediator.publish('error', {character: character,
       msg: {message: "You do not have the item!",
             info: {
@@ -60,7 +67,7 @@ async function handleEquip(character, msg){
     return
   }
 
-  const item = await CharacterService.getItem(itemID)
+  const item = await CharacterService.getItem(itemId)
 
   if(!item){
     senderMediator.publish('error', {character: character,
@@ -69,12 +76,6 @@ async function handleEquip(character, msg){
              
            }}})
     return
-  }
-
-  const validSubtype = {
-    "mining": ["pickaxe"],
-    "woodcutting": ["axe"],
-    "harvesting": ["sickle"],
   }
 
   if (!(item.type == equipSlot)) {
@@ -117,9 +118,9 @@ async function handleEquip(character, msg){
     return
   }
 
+  
+  CharacterService.equipSkillItem(character, itemId, skillSlot, equipSlot)
   console.log("Handling Equip successfully!")
-
-  CharacterService.equipSkillItem(character, itemID, skillSlot, equipSlot)
 }
 
 module.exports = {handleEquip}

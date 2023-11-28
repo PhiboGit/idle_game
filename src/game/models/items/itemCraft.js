@@ -44,7 +44,7 @@ function getRarity(skillLevel, selectedResources){
  * @param {*} characterSkill 
  * @returns {String}
  */
-async function craft(recipeName, recipe, selectedIngredients, characterSkill){
+function craft(recipeName, recipe, selectedIngredients, characterSkill){
   const type = recipe["type"]
   const subtype = recipe["subtype"]
   const tier = recipe["tier"]

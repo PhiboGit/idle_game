@@ -138,17 +138,17 @@
       "ingredients": [
         {"required": true,
         "slot": [
-          {"resource": "ingotT1", "amount": 5}
+          {"resource": "ingotT1", "amount": 15}
         ]},
   
         {"required": true,
         "slot": [
-          {"resource": "plankT1", "amount": 3}
+          {"resource": "plankT1", "amount": 15}
           ]},
           
         {"required": true,
         "slot": [
-          {"resource": "linenT1", "amount": 5}
+          {"resource": "linenT1", "amount": 15}
         ]} 
       ],
       "upgrades": [

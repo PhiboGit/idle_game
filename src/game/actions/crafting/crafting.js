@@ -114,8 +114,8 @@ async function crafting(character, skillName, task, recipeName, selectedResource
     else if(task == "upgrading"){
       switch (recipe.type) {
         case "tool":
-          const item_id = await upgradeTool(recipeName, recipe, selectedResources, characterSkill)
-          pushData['items'] = [item_id]
+          const itemId = await upgradeTool(recipeName, recipe, selectedResources, characterSkill)
+          pushData['items'] = itemId
           break;
       
         default:
@@ -125,7 +125,7 @@ async function crafting(character, skillName, task, recipeName, selectedResource
     }
   }
 	// At last update all the values for the character.
-	await CharacterService.increment(character, incrementData, {}, pushData)
+	await CharacterService.increment(character, incrementData, {}, pushData, {})
 	return true
 }
 

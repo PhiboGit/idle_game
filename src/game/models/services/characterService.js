@@ -14,13 +14,14 @@ const {senderMediator} = require('../../../routes/websocket/mediator')
  * @param {String} character 
  * @param {Object} form 
  */
-async function increment(character, incrementForm = {}, setForm= {}, pushForm={} ){
+async function increment(character, incrementForm = {}, setForm= {}, pushForm={}, pullForm={} ){
   console.log("CharacterService.increment is processing the form...")
   const update = {}
 
   update['$inc'] = incrementForm
   update['$set'] = setForm
   update['$push'] = pushForm
+  update['$pull'] = pullForm
 
   const levelUpdate = await updateSkillLevel(character, update)
     if(levelUpdate){
@@ -36,6 +37,7 @@ async function increment(character, incrementForm = {}, setForm= {}, pushForm={}
        }
       )
     if (pushForm['items']){
+      // notify the user about the new item
       await itemUpdate(character, pushForm['items'])
     }
   } catch (error) {
@@ -192,8 +194,6 @@ async function getSkill(character, skill){
 
     skillSheet.luck += tool.properties?.luckBonus || 0
   }
-
-  
   return skillSheet
 }
 
@@ -288,14 +288,11 @@ async function getEnchantingSkill(character, skill){
   return skillSheet
 }
 
-async function equipSkillItem(character, itemID, skillName, slotType){
-
+async function equipSkillItem(character, itemId, skillName, slotType){
   let update = {}
-
   update['$set'] = {
-    [`skills.${skillName}.equipment.${slotType}`]: itemID,
+    [`skills.${skillName}.equipment.${slotType}`]: itemId,
   };
-
   const options = {
     upsert: true, // only for dev, to not delete, recreate database
   };
@@ -306,12 +303,12 @@ async function equipSkillItem(character, itemID, skillName, slotType){
   )
   senderMediator.publish('update_char', {character: character, msg: update})
   
-  if (itemID){
+  if (itemId){
     // if the item exists, bind the item
     let updateItem = {}
     updateItem['$set'] = {['soulbound']: true}
     const item = await Item.findByIdAndUpdate(
-      itemID,
+      itemId,
       updateItem,
       { new: true }
     )
@@ -320,6 +317,27 @@ async function equipSkillItem(character, itemID, skillName, slotType){
     }
   }
 }
+
+async function isItemEquiped(character, itemId) {
+  const item = await getItem(itemId)
+  const itemType = item.type
+  const itemSubType = item.subtype
+
+  const validSubtypeSkill = {
+    "pickaxe": "mining",
+    "axe": "woodcutting",
+    "sickle": "harvesting",
+  }
+  const characterDB = await findCharacter(character)
+  const validSkill = validSubtypeSkill[itemSubType]
+
+  //check if the item is at a valid subtype skill equiped
+  const equipedItemId = characterDB.skills[validSkill].equipment.tool
+  console.log("Equipment item id: ", equipedItemId)
+
+  return (equipedItemId == itemId)
+}
+
 
 async function getAllItemsFromCharacter(character) {
   const select = 'items';
@@ -331,10 +349,14 @@ async function getAllItemsFromCharacter(character) {
   return itemIds;
 }
 
-async function getItem(item_id){
-  const item = await Item.findById(item_id)
+async function getItem(itemId){
+  const item = await Item.findById(itemId)
 
   return item
+}
+
+async function deleteItem(itemId){
+  await Item.findByIdAndDelete(itemId)
 }
 
 async function getActiveAction(character){
@@ -351,4 +373,4 @@ async function getActiveAction(character){
   return runningActionName
 }
 
-module.exports = {increment, getSkill, findCharacter, getFieldValue,getGatheringSkill,getCraftingSkill,getEnchantingSkill, updateActionManager, getAll, getItem, equipSkillItem, getAllItemsFromCharacter, getActiveAction, itemUpdate}
+module.exports = {increment, getSkill, isItemEquiped,deleteItem, findCharacter, getFieldValue,getGatheringSkill,getCraftingSkill,getEnchantingSkill, updateActionManager, getAll, getItem, equipSkillItem, getAllItemsFromCharacter, getActiveAction, itemUpdate}

@@ -106,7 +106,7 @@ async function enchanting(character, skillName, task, itemId, enchantingResource
       break;
   }
 	// At last update all the values for the character.
-	await CharacterService.increment(character, incrementData, {}, {})
+	await CharacterService.increment(character, incrementData, {}, {}, {})
   await CharacterService.itemUpdate(character, [item._id])
 	return true
 }
