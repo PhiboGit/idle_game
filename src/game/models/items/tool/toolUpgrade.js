@@ -23,7 +23,7 @@ function getBaseSpeed(tier, rarity) {
   const max = toolSpeed[tier - 1][getRarityNumber(rarity) + 1]
   
   // Roll a random number within the specified range
-  return rollRange(min, max);
+  return rollRange(min, max) / 100;
 }
 
 
@@ -47,7 +47,7 @@ function applyBonus(tool, selectedResources){
     [  1,   2,   3,   4,  5],
     "exp": 
     //com, unc, rar, epi, leg
-    [5,  10,  15,  20,  25]
+    [0.05,  0.10,  0.15,  0.20,  0.25]
   }
   const rarity = tool.rarity
   //get bonus
@@ -72,12 +72,8 @@ function applyBonus(tool, selectedResources){
   rolledBonus.forEach(bonus => {
     switch (bonus) {
       case 'speed':
-        // speedBonus is a multiplier to the base speed, rounded up
-        const speedMultiplier = toolBonus.speed[getRarityNumber(rarity)];
-        tool.properties.speedBonus = Math.floor(tool.properties.baseSpeed * speedMultiplier) + 1;
-        // increment speed
-        tool.properties.speed += tool.properties.speedBonus;
-        break;
+        tool.properties.speedBonus = toolBonus.speed[getRarityNumber(rarity)];
+      break;
         
       case 'luck':
         tool.properties.luckBonus = toolBonus.luck[getRarityNumber(rarity)];

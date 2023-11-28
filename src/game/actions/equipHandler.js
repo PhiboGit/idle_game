@@ -71,8 +71,6 @@ async function handleEquip(character, msg){
     return
   }
 
-  const skill = await CharacterService.getSkill(character, skillSlot)
-
   const validSubtype = {
     "mining": ["pickaxe"],
     "woodcutting": ["axe"],
@@ -96,6 +94,8 @@ async function handleEquip(character, msg){
       }}})
     return
   }
+      
+  const skill = await CharacterService.getSkill(character, skillSlot)
 
   if (!(skill.level >= item.level)) {
     senderMediator.publish('error', {character: character,

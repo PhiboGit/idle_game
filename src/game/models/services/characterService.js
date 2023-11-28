@@ -197,6 +197,97 @@ async function getSkill(character, skill){
   return skillSheet
 }
 
+
+/**
+ * 
+ * @param {String} character 
+ * @param {String} skill 
+ * @returns 
+ */
+async function getGatheringSkill(character, skill){
+  const select = `skills.${skill}`
+  const characterSkill = await Character.findOne({characterName: character}, select).lean()
+  
+  const skillSheet = {
+    level: characterSkill.skills?.[skill]?.level || 0,
+    luck: characterSkill.skills?.[skill]?.luck || 0,
+    speed: characterSkill.skills?.[skill]?.speed || 0,
+    yieldMax: 0,
+    yieldMin: 0,
+    expBonus:  0,
+  }
+  
+  const toolID = characterSkill.skills?.[skill]?.equipment?.tool
+  if (toolID) {
+    // If toolId exists, add stats to the skillsheet
+    const tool = await Item.findById(toolID)
+
+    skillSheet.luck += (tool.properties?.luckBonus || 0)
+    skillSheet.speed += ((tool.properties?.baseSpeed || 0) * (1 + tool.properties?.speedBonus) )
+    skillSheet.yieldMax += (tool.properties?.yieldMax || 0)
+    skillSheet.expBonus += (tool.properties?.expBonus || 0)
+  }
+  return skillSheet
+}
+
+/**
+ * 
+ * @param {String} character 
+ * @param {String} skill 
+ * @returns 
+ */
+async function getCraftingSkill(character, skill){
+  const select = `skills.${skill}`
+  const characterSkill = await Character.findOne({characterName: character}, select).lean()
+  
+  const skillSheet = {
+    level: characterSkill.skills?.[skill]?.level || 0,
+    luck: characterSkill.skills?.[skill]?.luck || 0,
+    speed: characterSkill.skills?.[skill]?.speed || 0,
+    expBonus:  0,
+  }
+  
+  const toolID = characterSkill.skills?.[skill]?.equipment?.tool
+  if (toolID) {
+    // If toolId exists, add stats to the skillsheet
+    const tool = await Item.findById(toolID)
+
+    skillSheet.luck += (tool.properties?.luckBonus || 0)
+    skillSheet.speed += ((tool.properties?.baseSpeed || 0) * (1 + tool.properties?.speedBonus) )
+    skillSheet.expBonus += (tool.properties?.expBonus || 0)
+  }
+  return skillSheet
+}
+
+/**
+ * 
+ * @param {String} character 
+ * @param {String} skill 
+ * @returns 
+ */
+async function getEnchantingSkill(character, skill){
+  const select = `skills.${skill}`
+  const characterSkill = await Character.findOne({characterName: character}, select).lean()
+  
+  const skillSheet = {
+    level: characterSkill.skills?.[skill]?.level || 0,
+    luck: characterSkill.skills?.[skill]?.luck || 0,
+    speed: characterSkill.skills?.[skill]?.speed || 0,
+    expBonus:  0,
+  }
+  
+  const toolID = characterSkill.skills?.[skill]?.equipment?.tool
+  if (toolID) {
+    // If toolId exists, add stats to the skillsheet
+    const tool = await Item.findById(toolID)
+
+    skillSheet.luck += (tool.properties?.luckBonus || 0)
+    skillSheet.speed += ((tool.properties?.baseSpeed || 0) * (1 + tool.properties?.speedBonus) )
+    skillSheet.expBonus += (tool.properties?.expBonus || 0)
+  }
+  return skillSheet
+}
+
 async function equipSkillItem(character, itemID, skillName, slotType){
 
   let update = {}
@@ -260,4 +351,4 @@ async function getActiveAction(character){
   return runningActionName
 }
 
-module.exports = {increment, getSkill, findCharacter, getFieldValue, updateActionManager, getAll, getItem, equipSkillItem, getAllItemsFromCharacter, getActiveAction, itemUpdate}
+module.exports = {increment, getSkill, findCharacter, getFieldValue,getGatheringSkill,getCraftingSkill,getEnchantingSkill, updateActionManager, getAll, getItem, equipSkillItem, getAllItemsFromCharacter, getActiveAction, itemUpdate}

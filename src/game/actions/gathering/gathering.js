@@ -13,7 +13,7 @@ async function validate(character, actionObject) {
     console.log(`init Validation ${skillName}-${task}...`)
     const gatheringData = getGatheringData(skillName, tier);
 
-    const characterSkill = await CharacterService.getSkill(character, skillName);
+    const characterSkill = await CharacterService.getGatheringSkill(character, skillName);
 
     try {
       await validateLevel(character, characterSkill.level, gatheringData.level);
@@ -59,7 +59,7 @@ async function gathering(character, skillName, tier) {
 	const incrementData = {}
 
 	const gatheringData = getGatheringData(skillName, tier)
-	const skill = await CharacterService.getSkill(character, skillName)
+	const skill = await CharacterService.getGatheringSkill(character, skillName)
   
   let minAmount = gatheringData.amountMin + skill.yieldMin
   let maxAmount = gatheringData.amountMax + skill.yieldMax
@@ -76,7 +76,7 @@ async function gathering(character, skillName, tier) {
 	
 	// and calculating exp gains
 	incrementData['exp'] = gatheringData.CharacterExp
-	incrementData[`skills.${skillName}.exp`] = Math.floor(gatheringData.exp * (1 + skill.exp))
+	incrementData[`skills.${skillName}.exp`] = (gatheringData.exp * (1 + skill.expBonus))
 	
 	// At last update all the values for the character.
 	await CharacterService.increment(character, incrementData)

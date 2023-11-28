@@ -23,7 +23,7 @@ async function validate(character, actionObject) {
     console.log(`Validation ${skillName}-${task} complete.`)
     // get the time
     const recipe = getRecipe(skillName, recipeName)
-    const characterSkill = await CharacterService.getSkill(character, skillName);
+    const characterSkill = await CharacterService.getCraftingSkill(character, skillName);
     const actionTime = getActionTime(recipe.time, characterSkill.speed)
 
     resolve(actionTime)
@@ -59,12 +59,12 @@ async function crafting(character, skillName, task, recipeName, selectedResource
   console.log('crafting in progress...')
 
   const recipe = getRecipe(skillName,recipeName)
-  const characterSkill = await CharacterService.getSkill(character, skillName);
+  const characterSkill = await CharacterService.getCraftingSkill(character, skillName);
 	// filling out the form to increment the values of a character
 	const incrementData = {}
   const pushData = {}
   incrementData['exp'] = recipe.expChar 
-  incrementData[`skills.${skillName}.exp`] = Math.floor(recipe.exp * ( 1 + characterSkill.exp))
+  incrementData[`skills.${skillName}.exp`] = (recipe.exp * ( 1 + characterSkill.expBonus))
   
   // check ingredients
   const characterDB = await CharacterService.findCharacter(character)
@@ -107,7 +107,6 @@ async function crafting(character, skillName, task, recipeName, selectedResource
     
     // if it is a unique item, we need to craft or upgrade it
   } else if (recipe.unique){
-    const characterSkill = await CharacterService.getSkill(character, skillName)
     if (task == "crafting"){
       const itemName = craft(recipeName, recipe, selectedResources, characterSkill)
       incrementData[`resources.${itemName}`] = recipe.amount

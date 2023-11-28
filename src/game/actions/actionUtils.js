@@ -49,6 +49,12 @@ async function validateLevel(character, characterSkillLevel, requiredLevel) {
   }
 }
 
+/**
+ * 
+ * @param {Number} speed time in ms
+ * @param {Number} characterSkillSpeed float like 0.05 or 1.5
+ * @returns 
+ */
 function getActionTime(speed, characterSkillSpeed) {
   let actionTime = Math.floor(speed / (1 + characterSkillSpeed));
   console.log(`Calculated time of ${actionTime}ms.`);

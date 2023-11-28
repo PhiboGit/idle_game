@@ -26,7 +26,7 @@ async function validate(character, actionObject) {
       reject('amount');
     }
     const item = await CharacterService.getItem(itemId)
-    const characterSkill = await CharacterService.getSkill(character, skillName);
+    const characterSkill = await CharacterService.getEnchantingSkill(character, skillName);
 
     if(characterSkill.level < enchantingProfession[`T${item.tier}`].level){
       console.log(`${character} does not have the required level. Is ${characterSkill.level} but needs ${enchantingProfession[`T${item.tier}`].level}`)
@@ -80,12 +80,12 @@ async function start(character, actionObject, activeTimeout) {
 async function enchanting(character, skillName, task, itemId, enchantingResource) {
   console.log('enchanting in progress...')
 
-  const characterSkill = await CharacterService.getSkill(character, skillName);
+  const characterSkill = await CharacterService.getEnchantingSkill(character, skillName);
   const item = await CharacterService.getItem(itemId)
 	// filling out the form to increment the values of a character
 	const incrementData = {}
   incrementData['exp'] = enchantingProfession[`T${item.tier}`].expChar 
-  incrementData[`skills.${skillName}.exp`] = Math.floor(enchantingProfession[`T${item.tier}`].exp * ( 1 + characterSkill.exp))
+  incrementData[`skills.${skillName}.exp`] = (enchantingProfession[`T${item.tier}`].exp * ( 1 + characterSkill.expBonus))
   
   // check ingredients
   const characterDB = await CharacterService.findCharacter(character)
