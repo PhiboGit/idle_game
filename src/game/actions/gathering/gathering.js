@@ -61,8 +61,8 @@ async function gathering(character, skillName, tier) {
 	const gatheringData = getGatheringData(skillName, tier)
 	const skill = await CharacterService.getSkill(character, skillName)
   
-  let minAmount = gatheringData.amountMin
-  let maxAmount = gatheringData.amountMax + skill.yield
+  let minAmount = gatheringData.amountMin + skill.yieldMin
+  let maxAmount = gatheringData.amountMax + skill.yieldMax
   const amount = rollRange(minAmount, maxAmount)
 
   incrementData[`resources.${gatheringData.resourceName}`] = Math.floor(amount)

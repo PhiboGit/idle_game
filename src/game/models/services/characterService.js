@@ -175,7 +175,8 @@ async function getSkill(character, skill){
     level: characterSkill.skills?.[skill]?.level || 0,
     luck: characterSkill.skills?.[skill]?.luck || 0,
     speed: characterSkill.skills?.[skill]?.speed || 0,
-    yield: 0,
+    yieldMax: 0,
+    yieldMin: 0,
     exp:  0,
   }
   
@@ -186,7 +187,7 @@ async function getSkill(character, skill){
 
     skillSheet.speed += (tool.properties?.speed || 0) / 100
     skillSheet.speed += (tool.properties?.speedBonus || 0) / 100
-    skillSheet.yield += (tool.properties?.yieldBonus || 0)
+    skillSheet.yieldMax += (tool.properties?.yieldMax || 0)
     skillSheet.exp += (tool.properties?.expBonus || 0) / 100
 
     skillSheet.luck += tool.properties?.luckBonus || 0

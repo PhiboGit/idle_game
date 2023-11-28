@@ -84,7 +84,7 @@ function applyBonus(tool, selectedResources){
         break;
         
       case 'yield':
-        tool.properties.yieldBonus = toolBonus.yield[getRarityNumber(rarity)];
+        tool.properties.yieldMax = toolBonus.yield[getRarityNumber(rarity)];
         break;
           
       case 'exp':

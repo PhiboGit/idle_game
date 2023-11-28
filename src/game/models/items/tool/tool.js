@@ -15,7 +15,7 @@ class Tool extends Item {
       baseSpeed,
       speedBonus: 0,
       luckBonus: 0,
-      yieldBonus: 0,
+      yieldMax: 0,
       expBonus: 0
     };
   }
