@@ -17,13 +17,8 @@ router.post('/', userExists, authUser, async (req, res) => {
             { username: req.body.username },
              { $push: { tokens: token } })
 
-        res.setHeader('Set-Cookie', cookie.serialize('accessToken', token,{
-            secure: true,
-            path: '/',
-            sameSite: 'none',
-        }))
         console.log('token added to user')
-        res.status(200).send({success: true})
+        res.status(200).send({success: true, token: token})
     } catch (error) {
         console.log(error.message)
         res.status(500).send({success: false})
