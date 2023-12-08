@@ -3,21 +3,38 @@ const {verifyAction} = require('./actionVerifier')
 const {senderMediator} = require('../../routes/websocket/mediator')
 
 function handleCancel(character, msg) {
-  if(!(msg && 
-    msg.type && typeof msg.type === 'string' && msg.type === 'cancel' && 
-    msg.index && typeof msg.index === 'number' && Number.isInteger(msg.index) &&
-    msg.index >= -1 && msg.index <= 4
-    )){
-    senderMediator.publish('error', {character: character,
-      msg: {message: "The submitted form for type: 'cancel' is not valid!",
-            info: {
-             index: 'Number/Integer: -1 to 4, -1 is the current running action, else the index of the Queue.',
-           }}})
-    return
+  console.log('msg:', msg);
+  const isMsgValid = msg && typeof msg === 'object';
+  console.log(`Check isMsgValid - ${isMsgValid}`);
+
+  const isTypeValid = msg.type && typeof msg.type === 'string' && msg.type === 'cancel';
+  console.log(`Check isTypeValid - ${isTypeValid}`);
+
+  const isIndexNumber = typeof msg.index === 'number';
+  console.log(`Check isIndexNumber - ${isIndexNumber}`);
+
+  const isIndexInteger = Number.isInteger(msg.index);
+  console.log(`Check isIndexInteger - ${isIndexInteger}`);
+
+  const isIndexValidRange = msg.index >= -1 && msg.index <= 4;
+  console.log(`Check isIndexValidRange - ${isIndexValidRange}`);
+
+  if (!(isMsgValid && isTypeValid && isIndexNumber && isIndexInteger && isIndexValidRange)) {
+    senderMediator.publish('error', {
+      character: character,
+      msg: {
+        message: "The submitted form for type: 'cancel' is not valid!",
+        info: {
+          index: 'Number/Integer: -1 to 4, -1 is the current running action, else the index of the Queue.',
+        }
+      }
+    });
+    return;
   }
 
-  ActionManager.cancelAction(character, msg.index)
+  ActionManager.cancelAction(character, msg.index);
 }
+
 
 function handleAction(character, msg) {
   const valid = verifyAction(msg)
