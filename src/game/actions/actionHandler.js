@@ -42,7 +42,33 @@ function handleAction(character, msg) {
     senderMediator.publish('error', {character: character,
        msg: {message: "The submitted form for type: 'action' is not valid!",
              info: {
-              not_implemented: "Server: Info is not implemented with a return value"
+              example: {
+                "type": "action",
+                "actionType" : "mining",
+                  "task": "gathering",
+                  "limit": true,
+                  "iterations": 100,
+                "args": {
+                    "tier": 1 
+                  }
+                },
+              detail: {
+                availableActions: {
+                  "woodcutting": ["gathering"],
+                  "mining": ["gathering"],
+                  "harvesting": ["gathering"],
+                
+                  "woodworking": ["crafting"],
+                  "smelting": ["crafting"],
+                  "weaving": ["crafting"],
+                
+                  "toolsmith": ["crafting", "upgrading"],
+                
+                  "enchanter": ["enchanting"]
+                },
+                iterations: ">0",
+                tier: "1-5"
+              }
             }}})
     return
   }
