@@ -1,5 +1,5 @@
 {
-  "weavingRecipes": {
+  "weaving": {
     "linenT1":{
       "unique":false,
       "amount": 1,
@@ -16,7 +16,7 @@
       "upgrades": []
     }
   },
-  "woodworkingRecipes": {
+  "woodworking": {
     "plankT1":{
       "unique":false,
       "amount": 1,
@@ -56,7 +56,7 @@
     }
   },
 
-  "smeltingRecipes": {
+  "smelting": {
     "coal":{
       "unique":false,
       "amount": 20,
@@ -67,7 +67,11 @@
       "ingredients": [
         {"required": true,
           "slot": [
-            {"resource": "woodT1", "amount": 5}
+            {"resource": "woodT1", "amount": 5},
+            {"resource": "woodT2", "amount": 6},
+            {"resource": "woodT3", "amount": 7},
+            {"resource": "woodT4", "amount": 8},
+            {"resource": "woodT5", "amount": 9}
           ]}
       
       ],
@@ -123,7 +127,7 @@
     }
   },
   
-  "toolsmithRecipes": {
+  "toolsmith": {
     "pickaxeT1":{
       "unique":true,
       "type": "tool",
@@ -138,17 +142,23 @@
       "ingredients": [
         {"required": true,
         "slot": [
-          {"resource": "ingotT1", "amount": 15}
+          {"resource": "ingotT1", "amount": 15},
+          {"resource": "chunk_uncommon", "amount": 1},
+          {"resource": "chunk_rare", "amount": 1},
+          {"resource": "chunk_epic", "amount": 1},
+          {"resource": "chunk_legendary", "amount": 1}
         ]},
   
         {"required": true,
         "slot": [
-          {"resource": "plankT1", "amount": 15}
+          {"resource": "plankT1", "amount": 15},
+          {"resource": "stick_uncommon", "amount": 1}
           ]},
           
         {"required": true,
         "slot": [
-          {"resource": "linenT1", "amount": 15}
+          {"resource": "linenT1", "amount": 15},
+          {"resource": "strand_uncommon", "amount": 1}
         ]} 
       ],
       "upgrades": [

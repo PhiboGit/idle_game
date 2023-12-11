@@ -33,7 +33,7 @@ async function increment(character, incrementForm = {}, setForm= {}, pushForm={}
       update,
       { 
         //new: true,
-        upsert: true // only for dev, to not delete, recreate database
+        upsert: true // only for dev; to not delete/recreate database; able to add new items to the inventory
        }
       )
     if (pushForm['items']){

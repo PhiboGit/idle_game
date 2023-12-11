@@ -36,44 +36,44 @@
   },
 
 
-  "ore_uncommon": {
+  "chunk_uncommon": {
     "name": "",
     "description": "",
     "craftingBonus": 2000
   },
-  "ore_rare":{
+  "chunk_rare":{
     "name": "",
     "description": "",
     "craftingBonus": 2250
   },
-  "ore_epic":{
+  "chunk_epic":{
     "name": "",
     "description": "",
     "craftingBonus": 2400
   },
-  "ore_legendary":{
+  "chunk_legendary":{
     "name": "",
     "description": "",
     "craftingBonus": 2500
   },
 
 
-  "fiber_uncommon": {
+  "strand_uncommon": {
     "name": "",
     "description": "",
     "craftingBonus": 2000
   },
-  "fiber_rare":{
+  "strand_rare":{
     "name": "",
     "description": "",
     "craftingBonus": 2250
   },
-  "fiber_epic":{
+  "strand_epic":{
     "name": "",
     "description": "",
     "craftingBonus": 2400
   },
-  "fiber_legendary":{
+  "strand_legendary":{
     "name": "",
     "description": "",
     "craftingBonus": 2500

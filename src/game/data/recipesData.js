@@ -9,25 +9,25 @@ function getRecipe(skillName, recipeName) {
 }
 
 function getWoodworkingRecipe(recipeName){
-  const woodworkingRecipes = recipesData["woodworkingRecipes"]
+  const woodworkingRecipes = recipesData["woodworking"]
   return woodworkingRecipes[recipeName]
 }
 
 function getSmeltingRecipe(recipeName){
-  const smeltingRecipes = recipesData["smeltingRecipes"]
+  const smeltingRecipes = recipesData["smelting"]
 
   return smeltingRecipes[recipeName]
 }
 
 
 function getWeavingRecipe(recipeName){
-  const weavingRecipes = recipesData["weavingRecipes"]
+  const weavingRecipes = recipesData["weaving"]
 
   return weavingRecipes[recipeName]
 }
 
 function getToolsmithRecipe(recipeName){
-  const toolsmithRecipes = recipesData["toolsmithRecipes"]
+  const toolsmithRecipes = recipesData["toolsmith"]
 
   return toolsmithRecipes[recipeName]
 }

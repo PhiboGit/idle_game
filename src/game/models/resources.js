@@ -81,6 +81,18 @@ const stick ={
   'stick_epic': {type: Number, default: 0}, 
   'stick_legendary': {type: Number, default: 0}, 
 }
+const chunk ={
+  'chunk_uncommon': {type: Number, default: 0}, 
+  'chunk_rare': {type: Number, default: 0}, 
+  'chunk_epic': {type: Number, default: 0}, 
+  'chunk_legendary': {type: Number, default: 0}, 
+}
+const strand ={
+  'strand_uncommon': {type: Number, default: 0}, 
+  'strand_rare': {type: Number, default: 0}, 
+  'strand_epic': {type: Number, default: 0}, 
+  'strand_legendary': {type: Number, default: 0}, 
+}
 
 const pickaxe = {
   "pickaxeT1_common": {type: Number, default: 0},
@@ -116,6 +128,6 @@ const pickaxe = {
 
 const items = {...pickaxe}
 
-const resources = { ...gatheredMaterials, ...refinedMaterials, ...charms, ...statCharms, ...sap, ...stick,...items}
+const resources = { ...gatheredMaterials, ...refinedMaterials, ...charms, ...statCharms, ...sap, ...stick, ...chunk, ...strand, ...items}
 
 module.exports = {resources}

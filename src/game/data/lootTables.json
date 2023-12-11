@@ -55,6 +55,7 @@
     "maxRoll": 1000000,
     "luck": true,
     "loot": [
+      {"roll": 1001000 ,"item": "[LTID]Chunk", "min" : 1, "max": 1 }
     ]
   },
   "VeinT2" : {
@@ -62,6 +63,7 @@
     "maxRoll": 1000000,
     "luck": true,
     "loot": [
+      {"roll": 1001000 ,"item": "[LTID]Chunk", "min" : 1, "max": 1 }
     ]
   },
   "VeinT3" : {
@@ -69,6 +71,7 @@
     "maxRoll": 1000000,
     "luck": true,
     "loot": [
+      {"roll": 1001000 ,"item": "[LTID]Chunk", "min" : 1, "max": 1 }
     ]
   },
   "VeinT4" : {
@@ -76,6 +79,7 @@
     "maxRoll": 1000000,
     "luck": true,
     "loot": [
+      {"roll": 1001000 ,"item": "[LTID]Chunk", "min" : 1, "max": 1 }
     ]
   },
   "VeinT5" : {
@@ -83,6 +87,7 @@
     "maxRoll": 1000000,
     "luck": true,
     "loot": [
+      {"roll": 1001000 ,"item": "[LTID]Chunk", "min" : 1, "max": 1 }
     ]
   },
 
@@ -91,6 +96,7 @@
     "maxRoll": 1000000,
     "luck": true,
     "loot": [
+      {"roll": 1001000 ,"item": "[LTID]Strand", "min" : 1, "max": 1 }
     ]
   },
   "PlantT2" : {
@@ -98,6 +104,7 @@
     "maxRoll": 1000000,
     "luck": true,
     "loot": [
+      {"roll": 1001000 ,"item": "[LTID]Strand", "min" : 1, "max": 1 }
     ]
   },
   "PlantT3" : {
@@ -105,6 +112,7 @@
     "maxRoll": 1000000,
     "luck": true,
     "loot": [
+      {"roll": 1001000 ,"item": "[LTID]Strand", "min" : 1, "max": 1 }
     ]
   },
   "PlantT4" : {
@@ -112,6 +120,7 @@
     "maxRoll": 1000000,
     "luck": true,
     "loot": [
+      {"roll": 1001000 ,"item": "[LTID]Strand", "min" : 1, "max": 1 }
     ]
   },
   "PlantT5" : {
@@ -119,6 +128,7 @@
     "maxRoll": 1000000,
     "luck": true,
     "loot": [
+      {"roll": 1001000 ,"item": "[LTID]Strand", "min" : 1, "max": 1 }
     ]
   },
 
@@ -162,6 +172,32 @@
       {"weight": 30, "item": "stick_rare", "min" : 1, "max" :1},
       {"weight": 15, "item": "stick_epic", "min" : 1, "max" :1},
       {"weight": 5, "item": "stick_legendary", "min" : 1, "max" :1}
+    ]
+  },
+
+  "Chunk":{
+    "type": "weights",
+    "limitByLuck": [0 , 1200, 3000, 5000, 7500 ],
+    "startLimit":  [0, 0, 0, 0, 0],
+    "endLimit":    [45, 20, 10, 4 , 0],
+    "loot": [
+      {"weight": 50, "item": "chunk_uncommon", "min" : 1, "max" :1},
+      {"weight": 30, "item": "chunk_rare", "min" : 1, "max" :1},
+      {"weight": 15, "item": "chunk_epic", "min" : 1, "max" :1},
+      {"weight": 5, "item": "chunk_legendary", "min" : 1, "max" :1}
+    ]
+  },
+
+  "Strand":{
+    "type": "weights",
+    "limitByLuck": [0 , 1200, 3000, 5000, 7500 ],
+    "startLimit":  [0, 0, 0, 0, 0],
+    "endLimit":    [45, 20, 10, 4 , 0],
+    "loot": [
+      {"weight": 50, "item": "strand_uncommon", "min" : 1, "max" :1},
+      {"weight": 30, "item": "strand_rare", "min" : 1, "max" :1},
+      {"weight": 15, "item": "strand_epic", "min" : 1, "max" :1},
+      {"weight": 5, "item": "strand_legendary", "min" : 1, "max" :1}
     ]
   }
 }
