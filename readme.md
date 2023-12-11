@@ -63,6 +63,7 @@ Do this to run the project:
 
  run server in new terminal: `npm run dev`
 
+ The server runs locally in wsl: The IP address: `ip addr | grep eth0` returns `inet 192.168.81.169/20` where `192.168.81.169` is the IP the server runs on.
 
  # Test with postman
 
