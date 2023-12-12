@@ -188,6 +188,249 @@
           {"resource": "miningSpeedCharm", "amount": 1}
           ]} 
       ]
+    },
+    "pickaxeT2":{
+      "unique":true,
+      "type": "tool",
+      "subtype": "pickaxe",
+      "tier": 2,
+      "equipLevel": 20,
+      "amount": 1,
+      "level": 20,
+      "time": 20000,
+      "exp": 10,
+      "expChar": 5,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "ingotT2", "amount": 15},
+          {"resource": "chunk_uncommon", "amount": 1},
+          {"resource": "chunk_rare", "amount": 1},
+          {"resource": "chunk_epic", "amount": 1},
+          {"resource": "chunk_legendary", "amount": 1}
+        ]},
+  
+        {"required": true,
+        "slot": [
+          {"resource": "plankT2", "amount": 15},
+          {"resource": "stick_uncommon", "amount": 1}
+          ]},
+          
+        {"required": true,
+        "slot": [
+          {"resource": "linenT2", "amount": 15},
+          {"resource": "strand_uncommon", "amount": 1}
+        ]} 
+      ],
+      "upgrades": [
+        {"required": true,
+        "slot": [
+          {"resource": "pickaxeT2_common", "amount": 1},
+          {"resource": "pickaxeT2_uncommon", "amount": 1},
+          {"resource": "pickaxeT2_rare", "amount": 1},
+          {"resource": "pickaxeT2_epic", "amount": 1},
+          {"resource": "pickaxeT2_legendary", "amount": 1}
+          ]},
+
+
+        {"required": false,
+        "slot": [
+          {"resource": "miningLuckCharm", "amount": 1},
+          {"resource": "miningYieldCharm", "amount": 1},
+          {"resource": "miningExpCharm", "amount": 1},
+          {"resource": "miningSpeedCharm", "amount": 1}
+          ]},
+          
+        {"required": false,
+        "slot": [
+          {"resource": "miningLuckCharm", "amount": 1},
+          {"resource": "miningYieldCharm", "amount": 1},
+          {"resource": "miningExpCharm", "amount": 1},
+          {"resource": "miningSpeedCharm", "amount": 1}
+          ]} 
+      ]
+    },
+    "pickaxeT3":{
+      "unique":true,
+      "type": "tool",
+      "subtype": "pickaxe",
+      "tier": 3,
+      "equipLevel": 30,
+      "amount": 1,
+      "level": 30,
+      "time": 20000,
+      "exp": 10,
+      "expChar": 5,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "ingotT3", "amount": 15},
+          {"resource": "chunk_uncommon", "amount": 1},
+          {"resource": "chunk_rare", "amount": 1},
+          {"resource": "chunk_epic", "amount": 1},
+          {"resource": "chunk_legendary", "amount": 1}
+        ]},
+  
+        {"required": true,
+        "slot": [
+          {"resource": "plankT3", "amount": 15},
+          {"resource": "stick_uncommon", "amount": 1}
+          ]},
+          
+        {"required": true,
+        "slot": [
+          {"resource": "linenT3", "amount": 15},
+          {"resource": "strand_uncommon", "amount": 1}
+        ]} 
+      ],
+      "upgrades": [
+        {"required": true,
+        "slot": [
+          {"resource": "pickaxeT3_common", "amount": 1},
+          {"resource": "pickaxeT3_uncommon", "amount": 1},
+          {"resource": "pickaxeT3_rare", "amount": 1},
+          {"resource": "pickaxeT3_epic", "amount": 1},
+          {"resource": "pickaxeT3_legendary", "amount": 1}
+          ]},
+
+
+        {"required": false,
+        "slot": [
+          {"resource": "miningLuckCharm", "amount": 1},
+          {"resource": "miningYieldCharm", "amount": 1},
+          {"resource": "miningExpCharm", "amount": 1},
+          {"resource": "miningSpeedCharm", "amount": 1}
+          ]},
+          
+        {"required": false,
+        "slot": [
+          {"resource": "miningLuckCharm", "amount": 1},
+          {"resource": "miningYieldCharm", "amount": 1},
+          {"resource": "miningExpCharm", "amount": 1},
+          {"resource": "miningSpeedCharm", "amount": 1}
+          ]} 
+      ]
+    },
+    "pickaxeT4":{
+      "unique":true,
+      "type": "tool",
+      "subtype": "pickaxe",
+      "tier": 4,
+      "equipLevel": 40,
+      "amount": 1,
+      "level": 40,
+      "time": 20000,
+      "exp": 10,
+      "expChar": 5,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "ingotT4", "amount": 15},
+          {"resource": "chunk_uncommon", "amount": 1},
+          {"resource": "chunk_rare", "amount": 1},
+          {"resource": "chunk_epic", "amount": 1},
+          {"resource": "chunk_legendary", "amount": 1}
+        ]},
+  
+        {"required": true,
+        "slot": [
+          {"resource": "plankT4", "amount": 15},
+          {"resource": "stick_uncommon", "amount": 1}
+          ]},
+          
+        {"required": true,
+        "slot": [
+          {"resource": "linenT4", "amount": 15},
+          {"resource": "strand_uncommon", "amount": 1}
+        ]} 
+      ],
+      "upgrades": [
+        {"required": true,
+        "slot": [
+          {"resource": "pickaxeT4_common", "amount": 1},
+          {"resource": "pickaxeT4_uncommon", "amount": 1},
+          {"resource": "pickaxeT4_rare", "amount": 1},
+          {"resource": "pickaxeT4_epic", "amount": 1},
+          {"resource": "pickaxeT4_legendary", "amount": 1}
+          ]},
+
+
+        {"required": false,
+        "slot": [
+          {"resource": "miningLuckCharm", "amount": 1},
+          {"resource": "miningYieldCharm", "amount": 1},
+          {"resource": "miningExpCharm", "amount": 1},
+          {"resource": "miningSpeedCharm", "amount": 1}
+          ]},
+          
+        {"required": false,
+        "slot": [
+          {"resource": "miningLuckCharm", "amount": 1},
+          {"resource": "miningYieldCharm", "amount": 1},
+          {"resource": "miningExpCharm", "amount": 1},
+          {"resource": "miningSpeedCharm", "amount": 1}
+          ]} 
+      ]
+    },"pickaxeT5":{
+      "unique":true,
+      "type": "tool",
+      "subtype": "pickaxe",
+      "tier": 5,
+      "equipLevel": 50,
+      "amount": 1,
+      "level": 50,
+      "time": 20000,
+      "exp": 10,
+      "expChar": 5,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "ingotT5", "amount": 15},
+          {"resource": "chunk_uncommon", "amount": 1},
+          {"resource": "chunk_rare", "amount": 1},
+          {"resource": "chunk_epic", "amount": 1},
+          {"resource": "chunk_legendary", "amount": 1}
+        ]},
+  
+        {"required": true,
+        "slot": [
+          {"resource": "plankT5", "amount": 15},
+          {"resource": "stick_uncommon", "amount": 1}
+          ]},
+          
+        {"required": true,
+        "slot": [
+          {"resource": "linenT5", "amount": 15},
+          {"resource": "strand_uncommon", "amount": 1}
+        ]} 
+      ],
+      "upgrades": [
+        {"required": true,
+        "slot": [
+          {"resource": "pickaxeT5_common", "amount": 1},
+          {"resource": "pickaxeT5_uncommon", "amount": 1},
+          {"resource": "pickaxeT5_rare", "amount": 1},
+          {"resource": "pickaxeT5_epic", "amount": 1},
+          {"resource": "pickaxeT5_legendary", "amount": 1}
+          ]},
+
+
+        {"required": false,
+        "slot": [
+          {"resource": "miningLuckCharm", "amount": 1},
+          {"resource": "miningYieldCharm", "amount": 1},
+          {"resource": "miningExpCharm", "amount": 1},
+          {"resource": "miningSpeedCharm", "amount": 1}
+          ]},
+          
+        {"required": false,
+        "slot": [
+          {"resource": "miningLuckCharm", "amount": 1},
+          {"resource": "miningYieldCharm", "amount": 1},
+          {"resource": "miningExpCharm", "amount": 1},
+          {"resource": "miningSpeedCharm", "amount": 1}
+          ]} 
+      ]
     }
   }
 }
