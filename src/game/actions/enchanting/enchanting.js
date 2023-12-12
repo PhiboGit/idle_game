@@ -94,7 +94,7 @@ async function enchanting(character, skillName, task, itemId, enchantingResource
     console.log(`${character} does not have the required resources. has ${inventoryValue} ${enchantingResource} but needs 1!`);
     return false
   }
-  incrementData[`resources.${item.resource}`] = -1
+  incrementData[`resources.${enchantingResource}`] = -1
   
   switch (item.type) {
     case "tool":
