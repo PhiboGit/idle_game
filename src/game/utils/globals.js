@@ -1,5 +1,5 @@
 
-const gameSpeed = 100
+const gameSpeed = 10
 
 function getSpeedModifier(){
   return 1/gameSpeed
