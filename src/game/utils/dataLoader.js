@@ -7,7 +7,7 @@ const gatheringResources_filepath = path.join(__dirname, '../data/gatheringResou
 const gatheringEXP_filepath = path.join(__dirname, '../data/EXP.json')
 const recipes_filepath = path.join(__dirname, '../data/recipes.json')
 const lootTables_filepath = path.join(__dirname, '../data/lootTables.json')
-const craftingMaterials_filepath = path.join(__dirname, '../data/items/craftingMaterials.json')
+const craftingMaterials_filepath = path.join(__dirname, '../data/resourceDetails/craftingMaterials.json')
 const enchanting_filepath = path.join(__dirname, '../data/enchanting.json')
 
 const regionData = loadJSONData(region_filepath);

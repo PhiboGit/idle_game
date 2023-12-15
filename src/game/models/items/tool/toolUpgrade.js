@@ -1,7 +1,7 @@
 const Tool = require('./tool')
 const { rollRange, weightedChoiceRemoved} = require('../../../utils/randomDice')
 const {getRarityNumber, rarityEvents} = require('../itemUtils')
-const {getCraftingMaterials} = require('../../../data/items/craftingMaterials')
+const {getCraftingMaterials} = require('../../../data/resourceDetails/craftingMaterials')
 
 /**
  * 

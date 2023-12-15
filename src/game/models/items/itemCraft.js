@@ -1,5 +1,5 @@
 const {weightedChoice, adjustWeights} = require('../../utils/randomDice')
-const {getCraftingMaterials} = require('../../data/items/craftingMaterials')
+const {getCraftingMaterials} = require('../../data/resourceDetails/craftingMaterials')
 const {rarityEvents} = require('./itemUtils')
 
 
