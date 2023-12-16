@@ -69,4 +69,6 @@ Do this to run the project:
 
  1. download and install postman: https://www.postman.com/downloads/
 
- 2. 
+ 2. ???
+
+ 3. profit
