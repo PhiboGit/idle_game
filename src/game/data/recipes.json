@@ -103,7 +103,7 @@
     "ingotT2":{
       "unique":false,
       "amount": 1,
-      "level": 0,
+      "level": 15,
       "time": 20000,
       "exp": 10,
       "expChar": 5,
