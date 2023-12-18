@@ -137,8 +137,8 @@
       "amount": 1,
       "level": 0,
       "time": 20000,
-      "exp": 10,
-      "expChar": 5,
+      "exp": 1000,
+      "expChar": 500,
       "ingredients": [
         {"required": true,
         "slot": [
@@ -152,13 +152,19 @@
         {"required": true,
         "slot": [
           {"resource": "plankT1", "amount": 15},
-          {"resource": "stick_uncommon", "amount": 1}
+          {"resource": "stick_uncommon", "amount": 1},
+          {"resource": "stick_rare", "amount": 1},
+          {"resource": "stick_epic", "amount": 1},
+          {"resource": "stick_legendary", "amount": 1}
           ]},
           
         {"required": true,
         "slot": [
           {"resource": "linenT1", "amount": 15},
-          {"resource": "strand_uncommon", "amount": 1}
+          {"resource": "strand_uncommon", "amount": 1},
+          {"resource": "strand_rare", "amount": 1},
+          {"resource": "strand_epic", "amount": 1},
+          {"resource": "strand_legendary", "amount": 1}
         ]} 
       ],
       "upgrades": [
