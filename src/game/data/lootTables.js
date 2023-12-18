@@ -4,10 +4,11 @@ const {lootTables} = require('../utils/dataLoader')
 function rollTable(table, luck){
 
   roll = rollDice(table.maxRoll) + (table.luck ? luck : 0)
-  console.log('rollTable: ', roll)
+  console.log('rollTable: you rolled a: ', roll, table.maxRoll + (table.luck ? luck : 0))
 
   const re = []
   for (const loot of table.loot){
+    console.log('rollTable: you need a: ', loot.roll)
     if (roll >= loot.roll){
       re.push({"item": loot.item, "amount": rollRange(loot.min, loot.max)})
     }
