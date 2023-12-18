@@ -1,0 +1,16 @@
+{
+  "equipments": {
+    "rarityEvents": ["common", "uncommon", "rare", "epic", "legendary"],
+    "rarityWeights": [8000, 1500, 400, 90, 10],
+    "defaultWindow": [0,2000],
+    "professionLevel": {
+      "end": -200,
+      "start": 0
+    },
+    "itemLevel": {
+      "end": 200,
+      "start": 0
+    }
+  }
+
+}
