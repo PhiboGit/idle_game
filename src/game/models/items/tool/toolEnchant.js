@@ -23,11 +23,11 @@ async function enchantTool(tool, enchantingResource, characterSkill){
   const currentEnchantingLevel = tool.enchantingLevel
   const rarity = enchantingResource.split('_')[1];
   let chances = enchantingBonus[getRarityNumber(rarity)]
-  chances[0] = Math.max(0, chances[0] - Math.floor(characterSkill.level / 20) + Math.floor(currentEnchantingLevel / 2))
-  chances[1] = Math.max(0, chances[1] - Math.floor(characterSkill.level / 10) + Math.floor(currentEnchantingLevel / 2))
-  chances[2] = Math.max(0, chances[2] + Math.floor(characterSkill.level / 1)  - Math.floor(currentEnchantingLevel / 2))
-  chances[3] = Math.max(0, chances[3] + Math.floor(characterSkill.level / 25) - Math.floor(currentEnchantingLevel / 2))
-  chances[4] = Math.max(0, chances[4] + Math.floor(characterSkill.level / 50) - Math.floor(currentEnchantingLevel / 2))
+  chances[0] = Math.max(0, chances[0] - Math.floor(characterSkill.level / 20) + Math.floor(currentEnchantingLevel / 2)) // -2 enchanting level
+  chances[1] = Math.max(0, chances[1] - Math.floor(characterSkill.level / 10) + Math.floor(currentEnchantingLevel / 2)) // -1 enchanting level
+  chances[2] = Math.max(0, chances[2] + Math.floor(characterSkill.level / 1)  - Math.floor(currentEnchantingLevel / 2)) //  1 enchanting level
+  chances[3] = Math.max(0, chances[3] + Math.floor(characterSkill.level / 25) - Math.floor(currentEnchantingLevel / 2)) //  2 enchanting level
+  chances[4] = Math.max(0, chances[4] + Math.floor(characterSkill.level / 50) - Math.floor(currentEnchantingLevel / 2)) //  3 enchanting level
 
   console.log("Enchanting chances: ", chances)
   const roll = weightedChoice(chancesEvents, 1, chances)[0]
