@@ -1,6 +1,6 @@
-const Tool = require('./tool')
-const {weightedChoice} = require('../../../utils/randomDice')
-const {getRarityNumber} = require('../itemUtils')
+const Item = require('../item')
+const {weightedChoice} = require('../../utils/randomDice')
+const {getRarityNumber} = require('./itemUtils')
 
 
 const chancesEvents = [-2, -1, 1, 2, 3]
@@ -14,13 +14,13 @@ const enchantingBonus = [
 
 /**
  * 
- * @param {Tool} tool 
+ * @param {Item} item 
  * @param {String} enchantingResource 
  * @param {*} characterSkill 
  */
-async function enchantTool(tool, enchantingResource, characterSkill){
-  console.log("enchant tool...", tool)
-  const currentEnchantingLevel = tool.enchantingLevel
+async function enchantItem(item, enchantingResource, characterSkill){
+  console.log("enchant item...", item)
+  const currentEnchantingLevel = item.enchantingLevel
   const rarity = enchantingResource.split('_')[1];
   let chances = enchantingBonus[getRarityNumber(rarity)]
   chances[0] = Math.max(0, chances[0] - Math.floor(characterSkill.level / 20) + Math.floor(currentEnchantingLevel / 2)) // -2 enchanting level
@@ -33,9 +33,9 @@ async function enchantTool(tool, enchantingResource, characterSkill){
   const roll = weightedChoice(chancesEvents, 1, chances)[0]
   console.log("Enchanting roll: ", roll)
 
-  tool.enchantingLevel = Math.max(0, currentEnchantingLevel + roll)
-  console.log("enchant tool: ", tool)
-  await tool.save()
+  item.enchantingLevel = Math.max(0, currentEnchantingLevel + roll)
+  console.log("enchant item: ", item)
+  await item.save()
 }
 
-module.exports = {enchantTool}
+module.exports = {enchantItem}

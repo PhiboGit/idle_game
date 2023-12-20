@@ -11,12 +11,6 @@ const equipmentSlots = [
   "tool"
 ]
 
-const validSubtype = {
-  "mining": ["pickaxe"],
-  "woodcutting": ["axe"],
-  "harvesting": ["sickle"],
-}
-
 function verifyEquip(msg){
   if((msg && 
     msg.type && typeof msg.type === 'string' && msg.type === 'equip' &&
@@ -78,6 +72,16 @@ async function handleEquip(character, msg){
     return
   }
 
+  
+  if (!(skillSlot == item.skill)) {
+    senderMediator.publish('error', {character: character,
+      msg: {message: "You cannot equip this item here!",
+      info: {
+        
+      }}})
+    return
+  }
+    
   if (!(item.type == equipSlot)) {
     senderMediator.publish('error', {character: character,
       msg: {message: "You cannot equip this item in this slot!",
@@ -86,17 +90,17 @@ async function handleEquip(character, msg){
       }}})
     return
   }
-
-  if (!(validSubtype[`${skillSlot}`].includes(item.subtype))) {
-    senderMediator.publish('error', {character: character,
-      msg: {message: "You cannot equip this item here!",
-      info: {
-        
-      }}})
-    return
+  
+  let skill
+  switch (item.subtype) {
+    case "gathering":
+      skill = await CharacterService.getGatheringSkill(character, skillSlot)
+      break;
+  
+    default:
+      console.error("skill subtype does not exist", item.subtype)
+      break;
   }
-      
-  const skill = await CharacterService.getSkill(character, skillSlot)
 
   if (!(skill.level >= item.level)) {
     senderMediator.publish('error', {character: character,
@@ -119,7 +123,7 @@ async function handleEquip(character, msg){
   }
 
   
-  CharacterService.equipSkillItem(character, itemId, skillSlot, equipSlot)
+  CharacterService.equipItem(character, itemId, skillSlot, equipSlot)
   console.log("Handling Equip successfully!")
 }
 

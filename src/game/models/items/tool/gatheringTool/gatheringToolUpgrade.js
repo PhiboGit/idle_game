@@ -1,7 +1,7 @@
-const Tool = require('./tool')
-const { rollRange, weightedChoiceRemoved} = require('../../../utils/randomDice')
-const {getRarityNumber, rarityEvents} = require('../itemUtils')
-const {getCraftingMaterials} = require('../../../data/resourceDetails/craftingMaterials')
+const GatheringTool = require('./gatheringTool')
+const { rollRange, weightedChoiceRemoved} = require('../../../../utils/randomDice')
+const {getRarityNumber, rarityEvents} = require('../../itemUtils')
+const {getCraftingMaterials} = require('../../../../data/resourceDetails/craftingMaterials')
 
 /**
  * 
@@ -29,7 +29,7 @@ function getBaseSpeed(tier, rarity) {
 
 /**
  * 
- * @param {Tool} tool 
+ * @param {GatheringTool} tool 
  * @param {[String]} selectedResources 
  */
 function applyBonus(tool, selectedResources){
@@ -102,9 +102,11 @@ function applyBonus(tool, selectedResources){
  * @param {*} characterSkill 
  * @returns 
  */
-async function upgradeTool(recipeName, recipe, selectedUpgrades, characterSkill){
+async function upgradeGatheringTool(recipeName, recipe, selectedUpgrades, characterSkill){
+  const name = recipe["name"]
   const type = recipe["type"]
   const subtype = recipe["subtype"]
+  const skill = recipe["skill"]
   const tier = recipe["tier"]
   const level = recipe["equipLevel"]
   
@@ -118,7 +120,8 @@ async function upgradeTool(recipeName, recipe, selectedUpgrades, characterSkill)
   const baseSpeed = getBaseSpeed(tier, rarity)
   
   // craft item
-  const tool = new Tool(subtype, level, tier, rarity, baseSpeed)
+
+  const tool = new GatheringTool(name, skill, level, tier, rarity, baseSpeed)
   applyBonus(tool, selectedUpgrades)
 
   console.log(tool)
@@ -128,4 +131,4 @@ async function upgradeTool(recipeName, recipe, selectedUpgrades, characterSkill)
   return toolDB._id
 }
 
-module.exports = {upgradeTool}
+module.exports = {upgradeGatheringTool}

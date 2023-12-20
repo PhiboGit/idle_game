@@ -1,7 +1,7 @@
 const CharacterService = require('../../models/services/characterService')
 const {enchantingProfession} = require('../../utils/dataLoader')
 const {getActionTime, initAction} = require('../actionUtils')
-const {enchantTool} = require('../../models/items/tool/toolEnchant')
+const {enchantItem} = require('../../models/items/itemEnchant')
 
 async function validate(character, actionObject) {
   return new Promise(async (resolve, reject) => {
@@ -33,7 +33,7 @@ async function validate(character, actionObject) {
       reject('level');
     }
 
-    const itemName = `${item.subtype}T${item.tier}`
+    const itemName = item.name
     if(!itemName == enchantingResource.split('_')[0]){
       console.log(`Cannot enchant the selected item ${itemName} with ${enchantingResource}!`)
       reject('ingredient');
@@ -96,15 +96,8 @@ async function enchanting(character, skillName, task, itemId, enchantingResource
   }
   incrementData[`resources.${enchantingResource}`] = -1
   
-  switch (item.type) {
-    case "tool":
-      await enchantTool(item, enchantingResource, characterSkill)
-      break;
-  
-    default:
-      console.error(`Cannot enchant ${item.type}!`);
-      break;
-  }
+
+  await enchantItem(item, enchantingResource, characterSkill)
 	// At last update all the values for the character.
 	await CharacterService.increment(character, incrementData, {}, {}, {})
   await CharacterService.itemUpdate(character, [item._id])

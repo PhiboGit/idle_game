@@ -3,7 +3,7 @@ const {getRecipe} = require('../../data/recipesData')
 const {verifyRecipe} = require('./craftingUtils')
 const {getActionTime, initAction} = require('../actionUtils')
 const {craft} = require('../../models/items/itemCraft')
-const {upgradeTool} = require('../../models/items/tool/toolUpgrade')
+const {upgradeItem} = require('../../models/items/itemUpgrade')
 
 async function validate(character, actionObject) {
   return new Promise(async (resolve, reject) => {
@@ -112,16 +112,12 @@ async function crafting(character, skillName, task, recipeName, selectedResource
       incrementData[`resources.${itemName}`] = recipe.amount
     }
     else if(task == "upgrading"){
-      switch (recipe.type) {
-        case "tool":
-          const itemId = await upgradeTool(recipeName, recipe, selectedResources, characterSkill)
+      if (recipe.type) {
+          const itemId = await upgradeItem(recipeName, recipe, selectedResources, characterSkill)
           pushData['items'] = itemId
-          break;
-      
-        default:
-          console.error(`Unable to upgrade ${recipe.type}!`)
-          break;
-      }
+      }else{
+        console.error(`Unable to upgrade ${recipeName}!`)
+      }  
     }
   }
 	// At last update all the values for the character.

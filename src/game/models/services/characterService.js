@@ -163,40 +163,6 @@ function getFieldValue(doc, fieldPath) {
   return value;
 }
 
-/**
- * 
- * @param {String} character 
- * @param {String} skill 
- * @returns 
- */
-async function getSkill(character, skill){
-  const select = `skills.${skill}`
-  const characterSkill = await Character.findOne({characterName: character}, select).lean()
-  
-  const skillSheet = {
-    level: characterSkill.skills?.[skill]?.level || 0,
-    luck: characterSkill.skills?.[skill]?.luck || 0,
-    speed: characterSkill.skills?.[skill]?.speed || 0,
-    yieldMax: 0,
-    yieldMin: 0,
-    exp:  0,
-  }
-  
-  const toolID = characterSkill.skills?.[skill]?.equipment?.tool
-  if (toolID) {
-    // If toolId exists, add stats to the skillsheet
-    const tool = await Item.findById(toolID)
-
-    skillSheet.speed += (tool.properties?.speed || 0) / 100
-    skillSheet.speed += (tool.properties?.speedBonus || 0) / 100
-    skillSheet.yieldMax += (tool.properties?.yieldMax || 0)
-    skillSheet.exp += (tool.properties?.expBonus || 0) / 100
-
-    skillSheet.luck += tool.properties?.luckBonus || 0
-  }
-  return skillSheet
-}
-
 
 /**
  * 
@@ -288,7 +254,7 @@ async function getEnchantingSkill(character, skill){
   return skillSheet
 }
 
-async function equipSkillItem(character, itemId, skillName, slotType){
+async function equipItem(character, itemId, skillName, slotType){
   let update = {}
   update['$set'] = {
     [`skills.${skillName}.equipment.${slotType}`]: itemId,
@@ -320,19 +286,13 @@ async function equipSkillItem(character, itemId, skillName, slotType){
 
 async function isItemEquiped(character, itemId) {
   const item = await getItem(itemId)
-  const itemType = item.type
-  const itemSubType = item.subtype
+  const itemSkill = item.skill
+  const itemSlot = item.type
 
-  const validSubtypeSkill = {
-    "pickaxe": "mining",
-    "axe": "woodcutting",
-    "sickle": "harvesting",
-  }
   const characterDB = await findCharacter(character)
-  const validSkill = validSubtypeSkill[itemSubType]
 
-  //check if the item is at a valid subtype skill equiped
-  const equipedItemId = characterDB.skills[validSkill].equipment.tool
+  //check if the item is at a valid skill equiped
+  const equipedItemId = characterDB.skills[itemSkill].equipment[itemSlot]
   console.log("Equipment item id: ", equipedItemId)
 
   return (equipedItemId == itemId)
@@ -373,4 +333,4 @@ async function getActiveAction(character){
   return runningActionName
 }
 
-module.exports = {increment, getSkill, isItemEquiped,deleteItem, findCharacter, getFieldValue,getGatheringSkill,getCraftingSkill,getEnchantingSkill, updateActionManager, getAll, getItem, equipSkillItem, getAllItemsFromCharacter, getActiveAction, itemUpdate}
+module.exports = {increment, isItemEquiped,deleteItem, findCharacter, getFieldValue,getGatheringSkill,getCraftingSkill,getEnchantingSkill, updateActionManager, getAll, getItem, equipItem, getAllItemsFromCharacter, getActiveAction, itemUpdate}
