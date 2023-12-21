@@ -97,10 +97,10 @@ async function handleEquip(character, msg){
   }
   
   
-  skillLevel = await CharacterService.getSkillLevel(character, skillSlot)
+  skillData = await CharacterService.getSkillData(character, skillSlot)
   
 
-  if (!(skillLevel >= item.level)) {
+  if (!(skillData.level >= item.level)) {
     senderMediator.publish('error', {character: character,
       msg: {message: "You do not have the required level!",
       info: {

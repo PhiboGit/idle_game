@@ -11,6 +11,7 @@ const lootTables_filepath = path.join(__dirname, '../data/lootTables.json')
 const craftingMaterials_filepath = path.join(__dirname, '../data/resourceDetails/craftingMaterials.json')
 const enchanting_filepath = path.join(__dirname, '../data/enchanting.json')
 const craftingTable_filepath = path.join(__dirname, '../data/craftingTable.json')
+const upgradingData_filepath = path.join(__dirname, '../data/upgrading.json')
 
 const regionData = loadJSONData(region_filepath);
 const gatheringEXPData = loadJSONData(gatheringEXP_filepath);
@@ -21,6 +22,7 @@ const lootTables = loadJSONData(lootTables_filepath)
 const craftingMaterials = loadJSONData(craftingMaterials_filepath)
 const enchantingProfession = loadJSONData(enchanting_filepath)
 const craftingTable = loadJSONData(craftingTable_filepath)
+const upgradeData = loadJSONData(upgradingData_filepath)
 
 function loadJSONData(filePath) {
     try {
@@ -63,4 +65,4 @@ if (isValid) {
     console.log('JSON data is not valid according to the schema:', validate.errors);
 }
 
-module.exports = {regionData,recipesData, refiningRecipes, gatheringEXPData, gatheringResourcesData, lootTables, craftingMaterials, enchantingProfession, craftingTable};
+module.exports = {regionData,recipesData, refiningRecipes, gatheringEXPData, gatheringResourcesData, upgradeData, lootTables, craftingMaterials, enchantingProfession, craftingTable};

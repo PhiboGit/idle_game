@@ -11,11 +11,12 @@ class GatheringTool extends Item {
     this.tier = tier;
     this.rarity = rarity;
     this.properties = {
-      baseSpeed, // Float 0.05 or 2.45 which gives a 5% or 245% speed
-      speedBonus: 0, // Float 0-1 applies percentage bonus to baseSpeed, boosts the effectivity of baseSpeed
-      luckBonus: 0, // Flat luck value of 0 - 2500
-      yieldMax: 0, // Float 0-5, applies to maxRoll
-      expBonus: 0, // Float 0-1 applies to exp
+      baseSpeed, // integer percent which gives a 5% or 245% speed
+      
+      speed: 0, // integer applies percentage bonus to baseSpeed, boosts the effectivity of baseSpeed
+      luck: 0, // Flat luck value of 0 - 2500
+      yieldMax: 0, // int 0-5, applies to maxRoll
+      exp: 0, // int percent applies to exp
 
       con: 0, // constitution
       str: 0, // strength

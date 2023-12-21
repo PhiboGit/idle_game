@@ -1,26 +1,11 @@
 const mongoose = require('mongoose')
 
 
-const skill = {
-  exp: {type: Number, default: 0},
-  level: {type: Number, default: 0},
-  luck: {type: Number, default: 0},
-  speed: {type: Number, default: 0},
-  equipment: {
-    tool: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Item', // Reference to the Item model
-      default: null
-    },
-  }
-}
-
 const refiningSkill = {
   exp: {type: Number, default: 0},
   level: {type: Number, default: 0},
+  luck: {type: Number, default: 0},
 
-  speed: {type: Number, default: 0},
-  expBonus: {type: Number, default: 0},
 
   equipment: {
     tool: {
@@ -59,9 +44,8 @@ const refiningSkill = {
 const craftingSkill = {
   exp: {type: Number, default: 0},
   level: {type: Number, default: 0},
+  luck: {type: Number, default: 0},
 
-  speed: {type: Number, default: 0},
-  expBonus: {type: Number, default: 0},
 
   equipment: {
     tool: {
@@ -100,13 +84,8 @@ const craftingSkill = {
 const gatheringSkill = {
   exp: {type: Number, default: 0},
   level: {type: Number, default: 0},
-
-  speed: {type: Number, default: 0},
-  expBonus: {type: Number, default: 0},
-
   luck: {type: Number, default: 0},
-  yieldMin: {type: Number, default: 0},
-  yieldMax: {type: Number, default: 0},
+
   equipment: {
     tool: {
       type: mongoose.Schema.Types.ObjectId,
@@ -144,9 +123,7 @@ const gatheringSkill = {
 const enchantingSkill = {
   exp: {type: Number, default: 0},
   level: {type: Number, default: 0},
-
-  speed: {type: Number, default: 0},
-  expBonus: {type: Number, default: 0},
+  luck: {type: Number, default: 0},
 
   equipment: {
     tool: {

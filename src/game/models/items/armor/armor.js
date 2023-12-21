@@ -14,10 +14,10 @@ class Armor extends Item {
       resistance: resistance,
       armor: armor,
 
-      speedBonus: 0, // Float 0-1 applies percentage bonus to baseSpeed, boosts the effectivity of baseSpeed
-      luckBonus: 0, // Flat luck value of 0 - 2500
-      yieldMax: 0, // Float 0-5, applies to maxRoll
-      expBonus: 0, // Float 0-1 applies to exp
+      speed: 0, // integer percentage applies percentage bonus to baseSpeed, boosts the effectivity of baseSpeed
+      luck: 0, // Flat luck value of 0 - 2500
+      yieldMax: 0, // int 0-5, applies to maxRoll
+      exp: 0, // int percentage 1-25 applies to exp
 
       con: 0, // constitution
       str: 0, // strength

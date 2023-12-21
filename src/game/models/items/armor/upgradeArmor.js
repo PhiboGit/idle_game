@@ -2,6 +2,7 @@ const Armor = require('./armor')
 const { rollRange, weightedChoiceRemoved} = require('../../../utils/randomDice')
 const {getRarityNumber, rarityEvents} = require('../itemUtils')
 const {getCraftingMaterials} = require('../../../data/resourceDetails/craftingMaterials')
+const { upgradeData } = require('../../../utils/dataLoader')
 
 /**
  * 
@@ -10,14 +11,7 @@ const {getCraftingMaterials} = require('../../../data/resourceDetails/craftingMa
  * @returns {Number}
  */
 function getArmorStat(tier, rarity) {
-  const armorStat = [
-// com, unc, rar, epi, leg, max
-  [  0,   5,  10,  20,  30,  50], //T1
-  [  5,  20,  45,  60,  75, 100], //T2
-  [ 20,  45,  70,  95, 120, 150], //T3
-  [ 45,  70, 100, 130, 160, 200], //T4
-  [ 70, 100, 140, 180, 220, 300], //T5
-];
+  const armorStat = upgradeData.toolSpeed
   // Access the values from the two-dimensional array
   const min = armorStat[tier - 1][getRarityNumber(rarity)]
   const max = armorStat[tier - 1][getRarityNumber(rarity) + 1]
@@ -33,111 +27,41 @@ function getArmorStat(tier, rarity) {
  * @param {[String]} selectedResources 
  */
 function applyBonus(armor, selectedResources){
-  const gatheringBonuses = ['speed', 'luck', 'yield', 'exp']
-  const stats = ["str", "con", "int", "dex", "foc"]
+  const maxBoniCount = getRarityNumber(armor.rarity) + 1
   
 
-  const bonuses = [...gatheringBonuses, ...stats] 
+  // available bonus stats for this armor
+  const gatheringBonuses = upgradeData.gatheringBonuses; // speed, exp, yield, luck
+  const stats = armor.skills.map(skill => upgradeData.skillToStatsMap[skill]); // each skill has only one stat
+  // only one random stat
+  const rolledStats = weightedChoiceRemoved(stats, 1)
+  const bonuses = [...gatheringBonuses, ...rolledStats];  // all available boni
 
-  const statBonus = [1,2,3,4,5]
-  const armorBonus = {
-    "stat": statBonus,
 
-    "speed":
-    //com,  unc,  rar,  epi,  leg
-    [0.10, 0.20, 0.33, 0.66, 1.00],
-    "luck":
-    //com,  unc,  rar,  epi,  leg
-    [500, 1000, 1500, 2000, 2500],
-    "yield":
-    //com, unc, rar, epi, leg
-    [  1,   2,   3,   4,  5],
-    "exp": 
-    //com, unc, rar, epi, leg
-    [0.05,  0.10,  0.15,  0.20,  0.25]
-  }
-  const rarity = armor.rarity
-  //get bonus
-  let rolledBonus = []
+  // lookup for the values of the bonus
+  const bonusValues = upgradeData.bonusCharmValues;
+
+  // bonus are not random if a charm is used
+  let rolledBonus = [];
   for (const bonusCharm of selectedResources) {
-    switch (bonusCharm) {
-      case "speedCharm":
-         rolledBonus.push("speed")
-        break;
-      case "expCharm":
-         rolledBonus.push("exp")
-        break;
-      case "yieldCharm":
-         rolledBonus.push("yield")
-        break;
-      case "luckCharm":
-         rolledBonus.push("luck")
-        break;
-      case "conCharm":
-         rolledBonus.push("con")
-        break;
-      case "strCharm":
-         rolledBonus.push("str")
-        break;
-      case "intCharm":
-         rolledBonus.push("int")
-        break;
-      case "dexCharm":
-         rolledBonus.push("dex")
-        break;
-      case "focCharm":
-         rolledBonus.push("foc")
-        break;
-    
-      default:
-        break;
+    // translate the charm name to a bonus
+    const bonusType = upgradeData.charmToBonusMap[bonusCharm];
+    if (bonusType) {
+      rolledBonus.push(bonusType);
     }
   }
-  // execlude selected bonus
-  const filterdBonuses = bonuses.filter(bonus => !rolledBonus.includes(bonus))
-  // roll the bonus
-  rolledBonus = rolledBonus.concat(weightedChoiceRemoved(filterdBonuses, 1 + getRarityNumber(rarity) - rolledBonus.length))
-  console.log( "rolledBonus" , rolledBonus)
-  
-  rolledBonus.forEach(bonus => {
-    switch (bonus) {
-      case 'speed':
-        armor.properties.speedBonus = armorBonus.speed[getRarityNumber(rarity)];
-      break;
-        
-      case 'luck':
-        armor.properties.luckBonus = armorBonus.luck[getRarityNumber(rarity)];
-        break;
-        
-      case 'yield':
-        armor.properties.yieldMax = armorBonus.yield[getRarityNumber(rarity)];
-        break;
-          
-      case 'exp':
-        armor.properties.expBonus = armorBonus.exp[getRarityNumber(rarity)];
-        break;
 
-      case 'con':
-        armor.properties.con = armorBonus.stat[getRarityNumber(rarity)];
-        break;
-      case 'str':
-        armor.properties.str = armorBonus.stat[getRarityNumber(rarity)];
-        break;
-      case 'int':
-        armor.properties.int = armorBonus.stat[getRarityNumber(rarity)];
-        break;
-      case 'dex':
-        armor.properties.dex = armorBonus.stat[getRarityNumber(rarity)];
-        break;
-      case 'foc':
-        armor.properties.foc = armorBonus.stat[getRarityNumber(rarity)];
-        break;
-              
-      default:
-        // Handle any unexpected bonus
-        console.error(`Unknown bonus type: ${bonus}`);
-    }
-  })
+  // remove the pre selected boni from the random roll pool
+  const filteredBonuses = bonuses.filter(bonus => !rolledBonus.includes(bonus));
+  // roll boni to apply
+  rolledBonus = rolledBonus.concat(weightedChoiceRemoved(filteredBonuses, maxBoniCount - rolledBonus.length));
+  console.log("rolledBonus", rolledBonus);
+
+  // apply the boni to the armor
+  rolledBonus.forEach(bonusType => {
+    const bonusValue = bonusValues[bonusType][getRarityNumber(armor.rarity)];
+    armor.properties[bonusType] = bonusValue;
+  });
 }
 
 /**

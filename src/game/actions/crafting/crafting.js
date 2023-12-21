@@ -23,8 +23,8 @@ async function validate(character, actionObject) {
     console.log(`Validation ${skillName}-${task} complete.`)
     // get the time
     const recipe = getRecipe(skillName, recipeName)
-    const characterSkill = await CharacterService.getCraftingSkill(character, skillName);
-    const actionTime = getActionTime(recipe.time, characterSkill.speed)
+    const characterSkillData = await CharacterService.getSkillData(character, skillName);
+    const actionTime = getActionTime(recipe.time, characterSkillData.speed)
 
     resolve(actionTime)
     return
@@ -59,12 +59,12 @@ async function crafting(character, skillName, task, recipeName, selectedResource
   console.log('crafting in progress...')
 
   const recipe = getRecipe(skillName,recipeName)
-  const characterSkill = await CharacterService.getCraftingSkill(character, skillName);
+  const characterSkillData = await CharacterService.getSkillData(character, skillName);
 	// filling out the form to increment the values of a character
 	const incrementData = {}
   const pushData = {}
   incrementData['exp'] = recipe.expChar 
-  incrementData[`skills.${skillName}.exp`] = (recipe.exp * ( 1 + characterSkill.expBonus))
+  incrementData[`skills.${skillName}.exp`] = (recipe.exp * ( 1 + characterSkillData.exp))
   
   // check ingredients
   const characterDB = await CharacterService.findCharacter(character)
@@ -108,12 +108,12 @@ async function crafting(character, skillName, task, recipeName, selectedResource
     // if it is a unique item, we need to craft or upgrade it
   } else if (recipe.unique){
     if (task == "crafting"){
-      const itemName = craft(recipeName, recipe, selectedResources, characterSkill)
+      const itemName = craft(recipeName, recipe, selectedResources, characterSkillData)
       incrementData[`resources.${itemName}`] = recipe.amount
     }
     else if(task == "upgrading"){
       if (recipe.type) {
-          const itemId = await upgradeItem(recipeName, recipe, selectedResources, characterSkill)
+          const itemId = await upgradeItem(recipeName, recipe, selectedResources, characterSkillData)
           pushData['items'] = itemId
       }else{
         console.error(`Unable to upgrade ${recipeName}!`)

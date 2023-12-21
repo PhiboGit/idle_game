@@ -54,7 +54,7 @@ async function validateIngredients(character, selectedResources, recipeResources
 
 async function verifyRecipe(character,task, skillName,recipeName, selectedResources ){
   console.log(`Verify recipe...`);
-  const characterSkill = await CharacterService.getCraftingSkill(character, skillName);
+  const characterSkill = await CharacterService.getSkillData(character, skillName);
   const recipe = getRecipe(skillName, recipeName)
   if(!recipe) {
     console.log(`${recipeName} does not exist for ${skillName}`)

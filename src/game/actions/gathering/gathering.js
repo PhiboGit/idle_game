@@ -13,10 +13,10 @@ async function validate(character, actionObject) {
     console.log(`init Validation ${skillName}-${task}...`)
     const gatheringData = getGatheringData(skillName, tier);
 
-    const characterSkill = await CharacterService.getGatheringSkill(character, skillName);
+    const characterSkillData = await CharacterService.getSkillData(character, skillName);
 
     try {
-      await validateLevel(character, characterSkill.level, gatheringData.level);
+      await validateLevel(character, characterSkillData.level, gatheringData.level);
       console.log('validate Level successfully');
     } catch (error) {
       console.log('Validation failed: ', error.message);
@@ -26,7 +26,7 @@ async function validate(character, actionObject) {
 
     console.log(`Validation gathering complete.`);
 
-    const actionTime = getActionTime(gatheringData.time, characterSkill.speed)
+    const actionTime = getActionTime(gatheringData.time, characterSkillData.speed)
 
     resolve(actionTime)
     return 
@@ -59,16 +59,16 @@ async function gathering(character, skillName, tier) {
 	const incrementData = {}
 
 	const gatheringData = getGatheringData(skillName, tier)
-	const skill = await CharacterService.getGatheringSkill(character, skillName)
+	const skillData = await CharacterService.getSkillData(character, skillName)
   
-  let minAmount = gatheringData.amountMin + skill.yieldMin
-  let maxAmount = gatheringData.amountMax + skill.yieldMax
+  let minAmount = gatheringData.amountMin + skillData.yieldMin
+  let maxAmount = gatheringData.amountMax + skillData.yieldMax
   const amount = rollRange(minAmount, maxAmount)
 
   incrementData[`resources.${gatheringData.resourceName}`] = Math.floor(amount)
 
 	// rolling the rare loot table
-	const lootBag = parseLootTable(gatheringData.lootTable,1, skill.luck)
+	const lootBag = parseLootTable(gatheringData.lootTable,1, skillData.luck)
 	for (const loot of lootBag){
 		console.log(`${character} looted ${loot.amount} ${loot.item}`)
 		incrementData[`resources.${loot.item}`] = loot.amount
@@ -76,7 +76,7 @@ async function gathering(character, skillName, tier) {
 	
 	// and calculating exp gains
 	incrementData['exp'] = gatheringData.CharacterExp
-	incrementData[`skills.${skillName}.exp`] = (gatheringData.exp * (1 + skill.expBonus))
+	incrementData[`skills.${skillName}.exp`] = (gatheringData.exp * (1 + skillData.exp))
 	
 	// At last update all the values for the character.
 	await CharacterService.increment(character, incrementData)
