@@ -1,0 +1,292 @@
+{
+  "weaving": {
+    "linenT1":{
+      "amount": 1,
+      "level": 0,
+      "time": 20000,
+      "exp": 10,
+      "expChar": 5,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "fiberT1", "amount": 10}
+          ]}
+      ]
+    },
+    "linenT2":{
+      "amount": 1,
+      "level": 25,
+      "time": 40000,
+      "exp": 20,
+      "expChar": 10,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "fiberT2", "amount": 10}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "linenT1", "amount": 3}
+          ]}
+      ]
+    },
+    "linenT3":{
+      "amount": 1,
+      "level": 50,
+      "time": 60000,
+      "exp": 30,
+      "expChar": 15,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "fiberT3", "amount": 10}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "linenT2", "amount": 3}
+          ]}
+      ]
+    },
+    "linenT4":{
+      "amount": 1,
+      "level": 75,
+      "time": 80000,
+      "exp": 40,
+      "expChar": 20,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "fiberT4", "amount": 10}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "linenT3", "amount": 3}
+          ]}
+      ]
+    },
+    "linenT5":{
+      "amount": 1,
+      "level": 100,
+      "time": 100000,
+      "exp": 50,
+      "expChar": 25,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "fiberT5", "amount": 10}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "linenT4", "amount": 3}
+          ]}
+      ]
+    }
+  },
+
+  "woodworking": {
+    "plankT1":{
+      "amount": 1,
+      "level": 0,
+      "time": 20000,
+      "exp": 10,
+      "expChar": 5,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "woodT1", "amount": 10}
+          ]}
+      ]
+    },
+    "plankT2":{
+      "amount": 1,
+      "level": 25,
+      "time": 40000,
+      "exp": 20,
+      "expChar": 10,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "woodT2", "amount": 10}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "plankT1", "amount": 3}
+          ]}
+      ]
+    },
+    "plankT3":{
+      "amount": 1,
+      "level": 50,
+      "time": 60000,
+      "exp": 30,
+      "expChar": 15,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "woodT3", "amount": 10}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "plankT2", "amount": 3}
+          ]}
+      ]
+    },
+    "plankT4":{
+      "amount": 1,
+      "level": 75,
+      "time": 80000,
+      "exp": 40,
+      "expChar": 20,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "woodT4", "amount": 10}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "plankT3", "amount": 3}
+          ]}
+      ]
+    },
+    "plankT5":{
+      "amount": 1,
+      "level": 100,
+      "time": 100000,
+      "exp": 50,
+      "expChar": 25,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "woodT5", "amount": 10}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "plankT4", "amount": 3}
+          ]}
+      ]
+    }
+  },
+
+  "smelting": {
+    "coal":{
+      "amount": 20,
+      "level": 0,
+      "time": 20000,
+      "exp": 10,
+      "expChar": 5,
+      "ingredients": [
+        {"required": true,
+          "slot": [
+            {"resource": "woodT1", "amount": 5},
+            {"resource": "woodT2", "amount": 7},
+            {"resource": "woodT3", "amount": 10},
+            {"resource": "woodT4", "amount": 15},
+            {"resource": "woodT5", "amount": 20}
+          ]}
+      
+      ]
+    },
+
+    "ingotT1":{
+      "amount": 1,
+      "level": 0,
+      "time": 20000,
+      "exp": 10,
+      "expChar": 5,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "coal", "amount": 5}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "oreT1", "amount": 10}
+          ]}
+      ]
+    },
+    "ingotT2":{
+      "amount": 1,
+      "level": 25,
+      "time": 40000,
+      "exp": 20,
+      "expChar": 10,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "coal", "amount": 5}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "oreT2", "amount": 10}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "ingotT1", "amount": 3}
+          ]}
+      ]
+    },
+    "ingotT3":{
+      "amount": 1,
+      "level": 50,
+      "time": 60000,
+      "exp": 30,
+      "expChar": 15,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "coal", "amount": 5}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "oreT3", "amount": 10}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "ingotT2", "amount": 3}
+          ]}
+      ]
+    },
+    "ingotT4":{
+      "amount": 1,
+      "level": 75,
+      "time": 80000,
+      "exp": 40,
+      "expChar": 20,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "coal", "amount": 5}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "oreT4", "amount": 10}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "ingotT3", "amount": 3}
+          ]}
+      ]
+    },
+    "ingotT5":{
+      "amount": 1,
+      "level": 100,
+      "time": 100000,
+      "exp": 50,
+      "expChar": 25,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "coal", "amount": 5}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "oreT5", "amount": 10}
+          ]},
+        {"required": true,
+        "slot": [
+          {"resource": "ingotT4", "amount": 3}
+          ]}
+      ]
+    }
+  }
+}

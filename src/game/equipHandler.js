@@ -8,7 +8,12 @@ const validSkills = [
 ]
 
 const equipmentSlots = [
-  "tool"
+  "tool",
+  "head",
+  "chest",
+  "hands",
+  "legs",
+  "feet"
 ]
 
 function verifyEquip(msg){
@@ -73,7 +78,7 @@ async function handleEquip(character, msg){
   }
 
   
-  if (!(skillSlot == item.skill)) {
+  if (!(item.skills.includes(skillSlot))) {
     senderMediator.publish('error', {character: character,
       msg: {message: "You cannot equip this item here!",
       info: {
@@ -91,18 +96,11 @@ async function handleEquip(character, msg){
     return
   }
   
-  let skill
-  switch (item.subtype) {
-    case "gathering":
-      skill = await CharacterService.getGatheringSkill(character, skillSlot)
-      break;
   
-    default:
-      console.error("skill subtype does not exist", item.subtype)
-      break;
-  }
+  skillLevel = await CharacterService.getSkillLevel(character, skillSlot)
+  
 
-  if (!(skill.level >= item.level)) {
+  if (!(skillLevel >= item.level)) {
     senderMediator.publish('error', {character: character,
       msg: {message: "You do not have the required level!",
       info: {

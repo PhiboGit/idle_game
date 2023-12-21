@@ -71,7 +71,7 @@ async function gathering(character, skillName, tier) {
 	const lootBag = parseLootTable(gatheringData.lootTable,1, skill.luck)
 	for (const loot of lootBag){
 		console.log(`${character} looted ${loot.amount} ${loot.item}`)
-		incrementData[`resources.${loot.item}`] = Math.floor(loot.amount * (1 + skill.yield))
+		incrementData[`resources.${loot.item}`] = loot.amount
 	}
 	
 	// and calculating exp gains

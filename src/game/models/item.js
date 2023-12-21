@@ -2,9 +2,8 @@ const mongoose = require('mongoose');
 
 const itemSchema = new mongoose.Schema({
   name: {type: String, default: "item"},
-  type: {type: String, default: "item"}, // e.g., tool, armor, weapon
-  subtype: {type: String, default: "item"}, // e.g., 'axe', 'sickle', 'fishing_rod', 'helm', 'chestplate', 'boots'
-  skill: {type: String, default: ""}, // e.g., '
+  type: {type: String, default: "item"}, // e.g., tool, head, chest, legs, hands, feet, weapon
+  skills: { type: [String], default: [] },
   level: {type: Number, default: 0},
   tier: {type: Number, default: 1},
   rarity: {type: String, default: "common"},

@@ -1,17 +1,19 @@
-const Item = require('../../../item')
+const Item = require('../../item')
 
 
-class GatheringTool extends Item {
-  constructor(name, skills, level, tier, rarity, baseSpeed = 0) {
+class Armor extends Item {
+  constructor(name, type, skills, level, tier, rarity, resistance, armor) {
     super();
     this.name = name;
-    this.type = 'tool';
+    this.type = type;
     this.skills = skills;
     this.level = level;
     this.tier = tier;
     this.rarity = rarity;
     this.properties = {
-      baseSpeed, // Float 0.05 or 2.45 which gives a 5% or 245% speed
+      resistance: resistance,
+      armor: armor,
+
       speedBonus: 0, // Float 0-1 applies percentage bonus to baseSpeed, boosts the effectivity of baseSpeed
       luckBonus: 0, // Flat luck value of 0 - 2500
       yieldMax: 0, // Float 0-5, applies to maxRoll
@@ -26,4 +28,4 @@ class GatheringTool extends Item {
   }
 }
 
-module.exports = GatheringTool
+module.exports = Armor

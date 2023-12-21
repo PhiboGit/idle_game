@@ -1,3 +1,4 @@
+const { upgradeArmor } = require('./armor/upgradeArmor');
 const {upgradeGatheringTool} = require('./tool/gatheringTool/gatheringToolUpgrade')
 
 /**
@@ -8,20 +9,13 @@ const {upgradeGatheringTool} = require('./tool/gatheringTool/gatheringToolUpgrad
  * @param {*} characterSkill 
  * @returns 
  */
-async function upgradeItem(recipeName, recipe, selectedUpgrades, characterSkill){
-  switch (recipe.type) {
-    case "tool":
-      switch (recipe.subtype) {
-        case "gathering":
-          return await upgradeGatheringTool(recipeName, recipe, selectedUpgrades, characterSkill)
-         
-        default:
-          break;
-      }
-      break;
-    
-    default:
-      break;
+async function upgradeItem(recipeName, recipe, selectedUpgrades, characterSkill) {
+  if (recipe.type === "tool" && recipe.skills.some(skill => ["woodcutting", "mining", "harvesting"].includes(skill))) {
+    return await upgradeGatheringTool(recipeName, recipe, selectedUpgrades, characterSkill);
+  } else if (["head", "chest", "hands", "legs", "feet"].includes(recipe.type)) {
+    return await upgradeArmor(recipeName, recipe, selectedUpgrades, characterSkill);
+  } else {
+    console.error("can not find upgrade: ", recipe.type);
   }
 }
 

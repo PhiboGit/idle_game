@@ -15,17 +15,170 @@ const skill = {
   }
 }
 
-const gatheringSkill = {
+const refiningSkill = {
   exp: {type: Number, default: 0},
   level: {type: Number, default: 0},
-  luck: {type: Number, default: 0},
+
   speed: {type: Number, default: 0},
+  expBonus: {type: Number, default: 0},
+
   equipment: {
     tool: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Item', // Reference to the Item model
       default: null
     },
+    head: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    chest: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    hands: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    legs: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    feet: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    }
+  }
+}
+
+const craftingSkill = {
+  exp: {type: Number, default: 0},
+  level: {type: Number, default: 0},
+
+  speed: {type: Number, default: 0},
+  expBonus: {type: Number, default: 0},
+
+  equipment: {
+    tool: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    head: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    chest: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    hands: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    legs: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    feet: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    }
+  }
+}
+
+const gatheringSkill = {
+  exp: {type: Number, default: 0},
+  level: {type: Number, default: 0},
+
+  speed: {type: Number, default: 0},
+  expBonus: {type: Number, default: 0},
+
+  luck: {type: Number, default: 0},
+  yieldMin: {type: Number, default: 0},
+  yieldMax: {type: Number, default: 0},
+  equipment: {
+    tool: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    head: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    chest: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    hands: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    legs: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    feet: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    }
+  }
+}
+
+const enchantingSkill = {
+  exp: {type: Number, default: 0},
+  level: {type: Number, default: 0},
+
+  speed: {type: Number, default: 0},
+  expBonus: {type: Number, default: 0},
+
+  equipment: {
+    tool: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    head: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    chest: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    hands: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    legs: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    },
+    feet: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item', // Reference to the Item model
+      default: null
+    }
   }
 }
 
@@ -34,13 +187,14 @@ const skills = {
   mining: gatheringSkill,
   harvesting: gatheringSkill,  
 
-  woodworking:skill,
-  weaving: skill,
-  smelting:skill,
+  woodworking:refiningSkill,
+  weaving: refiningSkill,
+  smelting:refiningSkill,
 
-  toolsmith: skill,
+  toolsmith: craftingSkill,
+  armorer: craftingSkill,
 
-  enchanter: skill,
+  enchanter: enchantingSkill,
 
 }
 

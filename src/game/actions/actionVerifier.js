@@ -8,6 +8,7 @@ const availableActions = {
   "weaving": ["crafting"],
 
   "toolsmith": ["crafting", "upgrading"],
+  "armorer": ["crafting", "upgrading"],
 
   "enchanter": ["enchanting"]
 }

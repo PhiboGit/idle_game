@@ -1,5 +1,5 @@
 // marketplace or contract for refinements
-
+const { generateItemObject } = require('./generators');
 
 const gatheredMaterials = {
   'woodT1': {type: Number, default: 0},
@@ -43,20 +43,10 @@ const refinedMaterials = {
 }
 
 const charms = {
-  'woodcuttingSpeedCharm': {type: Number, default: 0}, 
-  'woodcuttingExpCharm': {type: Number, default: 0}, 
-  'woodcuttingLuckCharm': {type: Number, default: 0}, 
-  'woodcuttingYieldCharm': {type: Number, default: 0},
-
-  'miningSpeedCharm': {type: Number, default: 0}, 
-  'miningExpCharm': {type: Number, default: 0}, 
-  'miningLuckCharm': {type: Number, default: 0}, 
-  'miningYieldCharm': {type: Number, default: 0},
-
-  'harvestingSpeedCharm': {type: Number, default: 0}, 
-  'harvestingExpCharm': {type: Number, default: 0}, 
-  'harvestingLuckCharm': {type: Number, default: 0}, 
-  'harvestingYieldCharm': {type: Number, default: 0}, 
+  'speedCharm': {type: Number, default: 0}, 
+  'expCharm': {type: Number, default: 0}, 
+  'luckCharm': {type: Number, default: 0}, 
+  'yieldCharm': {type: Number, default: 0},
 }
 
 const statCharms = {
@@ -126,7 +116,18 @@ const pickaxe = {
   "pickaxeT5_legendary": {type: Number, default: 0},
 }
 
-const items = {...pickaxe}
+const items = {
+  ...generateItemObject("pickaxe", 5),
+  ...generateItemObject("sickle", 5),
+  ...generateItemObject("axe", 5),
+
+
+  ...generateItemObject("hat",5),
+  ...generateItemObject("chestpiece", 5),
+  ...generateItemObject("gloves", 5),
+  ...generateItemObject("pants", 5),
+  ...generateItemObject("boots", 5)
+}
 
 const resources = { ...gatheredMaterials, ...refinedMaterials, ...charms, ...statCharms, ...sap, ...stick, ...chunk, ...strand, ...items}
 

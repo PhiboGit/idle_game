@@ -33,7 +33,7 @@ async function increment(character, incrementForm = {}, setForm= {}, pushForm={}
       update,
       { 
         //new: true,
-        upsert: true // only for dev; to not delete/recreate database; able to add new items to the inventory
+        upsert: false // only for dev; to not delete/recreate database; able to add new items to the inventory
        }
       )
     if (pushForm['items']){
@@ -170,6 +170,19 @@ function getFieldValue(doc, fieldPath) {
  * @param {String} skill 
  * @returns 
  */
+async function getSkillLevel(character, skill){
+  const select = `skills.${skill}`
+  const characterSkill = await Character.findOne({characterName: character}, select).lean()
+  
+  return characterSkill.skills?.[skill]?.level || 0
+}
+
+/**
+ * 
+ * @param {String} character 
+ * @param {String} skill 
+ * @returns 
+ */
 async function getGatheringSkill(character, skill){
   const select = `skills.${skill}`
   const characterSkill = await Character.findOne({characterName: character}, select).lean()
@@ -260,7 +273,7 @@ async function equipItem(character, itemId, skillName, slotType){
     [`skills.${skillName}.equipment.${slotType}`]: itemId,
   };
   const options = {
-    upsert: true, // only for dev, to not delete, recreate database
+    upsert: false, // only for dev, to not delete, recreate database
   };
   await Character.findOneAndUpdate(
     { characterName: character },
@@ -286,16 +299,23 @@ async function equipItem(character, itemId, skillName, slotType){
 
 async function isItemEquiped(character, itemId) {
   const item = await getItem(itemId)
-  const itemSkill = item.skill
+  const characterDB = await findCharacter(character)
   const itemSlot = item.type
 
-  const characterDB = await findCharacter(character)
 
-  //check if the item is at a valid skill equiped
-  const equipedItemId = characterDB.skills[itemSkill].equipment[itemSlot]
-  console.log("Equipment item id: ", equipedItemId)
+  let found = false
+  for (const itemSkill of item.skills) {
+    //check if the item is at a valid skill equiped
+    const equipedItemId = characterDB.skills[itemSkill].equipment[itemSlot]
+    if (equipedItemId == itemId){
+      console.log("Equipment item id: ", equipedItemId)
+      found = true
+    }
+  }
 
-  return (equipedItemId == itemId)
+
+  
+  return (found)
 }
 
 
@@ -333,4 +353,4 @@ async function getActiveAction(character){
   return runningActionName
 }
 
-module.exports = {increment, isItemEquiped,deleteItem, findCharacter, getFieldValue,getGatheringSkill,getCraftingSkill,getEnchantingSkill, updateActionManager, getAll, getItem, equipItem, getAllItemsFromCharacter, getActiveAction, itemUpdate}
+module.exports = {increment, isItemEquiped,deleteItem, findCharacter, getFieldValue,getSkillLevel,getGatheringSkill,getCraftingSkill,getEnchantingSkill, updateActionManager, getAll, getItem, equipItem, getAllItemsFromCharacter, getActiveAction, itemUpdate}

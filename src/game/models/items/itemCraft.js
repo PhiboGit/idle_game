@@ -34,7 +34,6 @@ function getRarity(skillLevel, itemLevel, selectedResources){
  */
 function craft(recipeName, recipe, selectedIngredients, characterSkill){
   const type = recipe["type"]
-  const subtype = recipe["subtype"]
   const tier = recipe["tier"]
   const itemLevel = recipe["level"]
   

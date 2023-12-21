@@ -1,7 +1,7 @@
-const GatheringTool = require('./gatheringTool')
-const { rollRange, weightedChoiceRemoved} = require('../../../../utils/randomDice')
-const {getRarityNumber, rarityEvents} = require('../../itemUtils')
-const {getCraftingMaterials} = require('../../../../data/resourceDetails/craftingMaterials')
+const Armor = require('./armor')
+const { rollRange, weightedChoiceRemoved} = require('../../../utils/randomDice')
+const {getRarityNumber, rarityEvents} = require('../itemUtils')
+const {getCraftingMaterials} = require('../../../data/resourceDetails/craftingMaterials')
 
 /**
  * 
@@ -9,8 +9,8 @@ const {getCraftingMaterials} = require('../../../../data/resourceDetails/craftin
  * @param {String} rarity 
  * @returns {Number}
  */
-function getBaseSpeed(tier, rarity) {
-  const toolSpeed = [
+function getArmorStat(tier, rarity) {
+  const armorStat = [
 // com, unc, rar, epi, leg, max
   [  0,   5,  10,  20,  30,  50], //T1
   [  5,  20,  45,  60,  75, 100], //T2
@@ -19,36 +19,28 @@ function getBaseSpeed(tier, rarity) {
   [ 70, 100, 140, 180, 220, 300], //T5
 ];
   // Access the values from the two-dimensional array
-  const min = toolSpeed[tier - 1][getRarityNumber(rarity)]
-  const max = toolSpeed[tier - 1][getRarityNumber(rarity) + 1]
+  const min = armorStat[tier - 1][getRarityNumber(rarity)]
+  const max = armorStat[tier - 1][getRarityNumber(rarity) + 1]
   
   // Roll a random number within the specified range
-  return rollRange(min, max) / 100;
+  return rollRange(min, max)
 }
 
 
 /**
  * 
- * @param {GatheringTool} tool 
+ * @param {Armor} armor 
  * @param {[String]} selectedResources 
  */
-function applyBonus(tool, selectedResources){
+function applyBonus(armor, selectedResources){
   const gatheringBonuses = ['speed', 'luck', 'yield', 'exp']
-  const skillToStats = {
-    "woodcutting": "con",
-    "mining": "str",
-    "harvesting": "int"
-  }
+  const stats = ["str", "con", "int", "dex", "foc"]
+  
 
-  const stats = []
-  for (const skill of tool.skills) {
-    stats.push(skillToStats[skill])
-  }
-
-  const bonuses = [...gatheringBonuses, stats] 
+  const bonuses = [...gatheringBonuses, ...stats] 
 
   const statBonus = [1,2,3,4,5]
-  const toolBonus = {
+  const armorBonus = {
     "stat": statBonus,
 
     "speed":
@@ -64,7 +56,7 @@ function applyBonus(tool, selectedResources){
     //com, unc, rar, epi, leg
     [0.05,  0.10,  0.15,  0.20,  0.25]
   }
-  const rarity = tool.rarity
+  const rarity = armor.rarity
   //get bonus
   let rolledBonus = []
   for (const bonusCharm of selectedResources) {
@@ -104,41 +96,41 @@ function applyBonus(tool, selectedResources){
   // execlude selected bonus
   const filterdBonuses = bonuses.filter(bonus => !rolledBonus.includes(bonus))
   // roll the bonus
-  rolledBonus = rolledBonus.concat(weightedChoiceRemoved(filterdBonuses, getRarityNumber(rarity) - rolledBonus.length))
+  rolledBonus = rolledBonus.concat(weightedChoiceRemoved(filterdBonuses, 1 + getRarityNumber(rarity) - rolledBonus.length))
   console.log( "rolledBonus" , rolledBonus)
   
   rolledBonus.forEach(bonus => {
     switch (bonus) {
       case 'speed':
-        tool.properties.speedBonus = toolBonus.speed[getRarityNumber(rarity)];
+        armor.properties.speedBonus = armorBonus.speed[getRarityNumber(rarity)];
       break;
         
       case 'luck':
-        tool.properties.luckBonus = toolBonus.luck[getRarityNumber(rarity)];
+        armor.properties.luckBonus = armorBonus.luck[getRarityNumber(rarity)];
         break;
         
       case 'yield':
-        tool.properties.yieldMax = toolBonus.yield[getRarityNumber(rarity)];
+        armor.properties.yieldMax = armorBonus.yield[getRarityNumber(rarity)];
         break;
           
       case 'exp':
-        tool.properties.expBonus = toolBonus.exp[getRarityNumber(rarity)];
+        armor.properties.expBonus = armorBonus.exp[getRarityNumber(rarity)];
         break;
 
       case 'con':
-        tool.properties.con = toolBonus.stat[getRarityNumber(rarity)];
+        armor.properties.con = armorBonus.stat[getRarityNumber(rarity)];
         break;
       case 'str':
-        tool.properties.str = toolBonus.stat[getRarityNumber(rarity)];
+        armor.properties.str = armorBonus.stat[getRarityNumber(rarity)];
         break;
       case 'int':
-        tool.properties.int = toolBonus.stat[getRarityNumber(rarity)];
+        armor.properties.int = armorBonus.stat[getRarityNumber(rarity)];
         break;
       case 'dex':
-        tool.properties.dex = toolBonus.stat[getRarityNumber(rarity)];
+        armor.properties.dex = armorBonus.stat[getRarityNumber(rarity)];
         break;
       case 'foc':
-        tool.properties.foc = toolBonus.stat[getRarityNumber(rarity)];
+        armor.properties.foc = armorBonus.stat[getRarityNumber(rarity)];
         break;
               
       default:
@@ -156,8 +148,9 @@ function applyBonus(tool, selectedResources){
  * @param {*} characterSkill 
  * @returns 
  */
-async function upgradeGatheringTool(recipeName, recipe, selectedUpgrades, characterSkill){
+async function upgradeArmor(recipeName, recipe, selectedUpgrades, characterSkill){
   const name = recipe["name"]
+  const type = recipe["type"]
   const skills = recipe["skills"]
   const tier = recipe["tier"]
   const level = recipe["equipLevel"]
@@ -166,21 +159,22 @@ async function upgradeGatheringTool(recipeName, recipe, selectedUpgrades, charac
   const skillLuck = characterSkill.luck
 
   // find the item to upgrades and get the rarity
-  const rarity = selectedUpgrades.find(str => str.includes(recipeName))?.split("_")[1]
+  const rarity = selectedUpgrades.find(string => string.includes(recipeName))?.split("_")[1]
   
   // get base speed
-  const baseSpeed = getBaseSpeed(tier, rarity)
+  const armorStat = getArmorStat(tier, rarity)
+  const resistanceStat = getArmorStat(tier, rarity)
   
   // craft item
 
-  const tool = new GatheringTool(name, skills, level, tier, rarity, baseSpeed)
-  applyBonus(tool, selectedUpgrades)
+  const armor = new Armor(name, type, skills, level, tier, rarity, resistanceStat, armorStat)
+  applyBonus(armor, selectedUpgrades)
 
-  console.log(tool)
+  console.log(armor)
 
-  const toolDB = await tool.save()
+  const itemDB = await armor.save()
 
-  return toolDB._id
+  return itemDB._id
 }
 
-module.exports = {upgradeGatheringTool}
+module.exports = {upgradeArmor}

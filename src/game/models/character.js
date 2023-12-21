@@ -1,9 +1,7 @@
 const mongoose = require('mongoose')
 
-const {resources} = require('./resources')
+const {resources} = require('./resources/resources')
 const {skills} = require('./skills')
-
-const {senderMediator} = require('../../routes/websocket/mediator')
 
 // character has a name basic stats, race, resources, inventory, equipment, items, tools, level
 const CharacterSchema = new mongoose.Schema(
