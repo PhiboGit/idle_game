@@ -186,23 +186,27 @@ async function getSkillData(character, skill) {
 
   // iterate over all the equipment items
   const equipmentTypes = ['tool', 'head', 'chest', 'hands', 'legs', 'feet'];
-  equipmentTypes.forEach(async (type) => {
-    const equipmentID = characterSkill.skills?.[skill]?.equipment?.[type];
-    if (equipmentID) {
-      const item = await Item.findById(equipmentID);
+  // Use Promise.all to wait for all asynchronous operations to complete
+  await Promise.all(
+    equipmentTypes.map(async (type) => {
+      const equipmentID = characterSkill.skills[skill].equipment[type];
+      if (equipmentID) {
+        const item = await Item.findById(equipmentID);
 
-      skillSheet.luck += item.properties?.luck || 0;
-      skillSheet.speed += (item.properties?.baseSpeed || 0) + (item.properties?.speed || 0);
-      skillSheet.yieldMax += item.properties?.yieldMax || 0;
-      skillSheet.yieldMin += item.properties?.yieldMin || 0;
-      skillSheet.exp += item.properties?.exp || 0;
-    }
-  });
-
+        skillSheet.luck += item.properties.luck || 0;
+        skillSheet.speed += (item.properties.baseSpeed || 0) + (item.properties.speed || 0);
+        skillSheet.yieldMax += item.properties.yieldMax || 0;
+        skillSheet.yieldMin += item.properties.yieldMin || 0;
+        skillSheet.exp += item.properties?.exp || 0;
+      }
+    })
+  );
+  
   // some values need adjustments, eg. percentage values
   skillSheet.speed = skillSheet.speed / 100
   skillSheet.exp = skillSheet.exp / 100
-
+  
+  console.log("SkillData: ", skillSheet)
   return skillSheet;
 }
 
