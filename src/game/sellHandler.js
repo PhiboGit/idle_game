@@ -1,31 +1,32 @@
 const CharacterService = require('./models/services/characterService')
 const {senderMediator} = require('../routes/websocket/mediator')
-const {rollRange} = require('../game/utils/randomDice')
+const {getSellValueGold} = require('../game/data/vendor')
+const {rollRange} = require('./utils/randomDice')
 
-function verifyDismantle(msg){
+function verifySellItem(msg){
   if((msg && 
-    msg.type && typeof msg.type === 'string' && msg.type === 'dismantle' &&
+    msg.type && typeof msg.type === 'string' && msg.type === 'sell' &&
     msg.args &&
     msg.args.itemId && typeof msg.args.itemId === 'string'
     )){
       return true
     }
-  console.info('Invalid args for dismantle')
+  console.info('Invalid args for sell')
   return false
 }
 
-async function handleDismantle(character, msg){
-  console.log("Handling Dismantle submission...")
-  const valid = verifyDismantle(msg)
+async function handleSell(character, msg){
+  console.log("Handling Sell submission...")
+  const valid = verifySellItem(msg)
   if (!valid) {
     senderMediator.publish('error', {character: character,
-      msg: {message: "The submitted form for type: 'dismantle' is not valid!",
+      msg: {message: "The submitted form for type: 'sell' is not valid!",
             info: {
              
            }}})
     return
   }
-  console.log("Handling Dismantle submission is valid. Trying to destroy item...")
+  console.log("Handling Sell submission is valid. Trying to sell item...")
 
   const itemId = msg.args.itemId
 
@@ -63,25 +64,21 @@ async function handleDismantle(character, msg){
   }
 
   
-  await dismantleItem(character, itemId, item.tier, item.type)
+  await sellItem(character, item)
 
-  console.log("Handling Dismantle successfully!")
+  console.log("Handling Sell successfully!")
 }
 
-async function dismantleItem(character, itemId, tier, itemType){
-  const plankAmount = rollRange(1, 3)
-  const ingotAmount = rollRange(1, 3)
-  const linenAmount = rollRange(1, 3)
+async function sellItem(character, item){
+  const goldAmount = getSellValueGold(item.tier, item.rarity)
 
   const incrementData = {}
   const pullData = {}
-  pullData['items'] = itemId
-  incrementData[`resources.plankT${tier}`] = plankAmount
-  incrementData[`resources.ingotT${tier}`] = ingotAmount
-  incrementData[`resources.linenT${tier}`] = linenAmount
+  pullData['items'] = item._id
+  incrementData[`currency.gold`] = goldAmount
 
   await CharacterService.increment(character, incrementData, {}, {}, pullData)
-  await CharacterService.deleteItem(itemId)
+  await CharacterService.deleteItem(item._id)
 }
 
-module.exports = {handleDismantle}
+module.exports = {handleSell}

@@ -14,6 +14,9 @@ const CharacterSchema = new mongoose.Schema(
 			},
 		level: {type: Number, default: 0},
 		exp: {type: Number, default: 0},
+		currency: {
+			gold: {type: Number, default: 0}
+		},
 		currentAction: {type: Object, default: null},
 		actionQueue: [Object],
     resources,
