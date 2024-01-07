@@ -50,7 +50,7 @@ async function handleEquip(character, msg){
   // to unequip an item
   if(itemId == "null"){
     console.log("Handling Equip successfully!")
-    CharacterService.equipSkillItem(character, null, skillSlot, equipSlot)
+    CharacterService.equipItem(character, null, skillSlot, equipSlot)
     return
   }
 
