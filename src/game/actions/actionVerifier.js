@@ -158,7 +158,7 @@ function verifyEnchantingArgs(args){
     args.hasOwnProperty("enchantingLevelLimit") &&
     typeof args.enchantingLevelLimit === 'number' &&
     Number.isInteger(args.enchantingLevelLimit) &&
-    args.enchantingLevelLimit >= 1 
+    args.enchantingLevelLimit >= 0 
 		){
 			return true
 		}

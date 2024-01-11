@@ -2,11 +2,11 @@ const Item = require('../../../item')
 
 
 class GatheringTool extends Item {
-  constructor(name, skills, level, tier, rarity, baseSpeed = 0) {
+  constructor(name, equipmentSkills, level, tier, rarity, baseSpeed = 0) {
     super();
     this.name = name;
-    this.type = 'tool';
-    this.skills = skills;
+    this.equipmentType = 'tool';
+    this.equipmentSkills = equipmentSkills;
     this.level = level;
     this.tier = tier;
     this.rarity = rarity;

@@ -2,11 +2,11 @@ const Item = require('../../item')
 
 
 class Armor extends Item {
-  constructor(name, type, skills, level, tier, rarity, resistance, armor) {
+  constructor(name, equipmentType, equipmentSkills, level, tier, rarity, resistance, armor) {
     super();
     this.name = name;
-    this.type = type;
-    this.skills = skills;
+    this.equipmentType = equipmentType;
+    this.equipmentSkills = equipmentSkills;
     this.level = level;
     this.tier = tier;
     this.rarity = rarity;

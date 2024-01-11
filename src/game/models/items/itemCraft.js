@@ -26,14 +26,14 @@ function getRarity(skillLevel, itemLevel, selectedResources){
 
 /**
  * 
- * @param {String} recipeName 
  * @param {*} recipe 
  * @param {[String]} selectedIngredients 
  * @param {*} characterSkill 
  * @returns {String}
  */
-function craft(recipeName, recipe, selectedIngredients, characterSkill){
-  const type = recipe["type"]
+function craft(recipe, selectedIngredients, characterSkill){
+  const recipeName = recipe["name"]
+  const equipmentType = recipe["equipmentType"]
   const tier = recipe["tier"]
   const itemLevel = recipe["level"]
   

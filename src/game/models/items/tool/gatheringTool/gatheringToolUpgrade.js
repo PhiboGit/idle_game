@@ -25,7 +25,7 @@ function applyBonus(tool, selectedResources) {
   
   // available bonus stats for this armor
   const gatheringBonuses = upgradeData.gatheringBonuses; // speed, exp, yield, luck
-  const stats = tool.skills.map(skill => upgradeData.skillToStatsMap[skill]); // each skill has only one stat
+  const stats = tool.equipmentSkills.map(skill => upgradeData.skillToStatsMap[skill]); // each skill has only one stat
   const bonuses = [...gatheringBonuses, ...stats];  // all available boni
 
 
@@ -56,27 +56,24 @@ function applyBonus(tool, selectedResources) {
 }
 
 /**
- * @param {String} recipeName
  * @param {*} recipe
  * @param {[String]} selectedUpgrades
  * @param {*} characterSkill
  * @returns
  */
-async function upgradeGatheringTool(recipeName, recipe, selectedUpgrades, characterSkill) {
-  const name = recipe["name"];
-  const skills = recipe["skills"];
+async function upgradeGatheringTool(recipe, selectedUpgrades, characterSkill) {
+  const recipeName = recipe["name"];
+  const equipmentSkills = recipe["equipmentSkills"];
   const tier = recipe["tier"];
   const level = recipe["equipLevel"];
 
   const skillLevel = characterSkill.level;
   const skillLuck = characterSkill.luck;
-
   const rarity = selectedUpgrades.find(str => str.includes(recipeName))?.split("_")[1];
   const baseSpeed = getBaseSpeed(tier, rarity);
 
-  const tool = new GatheringTool(name, skills, level, tier, rarity, baseSpeed);
+  const tool = new GatheringTool(recipeName, equipmentSkills, level, tier, rarity, baseSpeed);
   applyBonus(tool, selectedUpgrades);
-
   console.log(tool);
 
   const toolDB = await tool.save();

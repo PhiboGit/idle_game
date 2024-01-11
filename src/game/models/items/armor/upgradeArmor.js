@@ -32,7 +32,7 @@ function applyBonus(armor, selectedResources){
 
   // available bonus stats for this armor
   const gatheringBonuses = upgradeData.gatheringBonuses; // speed, exp, yield, luck
-  const stats = armor.skills.map(skill => upgradeData.skillToStatsMap[skill]); // each skill has only one stat
+  const stats = armor.equipmentSkills.map(skill => upgradeData.skillToStatsMap[skill]); // each skill has only one stat
   // only one random stat
   const rolledStats = weightedChoiceRemoved(stats, 1)
   const bonuses = [...gatheringBonuses, ...rolledStats];  // all available boni
@@ -66,32 +66,30 @@ function applyBonus(armor, selectedResources){
 
 /**
  * 
- * @param {String} recipeName 
  * @param {*} recipe 
  * @param {[String]} selectedUpgrades 
  * @param {*} characterSkill 
  * @returns 
  */
-async function upgradeArmor(recipeName, recipe, selectedUpgrades, characterSkill){
+async function upgradeArmor(recipe, selectedUpgrades, characterSkill){
   const name = recipe["name"]
-  const type = recipe["type"]
-  const skills = recipe["skills"]
+  const equipmentType = recipe["equipmentType"]
+  const equipmentSkills = recipe["equipmentSkills"]
   const tier = recipe["tier"]
   const level = recipe["equipLevel"]
   
   const skillLevel = characterSkill.level
   const skillLuck = characterSkill.luck
 
-  // find the item to upgrades and get the rarity
-  const rarity = selectedUpgrades.find(string => string.includes(recipeName))?.split("_")[1]
-  
+  // find the item to upgrade and get the rarity
+  const rarity = selectedUpgrades.find(string => string.includes(name)).split("_")[1]
   // get base speed
   const armorStat = getArmorStat(tier, rarity)
   const resistanceStat = getArmorStat(tier, rarity)
   
   // craft item
 
-  const armor = new Armor(name, type, skills, level, tier, rarity, resistanceStat, armorStat)
+  const armor = new Armor(name, equipmentType, equipmentSkills, level, tier, rarity, resistanceStat, armorStat)
   applyBonus(armor, selectedUpgrades)
 
   console.log(armor)

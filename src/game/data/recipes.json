@@ -1,10 +1,11 @@
 {
   "toolsmith": {
     "pickaxeT1":{
-      "name": "pickaxe",
-      "type": "tool",
-      "skills": ["mining"],
-      "unique":true,
+      "profession": "toolsmith",
+      "name": "pickaxeT1",
+      "equipmentType": "tool",
+      "equipmentSkills": ["mining"],
+      "rollRarity":true,
       "tier": 1,
       "equipLevel": 0,
       "amount": 1,
@@ -73,10 +74,11 @@
     },
 
     "sickleT1":{
-      "name": "sickle",
-      "type": "tool",
-      "skills": ["harvesting"],
-      "unique":true,
+      "profession": "toolsmith",
+      "name": "sickleT1",
+      "equipmentType": "tool",
+      "equipmentSkills": ["harvesting"],
+      "rollRarity":true,
       "tier": 1,
       "equipLevel": 0,
       "amount": 1,
@@ -145,10 +147,11 @@
     },
 
     "axeT1":{
-      "name": "axe",
-      "type": "tool",
-      "skills": ["woodcutting"],
-      "unique":true,
+      "profession": "toolsmith",
+      "name": "axeT1",
+      "equipmentType": "tool",
+      "equipmentSkills": ["woodcutting"],
+      "rollRarity":true,
       "tier": 1,
       "equipLevel": 0,
       "amount": 1,
@@ -219,10 +222,11 @@
 
   "armorer": {
     "hatT1":{
-      "name": "hat",
-      "type": "head",
-      "skills": ["mining", "woodcutting", "harvesting"],
-      "unique":true,
+      "profession": "armorer",
+      "name": "hatT1",
+      "equipmentType": "head",
+      "equipmentSkills": ["mining", "woodcutting", "harvesting"],
+      "rollRarity":true,
       "tier": 1,
       "equipLevel": 0,
       "amount": 1,
@@ -283,10 +287,11 @@
     },
 
     "chestpieceT1":{
-      "name": "chestpiece",
-      "type": "chest",
-      "skills": ["mining", "woodcutting", "harvesting"],
-      "unique":true,
+      "profession": "armorer",
+      "name": "chestpieceT1",
+      "equipmentType": "chest",
+      "equipmentSkills": ["mining", "woodcutting", "harvesting"],
+      "rollRarity":true,
       "tier": 1,
       "equipLevel": 0,
       "amount": 1,
@@ -352,10 +357,11 @@
     },
 
     "glovesT1":{
-      "name": "gloves",
-      "type": "hands",
-      "skills": ["mining", "woodcutting", "harvesting"],
-      "unique":true,
+      "profession": "armorer",
+      "name": "glovesT1",
+      "equipmentType": "hands",
+      "equipmentSkills": ["mining", "woodcutting", "harvesting"],
+      "rollRarity":true,
       "tier": 1,
       "equipLevel": 0,
       "amount": 1,
@@ -422,10 +428,11 @@
     },
 
     "pantsT1":{
-      "name": "pants",
-      "type": "legs",
-      "skills": ["mining", "woodcutting", "harvesting"],
-      "unique":true,
+      "profession": "armorer",
+      "name": "pantsT1",
+      "equipmentType": "legs",
+      "equipmentSkills": ["mining", "woodcutting", "harvesting"],
+      "rollRarity":true,
       "tier": 1,
       "equipLevel": 0,
       "amount": 1,
@@ -491,10 +498,11 @@
     },
 
     "bootsT1":{
-      "name": "boots",
-      "type": "feet",
-      "skills": ["mining", "woodcutting", "harvesting"],
-      "unique":true,
+      "profession": "armorer",
+      "name": "bootsT1",
+      "equipmentType": "feet",
+      "equipmentSkills": ["mining", "woodcutting", "harvesting"],
+      "rollRarity":true,
       "tier": 1,
       "equipLevel": 0,
       "amount": 1,

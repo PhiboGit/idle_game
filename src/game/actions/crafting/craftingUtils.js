@@ -52,7 +52,7 @@ async function validateIngredients(character, selectedResources, recipeResources
   return true;
 }
 
-async function verifyRecipe(character,task, skillName,recipeName, selectedResources ){
+async function verifyRecipe(character, task, skillName, recipeName, selectedResources ){
   console.log(`Verify recipe...`);
   const characterSkill = await CharacterService.getSkillData(character, skillName);
   const recipe = getRecipe(skillName, recipeName)

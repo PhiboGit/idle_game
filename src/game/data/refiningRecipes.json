@@ -1,6 +1,9 @@
 {
   "weaving": {
     "linenT1":{
+      "profession": "weaving",
+      "name": "linenT1",
+      
       "amount": 1,
       "level": 0,
       "time": 20000,
@@ -14,6 +17,9 @@
       ]
     },
     "linenT2":{
+      "profession": "weaving",
+      "name": "linenT2",
+
       "amount": 1,
       "level": 25,
       "time": 40000,
@@ -31,6 +37,9 @@
       ]
     },
     "linenT3":{
+      "profession": "weaving",
+      "name": "linenT3",
+
       "amount": 1,
       "level": 50,
       "time": 60000,
@@ -48,6 +57,9 @@
       ]
     },
     "linenT4":{
+      "profession": "weaving",
+      "name": "linenT4",
+
       "amount": 1,
       "level": 75,
       "time": 80000,
@@ -65,6 +77,9 @@
       ]
     },
     "linenT5":{
+      "profession": "weaving",
+      "name": "linenT5",
+
       "amount": 1,
       "level": 100,
       "time": 100000,
@@ -85,6 +100,9 @@
 
   "woodworking": {
     "plankT1":{
+      "profession": "woodworking",
+      "name": "plankT1",
+
       "amount": 1,
       "level": 0,
       "time": 20000,
@@ -98,6 +116,9 @@
       ]
     },
     "plankT2":{
+      "profession": "woodworking",
+      "name": "plankT2",
+
       "amount": 1,
       "level": 25,
       "time": 40000,
@@ -115,6 +136,9 @@
       ]
     },
     "plankT3":{
+      "profession": "woodworking",
+      "name": "plankT3",
+
       "amount": 1,
       "level": 50,
       "time": 60000,
@@ -132,6 +156,9 @@
       ]
     },
     "plankT4":{
+      "profession": "woodworking",
+      "name": "plankT4",
+
       "amount": 1,
       "level": 75,
       "time": 80000,
@@ -149,6 +176,9 @@
       ]
     },
     "plankT5":{
+      "profession": "woodworking",
+      "name": "plankT5",
+
       "amount": 1,
       "level": 100,
       "time": 100000,
@@ -169,6 +199,9 @@
 
   "smelting": {
     "coal":{
+      "profession": "smelting",
+      "name": "coal",
+
       "amount": 20,
       "level": 0,
       "time": 20000,
@@ -188,6 +221,9 @@
     },
 
     "ingotT1":{
+      "profession": "smelting",
+      "name": "ingotT1",
+
       "amount": 1,
       "level": 0,
       "time": 20000,
@@ -205,6 +241,9 @@
       ]
     },
     "ingotT2":{
+      "profession": "smelting",
+      "name": "ingotT2",
+
       "amount": 1,
       "level": 25,
       "time": 40000,
@@ -226,6 +265,9 @@
       ]
     },
     "ingotT3":{
+      "profession": "smelting",
+      "name": "ingotT3",
+
       "amount": 1,
       "level": 50,
       "time": 60000,
@@ -247,6 +289,9 @@
       ]
     },
     "ingotT4":{
+      "profession": "smelting",
+      "name": "ingotT4",
+
       "amount": 1,
       "level": 75,
       "time": 80000,
@@ -268,6 +313,9 @@
       ]
     },
     "ingotT5":{
+      "profession": "smelting",
+      "name": "ingotT5",
+
       "amount": 1,
       "level": 100,
       "time": 100000,

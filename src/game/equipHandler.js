@@ -78,7 +78,7 @@ async function handleEquip(character, msg){
   }
 
   
-  if (!(item.skills.includes(skillSlot))) {
+  if (!(item.equipmentSkills.includes(skillSlot))) {
     senderMediator.publish('error', {character: character,
       msg: {message: "You cannot equip this item here!",
       info: {
@@ -87,7 +87,7 @@ async function handleEquip(character, msg){
     return
   }
     
-  if (!(item.type == equipSlot)) {
+  if (!(item.equipmentType == equipSlot)) {
     senderMediator.publish('error', {character: character,
       msg: {message: "You cannot equip this item in this slot!",
       info: {
