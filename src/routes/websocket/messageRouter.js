@@ -1,6 +1,7 @@
 const ActionHandler = require('../../game/actions/actionHandler')
 const EquipHandler = require('../../game/equipHandler')
 const SellHandler = require('../../game/sellHandler')
+const MarketplaceHandler = require('../../game/models/marketplace/marketplaceHandler')
 const {senderMediator} = require('./mediator')
 
 // Define a configuration object for message routing
@@ -11,6 +12,14 @@ const messageRoutes = {
   'sell': SellHandler.handleSell,
   'getTime': handleGetTime,
   'broadcast': handleBroadcast,
+
+  'marketplace': {
+    'orderBook': MarketplaceHandler.handleOrderBook,
+    'sellOrder': MarketplaceHandler.handleSellOrder,
+    'buyOrder': MarketplaceHandler.handleBuyOrder,
+    'cancel': MarketplaceHandler.handleCancelOrder,
+    
+  },
 };
 
 
