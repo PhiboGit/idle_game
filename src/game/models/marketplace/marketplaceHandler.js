@@ -147,8 +147,7 @@ function verifyCancelOrder(msg){
   if((msg && 
     msg.type && typeof msg.type === 'string' && msg.type === 'marketplace/cancel' &&
     msg.args &&
-    msg.orderType && typeof msg.orderType === 'string' && (msg.orderType === 'sellOrder' || msg.orderType === 'buyOrder') &&
-    msg.args.orderId && typeof msg.args.resource === 'string' 
+    msg.args.orderId && typeof msg.args.orderId === 'string' 
     )){
       return true
     }
@@ -170,10 +169,9 @@ async function handleCancelOrder(character, msg){
   }
   console.log("Handling cancel submission is valid. Trying to cancel order ...")
 
-  const orderType = msg.args.orderType
   const orderId = msg.args.orderId
 
-  MarketplaceService.cancelOrder(character,orderType, orderId)
+  MarketplaceService.cancelOrder(character, orderId)
   
   senderMediator.publish('info', {character: character,
     msg: {message: "Order canceled!",

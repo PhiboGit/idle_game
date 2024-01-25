@@ -5,7 +5,7 @@ const Order = require("./order");
 const Character = require("./../character");
 
 async function cancelOrder(character, orderId){
-  const order = await Order.findOneAndUpdate({_id: orderId, character: character}, {status: 'cancelled'});
+  const order = await Order.findOneAndUpdate({_id: orderId, character: character}, {status: 'canceled'});
   if(!order){
     console.log("Cancelling order failed! does not own order.")
   }
