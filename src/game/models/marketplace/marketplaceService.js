@@ -1,21 +1,74 @@
-const {senderMediator} = require("./../../../routes/websocket/mediator")
-
+const mongoose = require('mongoose');
 const Marketplace = require("./marketplace");
 const Order = require("./order");
 const Character = require("./../character");
+
+const {senderMediator} = require("./../../../routes/websocket/mediator")
+
 
 async function cancelOrder(character, orderId){
   const order = await Order.findOneAndUpdate({_id: orderId, character: character}, {status: 'canceled'});
   if(!order){
     console.log("Cancelling order failed! does not own order.")
+    return
   }
   updateMarketplace(order.resource)
 }
 
+async function collectOrder(character, orderId) {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    const order = await Order.findOneAndUpdate(
+      { _id: orderId, character: character },
+      { unitsToCollect: 0, goldToCollect: 0 },
+      { session } // do not set new, need the old values
+    );
+
+    if (!order) {
+      // Order not found or does not belong to the specified character
+      throw new Error("Order not found or does not belong to the specified character");
+    }
+
+    const char = await Character.findOneAndUpdate(
+      { characterName: character },
+      {
+        $inc: {
+          ['currency.gold']: order.goldToCollect,
+          [`resources.${order.resource}`]: order.unitsToCollect
+        }
+      },
+      { session }
+    );
+
+    if (!char) {
+      // Character not found
+      throw new Error("Character not found");
+    }
+
+    // If everything is successful, commit the transaction
+    await session.commitTransaction();
+    session.endSession();
+
+    console.log("collectOrder: Transaction committed successfully");
+  } catch (error) {
+    // If there's an error, abort the transaction
+    await session.abortTransaction();
+    session.endSession();
+
+    console.error("collectOrder: Transaction aborted:", error.message);
+  }
+}
+
 async function postOrder(characterName, orderType, resource, price, units, days) {
+  console.log("posting order: ...");
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
     // Create a new order instance
-    const order = new Order({
+    const orderCreate = await Order.create([{
       orderType,
       character: characterName,
       resource,
@@ -24,9 +77,15 @@ async function postOrder(characterName, orderType, resource, price, units, days)
       unitsInit: units,
       expireDate: new Date(Date.now() + days * 24 * 60 * 60 * 1000),
       status: 'init'
-    });
-    // Save the order document
-    await order.save();
+    }], {session: session, new: true});
+
+    // Check if the order was created successfully
+    if (!orderCreate || orderCreate.length == 0) {
+      console.log("Error: Order creation failed.");
+      throw new Error("Order creation failed.");
+    }
+    const order = orderCreate[0]
+    console.log("posting order: order created!", order);
     
     
     // Check if the character has enough resources or gold
@@ -45,18 +104,22 @@ async function postOrder(characterName, orderType, resource, price, units, days)
     const character = await Character.findOneAndUpdate(
       { characterName, ...conditionPayment() },
       { $push: { orders: order._id }, ...updatePayment() },
-      { new: true }); // To get the updated document
-
+      { session: session}); 
     if (!character) {
       // Character not found or doesn't have enough resources or gold
-      await Order.deleteOne({_id: order._id})
       throw new Error("Character not found or doesn't have enough resources or gold");
     }
-    console.log("Order posted successfully:", order);
-    
+    console.log("posting order: character updated");
+    // If everything is successful, commit the transaction
+    console.log("Order posted successfully and character updated! Transaction successful!");
+    await session.commitTransaction();
+    session.endSession();
     // update the marketplace with the new Order
     await processOrder(order._id)
   } catch (error) {
+    // on error abbort the transaction
+    await session.abortTransaction();
+    session.endSession();
     console.error("Error posting order:", error.message);
   }
 }
@@ -64,158 +127,179 @@ async function postOrder(characterName, orderType, resource, price, units, days)
 async function processOrder(orderId){
   console.log("processOrder: ...");
   const order = await Order.findById(orderId);
+  if(!order){
+    console.log("processOrder: ordes not found!");
+    return
+  }
   const orderType = order.orderType
 
-  // Find or create the Marketplace document for the specified resource
+  // Find the Marketplace document for the specified resource
   const marketplace = await Marketplace.findOne(
     { resource: order.resource },
   )
+  // the marketplaces does not exist. We add the order to the marketplace directly!
   if(!marketplace){
+    console.log("processOrder: marketplaces not found!");
     addOrderToMarketplace(orderId)
     return
   }
 
-  
-  let unitsProcessed = 0
-  // if we have a sellOrder, this gold is earned by selling on the marketplace immediately
-  let goldEarned = 0
-  // if we have a buyOrder, the gold is payed with the post of the order.
-  // if there is currently a better deal on the market, you get payback on the price difference
-  let goldPayback = 0
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  try {
+    let unitsProcessed = 0
+    // if we have a sellOrder, this gold is earned by selling on the marketplace immediately
+    let goldEarned = 0
+    // if we have a buyOrder, the gold is payed with the post of the order.
+    // if there is currently a better deal on the market, you get payback on the price difference
+    let goldPayback = 0
 
-  const oppositeOrderBook = (orderType === 'sellOrder') ? marketplace.orderBookBuying : marketplace.orderBookSelling
-
-
-  // process the the opositeOrderBook
-  for (let i = 0; i < oppositeOrderBook.length; i++) {
-    console.log("processOrder: checking price tier ", oppositeOrderBook[i].price);
-    // you do not sell to order with lower price
-    // you do not buy from roder with higher price
-    if ((orderType === 'sellOrder' && order.price > oppositeOrderBook[i].price) || 
-      (orderType === 'buyOrder' && order.price < oppositeOrderBook[i].price)) {
-      console.log("processOrder: no orders in orderBook left to carry out!");
-      break
-    }
-    const oppositeOrders = oppositeOrderBook[i].orders
-    for (let j = 0; j < oppositeOrders.length; j++){
-      // break, when the order is completed
-      if (order.units - unitsProcessed === 0){
-        console.log("processOrder: order completed!", unitsProcessed, order);
+    // process the the opositeOrderBook
+    const oppositeOrderBook = (orderType === 'sellOrder') ? marketplace.orderBookBuying : marketplace.orderBookSelling
+    for (let i = 0; i < oppositeOrderBook.length; i++) {
+      console.log("processOrder: checking price tier ", oppositeOrderBook[i].price);
+      // you do not sell to order with lower price
+      // you do not buy from order with higher price
+      if ((orderType === 'sellOrder' && order.price > oppositeOrderBook[i].price) || 
+        (orderType === 'buyOrder' && order.price < oppositeOrderBook[i].price)) {
+        console.log("processOrder: no orders in orderBook left to carry out!");
         break
       }
-
-      // this is a oppositeOrder in the marketplace orderbook.
-      const oppositeOrderMarketplace = oppositeOrders[j]
-
-      const oppositeOrder = await Order.findById(oppositeOrderMarketplace.id)
-      console.log("processOrder: oppositeOrder ", oppositeOrder);
-
-      // this should normally not be in ther oderBook, since all units are already sold!
-      if(oppositeOrder.units <= 0) {
-        continue
-      }
-      
-      // can only process as many items as there are left in the oppositeOrder,
-      // or how many are still needed for the order
-      const unitsToProcess = Math.min(order.units - unitsProcessed, oppositeOrder.units)
-      
-      // the opposite order always sets the price! These are the orders in the marketplace.
-      // That way you always get the best deal from the market.
-      const gold = unitsToProcess * oppositeOrder.price
-      // Update the oppositeOrder document
-      const oppositeOrderType = orderType === 'sellOrder' ? 'buyOrder' : 'sellOrder'
-      const updateOppositeOrder = () => {
-        // the oppositeOrder is still active if not all units were grapped
-        const newStatus = unitsToProcess < oppositeOrder.units ? 'active' : 'complete'
-        // the buyOrder can now collect the units we sold to it
-        if (oppositeOrderType === 'buyOrder') return {
-          $inc: {units: -unitsToProcess, unitsToCollect: unitsToProcess },
-          $set: {status: newStatus}
+      const oppositeOrders = oppositeOrderBook[i].orders
+      for (let j = 0; j < oppositeOrders.length; j++){
+        // break, when the order is completed
+        if (order.units - unitsProcessed === 0){
+          console.log("processOrder: order completed!", unitsProcessed, order);
+          break
         }
-        // the sellOrder can now collect the gold
-        if (oppositeOrderType === 'sellOrder') {
-          return {
-            $inc: {units: -unitsToProcess, goldToCollect: gold },
+
+        // this is a oppositeOrder in the marketplace orderbook.
+        const oppositeOrderMarketplace = oppositeOrders[j]
+
+        const oppositeOrder = await Order.findById(oppositeOrderMarketplace.id)
+        console.log("processOrder: oppositeOrder ", oppositeOrder);
+
+        // this should normally not be in ther oderBook, since all units are already sold!
+        if(oppositeOrder.units <= 0) {
+          continue
+        }
+        
+        // can only process as many items as there are left in the oppositeOrder,
+        // or how many are still needed for the order
+        const unitsToProcess = Math.min(order.units - unitsProcessed, oppositeOrder.units)
+        
+        // the opposite order always sets the price! These are the orders in the marketplace.
+        // That way you always get the best deal from the market.
+        const gold = unitsToProcess * oppositeOrder.price
+        // Update the oppositeOrder document
+        const oppositeOrderType = orderType === 'sellOrder' ? 'buyOrder' : 'sellOrder'
+        const updateOppositeOrder = () => {
+          // the oppositeOrder is still active if not all units were grapped
+          const newStatus = unitsToProcess < oppositeOrder.units ? 'active' : 'complete'
+          // the buyOrder can now collect the units we sold to it
+          if (oppositeOrderType === 'buyOrder') return {
+            $inc: {units: -unitsToProcess, unitsToCollect: unitsToProcess },
             $set: {status: newStatus}
           }
+          // the sellOrder can now collect the gold
+          if (oppositeOrderType === 'sellOrder') {
+            return {
+              $inc: {units: -unitsToProcess, goldToCollect: gold },
+              $set: {status: newStatus}
+            }
+          }
         }
-      }
-      const updatedOppositeOrder = await Order.findOneAndUpdate( 
-        {_id: oppositeOrder.id, units: {$gte : unitsToProcess} },
-        updateOppositeOrder(),
-        {new: true}
-      )
+        const updatedOppositeOrder = await Order.findOneAndUpdate( 
+          {_id: oppositeOrder.id, units: {$gte : unitsToProcess} },
+          updateOppositeOrder(),
+          {session, new: true}
+        )
       
-      // the oppositeOrder was carried out successfully
-      if (updatedOppositeOrder){
+        if (!updatedOppositeOrder){
+          throw new Error("oppositeOrder update failed!")
+        }
+        // the oppositeOrder was carried out successfully
         console.log("processOrder: oppositeOrder updated!", updatedOppositeOrder);
-        // Update the order we still want to carry out
+        // aggregate the units we processed with the oppositeOrder
         unitsProcessed += unitsToProcess
         // for a sellOrder you earn gold
         goldEarned += gold
-        // the gold that was aldeady payed for the post minus the gold we now payed on the market
-      // we might have found a better deal now
-      goldPayback += (unitsToProcess * order.price) - gold
-      } else {
-        console.log("processOrder: order updated FAILED!");
-      }
+        // the gold that was aldeady payed for the post, minus the gold we now payed on the market
+        // we might have found a better deal now
+        goldPayback += (unitsToProcess * order.price) - gold
 
+        // we now have processed a single opposite order
+      }
     }
+    console.log("processSellOrder: opposite orderBook fully processed!");
+
+    // an early break might have left the order with units left to be processed
+    const newStatus = unitsProcessed < order.units ? 'active' : 'complete'
+    const newOrderUpdate = () => {
+      if (orderType === 'buyOrder') return { 
+        $inc: {
+          unitsToCollect: unitsProcessed,
+          goldToCollect: goldPayback,
+          units: -unitsProcessed,
+        },
+        $set: {
+          status: newStatus
+        }
+      }
+      // the sellOrder can now collect the gold
+      if (orderType === 'sellOrder') return { 
+        $inc: {
+          goldToCollect: goldEarned,
+          units: -unitsProcessed,
+        },
+        $set: {
+          status: newStatus
+        }
+      }
+    } 
+    const newOrder = await Order.findByIdAndUpdate(
+      orderId, 
+      newOrderUpdate(),
+      {session, new: true}
+    )
+    if (!newOrder) {
+      throw new Error("order update failed!")
+    }
+
+    // end the session
+    await session.commitTransaction();
+    session.endSession();
+
+    if (newStatus == 'active') {
+      console.log("processOrder: Order not completed. Add to market!", newOrder);
+      await addOrderToMarketplace(newOrder._id)
+    } else {
+      console.log("processOrder: Order completly processed. Not added to market.", newOrder);
+    }
+    console.log("processOrder: completed!");
+    await updateMarketplace(newOrder.resource)
+  } catch (error) {
+      // on error abbort the transaction
+    await session.abortTransaction();
+    session.endSession();
+    console.error("Error posting order:", error.message);
   }
-
-  // an early break left the sellOrder with units left to be sold
-  // If sellOrder is not completed, update the sellOrder document
-  // and add the sellOrder to the marketplace
-  const newStatus = unitsProcessed < order.units ? 'active' : 'complete'
-  
-  const newOrderUpdate = () => {
-    if (orderType === 'buyOrder') return { 
-      $inc: {
-        unitsToCollect: unitsProcessed,
-        goldToCollect: goldPayback,
-        units: -unitsProcessed,
-      },
-      $set: {
-        status: newStatus
-      }
-    }
-    // the sellOrder can now collect the gold
-    if (orderType === 'sellOrder') return { 
-      $inc: {
-        goldToCollect: goldEarned,
-        units: -unitsProcessed,
-      },
-      $set: {
-        status: newStatus
-      }
-    }
-  } 
-  const newOrder = await Order.findByIdAndUpdate(
-    orderId, 
-    newOrderUpdate(),
-    {new: true}
-  )
-
-  if (newStatus == 'active') {
-    console.log("processSellOrder: sellOrder not completed. Add to market!", newOrder);
-    await addOrderToMarketplace(newOrder._id)
-  } else {
-    console.log("processSellOrder: sellOrder completed. Not added to market.", newOrder);
-  }
-  console.log("processSellOrder: completed!");
-  await updateMarketplace(newOrder.resource)
 } 
 
 async function addOrderToMarketplace(orderId) {
+  const order = await Order.findById(orderId);
+  if(!order){
+    console.error("order does not exists");
+    return
+  }
+  const orderType = order.orderType
   try {
 
-    const order = await Order.findById(orderId);
-    const orderType = order.orderType
     // Find or create the Marketplace document for the specified resource
     const marketplace = await Marketplace.findOneAndUpdate(
       { resource: order.resource },
       { $setOnInsert: { resource: order.resource } },
-      { upsert: true, new: true }
+      { upsert: true, new: true, session }
     );
 
     const orderBook = (orderType === 'sellOrder') ? marketplace.orderBookSelling : marketplace.orderBookBuying
@@ -223,7 +307,6 @@ async function addOrderToMarketplace(orderId) {
     const priceTierIndex = orderBook.findIndex(
       (tier) => tier.price === order.price
     );
-
     // create a new price tier
     if (priceTierIndex === -1) {
       orderBook.push({
