@@ -43,11 +43,6 @@ async function handleOrderBook(character, msg){
     return
   }
 
-  senderMediator.publish('info', {character: character,
-    msg: {message: "Order book found!",
-          info: 
-            orderBook
-         }})
   return
 }
 
@@ -90,11 +85,6 @@ async function handleSellOrder(character, msg){
 
   MarketplaceService.postOrder(character, 'sellOrder', resource, price, units, days)
   
-  senderMediator.publish('info', {character: character,
-    msg: {message: "Sell order accepted!",
-          info: {
-           
-         }}})
   console.log("Handling sellOrder submission successfully!")
 }
 
@@ -135,11 +125,6 @@ async function handleBuyOrder(character, msg){
 
   MarketplaceService.postOrder(character, 'buyOrder', resource, price, units, days)
   
-  senderMediator.publish('info', {character: character,
-    msg: {message: "Buyorder accepted!",
-          info: {
-           
-         }}})
   console.log("Handling buyOrder submission successfully!")
 }
 
@@ -173,11 +158,6 @@ async function handleCancelOrder(character, msg){
 
   MarketplaceService.cancelOrder(character, orderId)
   
-  senderMediator.publish('info', {character: character,
-    msg: {message: "Order canceled!",
-          info: {
-           
-         }}})
   console.log("Handling cancel submission successfully!")
 }
 
@@ -211,11 +191,6 @@ async function handleCollectOrder(character, msg){
 
   MarketplaceService.collectOrder(character, orderId)
   
-  senderMediator.publish('info', {character: character,
-    msg: {message: "Order collected!",
-          info: {
-           
-         }}})
   console.log("Handling collect submission successfully!")
 }
 

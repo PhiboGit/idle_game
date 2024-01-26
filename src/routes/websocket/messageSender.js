@@ -16,15 +16,15 @@ class MessageSender{
     this.mediator.subscribe('update_char', this.updateChar_EventHandler.bind(this))
     this.mediator.subscribe('actionManager', this.actionManager_EventHandler.bind(this))
     this.mediator.subscribe('items', this.items_EventHandler.bind(this))
-    this.mediator.subscribe('equipment', this.equipment_EventHandler.bind(this))
+    this.mediator.subscribe('order', this.order_EventHandler.bind(this))
   }
 
-  equipment_EventHandler(data) {
-    console.log('MessageSender event: "equipment" invoked.');
+  order_EventHandler(data) {
+    console.log('MessageSender event: "order" invoked.');
     verifyData(data)
     
     const message = {
-      type: 'equip',
+      type: 'order',
       data: data.msg
     }
 
@@ -32,7 +32,7 @@ class MessageSender{
   }
 
   items_EventHandler(data) {
-    console.log('MessageSender event: "actionManager" invoked.');
+    console.log('MessageSender event: "items" invoked.');
     verifyData(data)
     
     const message = {

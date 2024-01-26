@@ -6,22 +6,31 @@ const Character = require("./../character");
 const {senderMediator} = require("./../../../routes/websocket/mediator")
 
 
-async function cancelOrder(character, orderId){
-  const order = await Order.findOneAndUpdate({_id: orderId, character: character}, {status: 'canceled'});
+async function cancelOrder(characterName, orderId){
+  const order = await Order.findOneAndUpdate({_id: orderId, character: characterName, status: 'active'}, {status: 'canceled'});
   if(!order){
-    console.log("Cancelling order failed! does not own order.")
+    console.log("Cancelling order failed! does not own order or is an active order!")
+    senderMediator.publish('error', {character: characterName,
+      msg: {message: "Cancelling order failed! does not own order or is an active order!",
+            info: {
+             orderId: orderId
+           }}})
     return
   }
   updateMarketplace(order.resource)
+
+  // Fetch the updated order as a lean object
+  const leanOrder = await Order.findById(orderId).lean();
+  senderMediator.publish('order', {character: characterName, msg: {order: leanOrder}})
 }
 
-async function collectOrder(character, orderId) {
+async function collectOrder(characterName, orderId) {
   const session = await mongoose.startSession();
   session.startTransaction();
 
   try {
     const order = await Order.findOneAndUpdate(
-      { _id: orderId, character: character },
+      { _id: orderId, character: characterName },
       { unitsToCollect: 0, goldToCollect: 0 },
       { session } // do not set new, need the old values
     );
@@ -31,14 +40,15 @@ async function collectOrder(character, orderId) {
       throw new Error("Order not found or does not belong to the specified character");
     }
 
+    const charUpdate = {
+      $inc: {
+        ['currency.gold']: order.goldToCollect,
+        [`resources.${order.resource}`]: order.unitsToCollect
+      }
+    }
     const char = await Character.findOneAndUpdate(
-      { characterName: character },
-      {
-        $inc: {
-          ['currency.gold']: order.goldToCollect,
-          [`resources.${order.resource}`]: order.unitsToCollect
-        }
-      },
+      { characterName: characterName },
+      charUpdate,
       { session }
     );
 
@@ -52,12 +62,22 @@ async function collectOrder(character, orderId) {
     session.endSession();
 
     console.log("collectOrder: Transaction committed successfully");
+
+    // Fetch the updated order as a lean object
+    const leanOrder = await Order.findById(orderId).lean();
+    senderMediator.publish('order', {character: characterName, msg: {order: leanOrder}})
+    senderMediator.publish('update_char', {character: characterName, msg: charUpdate})
   } catch (error) {
     // If there's an error, abort the transaction
     await session.abortTransaction();
     session.endSession();
-
     console.error("collectOrder: Transaction aborted:", error.message);
+
+    senderMediator.publish('error', {character: characterName,
+      msg: {message: "Collect order failed!",
+            info: {
+             
+           }}})
   }
 }
 
@@ -90,8 +110,8 @@ async function postOrder(characterName, orderType, resource, price, units, days)
     
     // Check if the character has enough resources or gold
     const conditionPayment = () => {
-      if(orderType === 'sellOrders') return { [`resources.${resource}`]: { $gte: units } } 
-      if(orderType === 'buyOrders') return { ["currency.gold"]: { $gte: price * units } };
+      if(orderType === 'sellOrder') return { [`resources.${resource}`]: { $gte: units } } 
+      if(orderType === 'buyOrder') return { ["currency.gold"]: { $gte: price * units } };
     }
     
     // decrement the value of resources or gold
@@ -100,10 +120,12 @@ async function postOrder(characterName, orderType, resource, price, units, days)
       if(orderType === 'buyOrder') return { $inc: { ["currency.gold"]: -price * units } } ;
     }
 
+    const charUpdate = { $push: { orders: order._id }, ...updatePayment() }
+
     // Update the character with the newly created Order's document id
     const character = await Character.findOneAndUpdate(
       { characterName, ...conditionPayment() },
-      { $push: { orders: order._id }, ...updatePayment() },
+      charUpdate,
       { session: session}); 
     if (!character) {
       // Character not found or doesn't have enough resources or gold
@@ -114,13 +136,23 @@ async function postOrder(characterName, orderType, resource, price, units, days)
     console.log("Order posted successfully and character updated! Transaction successful!");
     await session.commitTransaction();
     session.endSession();
+    // Fetch the updated order as a lean object
+    const leanOrder = await Order.findById(order._id).lean();
+    senderMediator.publish('order', {character: characterName, msg: {order: leanOrder}})
+    senderMediator.publish('update_char', {character: characterName, msg: charUpdate})
     // update the marketplace with the new Order
     await processOrder(order._id)
   } catch (error) {
     // on error abbort the transaction
     await session.abortTransaction();
     session.endSession();
+    console.error("Transaction aborted");
     console.error("Error posting order:", error.message);
+    senderMediator.publish('error', {character: characterName,
+      msg: {message: "Post order failed!",
+            info: {
+             
+           }}})
   }
 }
 
@@ -146,6 +178,8 @@ async function processOrder(orderId){
 
   const session = await mongoose.startSession();
   session.startTransaction();
+  const notifyOrderIdList = []
+
   try {
     let unitsProcessed = 0
     // if we have a sellOrder, this gold is earned by selling on the marketplace immediately
@@ -220,6 +254,7 @@ async function processOrder(orderId){
         }
         // the oppositeOrder was carried out successfully
         console.log("processOrder: oppositeOrder updated!", updatedOppositeOrder);
+        notifyOrderIdList.push(updatedOppositeOrder._id)
         // aggregate the units we processed with the oppositeOrder
         unitsProcessed += unitsToProcess
         // for a sellOrder you earn gold
@@ -265,11 +300,11 @@ async function processOrder(orderId){
     if (!newOrder) {
       throw new Error("order update failed!")
     }
-
+    notifyOrderIdList.push(newOrder._id)
     // end the session
     await session.commitTransaction();
     session.endSession();
-
+    notifyOrders(notifyOrderIdList)
     if (newStatus == 'active') {
       console.log("processOrder: Order not completed. Add to market!", newOrder);
       await addOrderToMarketplace(newOrder._id)
@@ -286,6 +321,14 @@ async function processOrder(orderId){
   }
 } 
 
+async function notifyOrders(orderIdList){
+  for (var i = 0; i < orderIdList.length; i++){
+    // Fetch the updated order as a lean object
+    const leanOrder = await Order.findById(orderIdList[i]).lean();
+    senderMediator.publish('order', {character: leanOrder.character, msg: {order: leanOrder}})
+  }
+}
+
 async function addOrderToMarketplace(orderId) {
   const order = await Order.findById(orderId);
   if(!order){
@@ -299,7 +342,7 @@ async function addOrderToMarketplace(orderId) {
     const marketplace = await Marketplace.findOneAndUpdate(
       { resource: order.resource },
       { $setOnInsert: { resource: order.resource } },
-      { upsert: true, new: true, session }
+      { upsert: true, new: true }
     );
 
     const orderBook = (orderType === 'sellOrder') ? marketplace.orderBookSelling : marketplace.orderBookBuying
