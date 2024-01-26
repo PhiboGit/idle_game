@@ -38,7 +38,19 @@ for ubuntu 20.04: `echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mo
 
 `cd ~` to get to root. `sudo mkdir -p /data/db` and where 'phibo' is your username:  `sudo chown -R phibo:root /data/db/`
 
-mongodb should now able to start and not return to the terminal: to start `mongod`  . you can shutdown mongodb with 'ctrl + C'
+With added Transaction and replica set:
+
+ `sudo nano /etc/mongod.conf` and add these lines:
+
+```
+replication:
+  replSetName: "rs0"
+```
+
+
+mongodb should now able to start and not return to the terminal: to start with replica set `mongod --replSet rs0`  . you can shutdown mongodb with 'ctrl + C'
+
+with the first start we need it init the replica set. open mongosh then : `rs.initiate()`
 
 5. install vscode on your windows: https://code.visualstudio.com/
 
