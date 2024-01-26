@@ -18,7 +18,7 @@ const messageRoutes = {
     'sellOrder': MarketplaceHandler.handleSellOrder,
     'buyOrder': MarketplaceHandler.handleBuyOrder,
     'cancel': MarketplaceHandler.handleCancelOrder,
-    
+    'collect': MarketplaceHandler.handleCollectOrder
   },
 };
 

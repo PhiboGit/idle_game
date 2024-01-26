@@ -403,4 +403,4 @@ async function updateMarketplace(resource) {
 }
 
 
-module.exports = {postOrder, cancelOrder}
+module.exports = {postOrder, cancelOrder, collectOrder}

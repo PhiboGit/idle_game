@@ -181,5 +181,43 @@ async function handleCancelOrder(character, msg){
   console.log("Handling cancel submission successfully!")
 }
 
+function verifyCollectOrder(msg){
+  if((msg && 
+    msg.type && typeof msg.type === 'string' && msg.type === 'marketplace/collect' &&
+    msg.args &&
+    msg.args.orderId && typeof msg.args.orderId === 'string' 
+    )){
+      return true
+    }
+  console.info('Invalid args for collect order')
+  return false
+}
 
-module.exports = {handleOrderBook, handleSellOrder, handleBuyOrder, handleCancelOrder}
+
+async function handleCollectOrder(character, msg){
+  console.log("Handling marketplace collect order...")
+  const valid = verifyCollectOrder(msg)
+  if (!valid) {
+    senderMediator.publish('error', {character: character,
+      msg: {message: "The submitted form for type: 'collect' is not valid!",
+            info: {
+             
+           }}})
+    return
+  }
+  console.log("Handling collect submission is valid. Trying to collect order ...")
+
+  const orderId = msg.args.orderId
+
+  MarketplaceService.collectOrder(character, orderId)
+  
+  senderMediator.publish('info', {character: character,
+    msg: {message: "Order collected!",
+          info: {
+           
+         }}})
+  console.log("Handling collect submission successfully!")
+}
+
+
+module.exports = {handleOrderBook, handleSellOrder, handleBuyOrder, handleCancelOrder, handleCollectOrder}
