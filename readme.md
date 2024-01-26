@@ -69,7 +69,7 @@ Do this to run the project:
 
  open vscode that is connected to WSL. (if vscode is not running, start it from ubuntu with `code .`)
 
- open a terimnal and start mongodb with `mongod`
+ open a terimnal and start mongodb with `mongod --replSet rs0`
 
  in a new terminal connect to mongodb with `mongosh`
 
