@@ -31,7 +31,7 @@ async function handleOrderBook(character, msg){
 
   const resource = msg.args.resource
 
-  const orderBook = await Marketplace.findOne({resource:  resource})
+  const orderBook = await Marketplace.findOne({resource:  resource}).lean()
 
 
   if(!orderBook){
@@ -43,6 +43,8 @@ async function handleOrderBook(character, msg){
     return
   }
 
+  senderMediator.publish('marketplace', {character: character,
+    msg: {resource, orderBook}})
   return
 }
 
