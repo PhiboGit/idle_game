@@ -1,80 +1,115 @@
 {
   "sap_uncommon": {
-    "name": "",
+    "displayName": "sap_uncommon",
+    "tier": 1,
+    "rarity": "uncommon",
     "description": ""
   },
   "sap_rare":{
-
+    "displayName": "sap_rare",
+    "tier": 1,
+    "rarity": "rare",
+    "description": ""
   },
   "sap_epic":{
-    
+    "displayName": "sap_epic",
+    "tier": 1,
+    "rarity": "epic",
+    "description": ""
   },
   "sap_legendary":{
-    
+    "displayName": "sap_legendary",
+    "tier": 1,
+    "rarity": "legendary",
+    "description": ""
   },
 
 
   "stick_uncommon": {
-    "name": "Mossy Twig",
+    "displayName": "Mossy Twig",
+    "tier": 1,
+    "rarity": "uncommon",
     "description": "",
     "craftingBonus": 2000
   },
   "stick_rare":{
-    "name": "Glimmering Stick",
+    "displayName": "Glimmering Stick",
+    "tier": 1,
+    "rarity": "rare",
     "description": "",
     "craftingBonus": 2250
   },
   "stick_epic":{
-    "name": "Petrified Branch",
+    "displayName": "Petrified Branch",
+    "tier": 1,
+    "rarity": "epic",
     "description": "",
     "craftingBonus": 2400
   },
   "stick_legendary":{
-    "name": "Ancient Hardwood",
+    "displayName": "Ancient Hardwood",
+    "tier": 1,
+    "rarity": "legendary",
     "description": "",
     "craftingBonus": 2500
   },
 
 
   "chunk_uncommon": {
-    "name": "",
+    "displayName": "chunk_uncommon",
+    "tier": 1,
+    "rarity": "uncommon",
     "description": "",
     "craftingBonus": 2000
   },
   "chunk_rare":{
-    "name": "",
+    "displayName": "chunk_rare",
+    "tier": 1,
+    "rarity": "rare",
     "description": "",
     "craftingBonus": 2250
   },
   "chunk_epic":{
-    "name": "",
+    "displayName": "chunk_epic",
+    "tier": 1,
+    "rarity": "epic",
     "description": "",
     "craftingBonus": 2400
   },
   "chunk_legendary":{
-    "name": "",
+    "displayName": "chunk_legendary",
+    "tier": 1,
+    "rarity": "legendary",
     "description": "",
     "craftingBonus": 2500
   },
 
 
   "strand_uncommon": {
-    "name": "",
+    "displayName": "strand_uncommon",
+    "tier": 1,
+    "rarity": "uncommon",
     "description": "",
     "craftingBonus": 2000
   },
   "strand_rare":{
-    "name": "",
+    "displayName": "strand_rare",
+    "tier": 1,
+    "rarity": "rare",
     "description": "",
     "craftingBonus": 2250
   },
   "strand_epic":{
-    "name": "",
+    "displayName": "strand_epic",
+    "tier": 1,
+    "rarity": "epic",
     "description": "",
     "craftingBonus": 2400
   },
   "strand_legendary":{
-    "name": "",
+    "displayName": "strand_legendary",
+    "tier": 1,
+    "rarity": "legendary",
     "description": "",
     "craftingBonus": 2500
   }

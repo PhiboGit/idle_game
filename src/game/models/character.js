@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const {resources} = require('./resources/resources')
+const {resources} = require('./resourcesCharacter')
 const {skills} = require('./skills')
 
 // character has a name basic stats, race, resources, inventory, equipment, items, tools, level

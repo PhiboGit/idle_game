@@ -3,6 +3,7 @@ const CharacterService = require('../../game/models/services/characterService')
 const routeMessage = require('./messageRouter')
 
 const {gatheringResourcesData, gatheringEXPData, recipesData, refiningRecipes, craftingTable, craftingMaterials, enchantingProfession} = require('../../game/utils/dataLoader')
+const { resourcesInfo } = require('../../game/data/resourceDetails/resourcesInfo')
 
 class MessageReceiver{
   constructor(mediator) {
@@ -66,6 +67,7 @@ async function initData(charName) {
   try {
 
     const database = {
+      resourcesInfo,
       expTable: gatheringEXPData,
       gatheringResourcesData,
       recipesData,

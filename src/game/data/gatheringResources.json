@@ -2,6 +2,8 @@
   "woodcutting": {
     "tiers": [
       {
+        "displayName": "Birch Tree",
+        "description": "",
         "resourceName": "woodT1",
         "level": 0,
         "time": 20000,
@@ -12,6 +14,8 @@
         "lootTable": "TreeT1"
       },
       {
+        "displayName": "Oak Tree",
+        "description": "",
         "resourceName": "woodT2",
         "level": 25,
         "time": 40000,
@@ -22,6 +26,8 @@
         "lootTable": "TreeT2"
       },
       {
+        "displayName":"Wyrmwood Tree",
+        "description": "",
         "resourceName": "woodT3",
         "level": 50,
         "time": 80000,
@@ -32,6 +38,8 @@
         "lootTable": "TreeT3"
       },
       {
+        "displayName": "Ironwood Tree",
+        "description": "",
         "resourceName": "woodT4",
         "level": 75,
         "time": 120000,
@@ -42,6 +50,8 @@
         "lootTable": "TreeT4"
       },
       {
+        "displayName": "Elderwood Tree",
+        "description": "",
         "resourceName": "woodT5",
         "level": 100,
         "time": 180000,
@@ -56,6 +66,8 @@
   "mining": {
     "tiers": [
       {
+        "displayName": "Iron Vein",
+        "description": "",
         "resourceName": "oreT1",
         "level": 0,
         "time": 20000,
@@ -66,6 +78,8 @@
         "lootTable": "VeinT1"
       },
       {
+        "displayName": "Starmetal Vein",
+        "description": "",
         "resourceName": "oreT2",
         "level": 25,
         "time": 40000,
@@ -76,6 +90,8 @@
         "lootTable": "VeinT2"
       },
       {
+        "displayName": "Platinum Vein",
+        "description": "",
         "resourceName": "oreT3",
         "level": 50,
         "time": 80000,
@@ -86,6 +102,8 @@
         "lootTable": "VeinT3"
       },
       {
+        "displayName": "Orichalcum Vein",
+        "description": "",
         "resourceName": "oreT4",
         "level": 75,
         "time": 120000,
@@ -96,6 +114,8 @@
         "lootTable": "VeinT4"
       },
       {
+        "displayName": "Mythril Vein",
+        "description": "",
         "resourceName": "oreT5",
         "level": 100,
         "time": 180000,
@@ -110,6 +130,8 @@
   "harvesting": {
     "tiers": [
       {
+        "displayName": "Jute Mallow",
+        "description": "",
         "resourceName": "fiberT1",
         "level": 0,
         "time": 20000,
@@ -120,6 +142,8 @@
         "lootTable": "PlantT1"
       },
       {
+        "displayName": "Hemp Plant",
+        "description": "",
         "resourceName": "fiberT2",
         "level": 25,
         "time": 40000,
@@ -130,6 +154,8 @@
         "lootTable": "PlantT2"
       },
       {
+        "displayName": "Flax Plant",
+        "description": "",
         "resourceName": "fiberT3",
         "level": 50,
         "time": 80000,
@@ -140,6 +166,8 @@
         "lootTable": "PlantT3"
       },
       {
+        "displayName": "Yucca Plant",
+        "description": "",
         "resourceName": "fiberT4",
         "level": 75,
         "time": 120000,
@@ -150,6 +178,8 @@
         "lootTable": "PlantT4"
       },
       {
+        "displayName": "Cotton Plant",
+        "description": "",
         "resourceName": "fiberT5",
         "level": 100,
         "time": 180000,

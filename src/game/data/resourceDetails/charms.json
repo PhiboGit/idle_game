@@ -1,42 +1,58 @@
 {
   "conCharm":{
-
+    "tier": 1,
+    "rarity": "rare",
+    "displayName": "Constitution Charm",
+    "description": ""
   },
   "strCharm":{
-
+    "tier": 1,
+    "rarity": "rare",
+    "displayName": "Strength Charm",
+    "description": ""
   },
   "intCharm":{
-    
+    "tier": 1,
+    "rarity": "rare",
+    "displayName": "Intelligence Charm",
+    "description": ""
   },
   "dexCharm":{
-    
+    "tier": 1,
+    "rarity": "rare",
+    "displayName": "Dexterity Charm",
+    "description": ""
   },
   "focCharm":{
-    
+    "tier": 1,
+    "rarity": "rare",
+    "displayName": "Focus Charm",
+    "description": ""
   },
 
-  "miningSpeedCharm": {
-
+  "speedCharm": {
+    "tier": 1,
+    "rarity": "rare",
+    "displayName": "Speed Charm",
+    "description": ""
   },
-  "miningExpCharm":{
-
+  "expCharm":{
+    "tier": 1,
+    "rarity": "rare",
+    "displayName": "Expert Charm",
+    "description": ""
   },
-  "miningLuckCharm":{
-
+  "luckCharm":{
+    "tier": 1,
+    "rarity": "rare",
+    "displayName": "Luck Charm",
+    "description": ""
   },
-  "miningYieldCharm":{
-
-  },
-  "woodcuttingSpeedCharm":{
-
-  },
-  "woodcuttingExpCharm":{
-
-  },
-  "woodcuttingLuckCharm":{
-
-  },
-  "woodcuttingYieldCharm":{
-
+  "yieldCharm":{
+    "tier": 1,
+    "rarity": "rare",
+    "displayName": "Yield Charm",
+    "description": ""
   }
+
 }

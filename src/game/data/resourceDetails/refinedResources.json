@@ -1,0 +1,100 @@
+{
+  "coal": {
+    "tier": 1,
+    "rarity": "common",
+    "displayName": "Coal",
+    "description": ""
+  },
+  "ingotT1": {
+    "tier": 1,
+    "rarity": "common",
+    "displayName": "Iron Ingot",
+    "description": ""
+  },
+  "ingotT2": {
+    "tier": 1,
+    "rarity": "common",
+    "displayName": "Starmetal Ingot",
+    "description": ""
+  },
+  "ingotT3": {
+    "tier": 1,
+    "rarity": "common",
+    "displayName": "Platinum Ingot",
+    "description": ""
+  },
+  "ingotT4": {
+    "tier": 1,
+    "rarity": "common",
+    "displayName": "Orichalcum Ingot",
+    "description": ""
+  },
+  "ingotT5": {
+    "tier": 1,
+    "rarity": "common",
+    "displayName": "Mythril Ingot",
+    "description": ""
+  },
+
+  "plankT1": {
+    "tier": 1,
+    "rarity": "common",
+    "displayName": "Birch Plank",
+    "description": ""
+  },
+  "plankT2": {
+    "tier": 1,
+    "rarity": "common",
+    "displayName": "Oak Plank",
+    "description": ""
+  },
+  "plankT3": {
+    "tier": 1,
+    "rarity": "common",
+    "displayName": "Wyrmwood Plank",
+    "description": ""
+  },
+  "plankT4": {
+    "tier": 1,
+    "rarity": "common",
+    "displayName": "IronWood Plank",
+    "description": ""
+  },
+  "plankT5": {
+    "tier": 1,
+    "rarity": "common",
+    "displayName": "Elderwood Plank",
+    "description": ""
+  },
+
+  "linenT1": {
+    "tier": 1,
+    "rarity": "common",
+    "displayName": "Jute Fabric",
+    "description": ""
+  },
+  "linenT2": {
+    "tier": 2,
+    "rarity": "common",
+    "displayName": "Hemp Fabric",
+    "description": ""
+  },
+  "linenT3": {
+    "tier": 3,
+    "rarity": "common",
+    "displayName": "Yucca Fabric",
+    "description": ""
+  },
+  "linenT4": {
+    "tier": 4,
+    "rarity": "common",
+    "displayName": "Flax Fabric",
+    "description": ""
+  },
+  "linenT5": {
+    "tier": 5,
+    "rarity": "common",
+    "displayName": "Cotton Fabric",
+    "description": ""
+  }
+}
