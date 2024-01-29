@@ -7,8 +7,24 @@ const {senderMediator} = require("./../../../routes/websocket/mediator")
 
 
 async function cancelOrder(characterName, orderId){
-  const order = await Order.findOneAndUpdate({_id: orderId, character: characterName, status: 'active'}, {status: 'canceled'});
-  if(!order){
+  // Fetch the updated order as a lean object
+  const order = await Order.findById(orderId).lean();
+  const update = {$set : {status: 'canceled'}}
+  if(order.orderType == 'buyOrder'){
+    update['$inc'] = {
+      'units': -order.units,
+      'goldToCollect': order.units * order.price
+    }
+  }
+  else if(order.orderType == 'sellOrder'){
+    update['$inc'] = {
+      'units': -order.units,
+      'unitsToCollect': order.units
+    }
+  }
+
+  const orderUpdated = await Order.findOneAndUpdate({_id: orderId, character: characterName, status: 'active'}, update);
+  if(!orderUpdated){
     console.log("Cancelling order failed! does not own order or is an active order!")
     senderMediator.publish('error', {character: characterName,
       msg: {message: "Cancelling order failed! does not own order or is an active order!",
@@ -17,7 +33,7 @@ async function cancelOrder(characterName, orderId){
            }}})
     return
   }
-  updateMarketplace(order.resource)
+  updateMarketplace(orderUpdated.resource)
 
   // Fetch the updated order as a lean object
   const leanOrder = await Order.findById(orderId).lean();
