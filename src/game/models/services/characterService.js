@@ -134,9 +134,8 @@ async function getAll(){
  * @returns 
  */
 async function findCharacter(charName){
-  const character =  await Character.findOne({ characterName: charName })
-  const populate = character.populate('items')
-  return populate
+  const character =  await Character.findOne({ characterName: charName }).populate('items').populate('orders').exec();
+  return character
 }
 
 /**
