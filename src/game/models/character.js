@@ -33,6 +33,12 @@ const CharacterSchema = new mongoose.Schema(
 				ref: 'Order', // Reference to the Order model
 			},
 		],
+		itemOrders: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'ItemOrder', // Reference to the ItemOrder model
+			},
+		],
 	},
 	{ collection: 'characters' }
 )
