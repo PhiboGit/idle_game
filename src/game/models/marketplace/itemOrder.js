@@ -7,6 +7,7 @@ const ItemOrderSchema = new mongoose.Schema(
     buyerCharacter: {type: String},
     
     price: {type: Number},
+    itemName: {type: String, default: ''},
     item: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Item',

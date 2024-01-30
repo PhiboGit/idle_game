@@ -211,17 +211,15 @@ async function getSkillData(character, skill) {
 
 
 async function equipItem(character, itemId, skillName, slotType){
+  console.log("equipItem: ...")
   let update = {}
   update['$set'] = {
     [`skills.${skillName}.equipment.${slotType}`]: itemId,
   };
-  const options = {
-    upsert: false, // only for dev, to not delete, recreate database
-  };
+  
   await Character.findOneAndUpdate(
     { characterName: character },
     update,
-    options
   )
   senderMediator.publish('update_char', {character: character, msg: update})
   
@@ -241,13 +239,14 @@ async function equipItem(character, itemId, skillName, slotType){
 }
 
 async function isItemEquiped(character, itemId) {
+  console.log("isItemEquiped: ...")
   const item = await getItem(itemId)
   const characterDB = await findCharacter(character)
-  const itemSlot = item.type
+  const itemSlot = item.equipmentType
 
 
   let found = false
-  for (const itemSkill of item.skills) {
+  for (const itemSkill of item.equipmentSkills) {
     //check if the item is at a valid skill equiped
     const equipedItemId = characterDB.skills[itemSkill].equipment[itemSlot]
     if (equipedItemId == itemId){
@@ -255,10 +254,9 @@ async function isItemEquiped(character, itemId) {
       found = true
     }
   }
-
-
+  console.log("isItemEquiped:", found)
   
-  return (found)
+  return found
 }
 
 

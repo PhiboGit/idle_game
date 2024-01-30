@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const ItemMarketplace = require("./itemMarketplace");
 const ItemOrder = require("./itemOrder");
 const Character = require("./../character");
+const CharacterService = require("./../services/characterService")
 
 const {senderMediator} = require("./../../../routes/websocket/mediator");
 const Item = require('../item');
@@ -19,7 +20,7 @@ async function cancelOrder(characterName, orderId){
     }
     const item = order.item
     const itemMarketplace = await ItemMarketplace.findOneAndUpdate(
-      {itemName: item.name},
+      {itemName: item.name, orderBook: order._id},
       {$pull: {orderBook: order._id}},
       {session: session})
     if(!itemMarketplace){
@@ -34,7 +35,7 @@ async function cancelOrder(characterName, orderId){
   } catch (error) {
     await session.abortTransaction();
     session.endSession();
-    console.log("Cancelling order failed! does not own order or is an active order!")
+    console.log("Cancelling order failed! does not own order or is an active order!", error.message);
     senderMediator.publish('error', {character: characterName,
       msg: {message: "Cancelling order failed! does not own order or is an active order!",
             info: {
@@ -46,41 +47,46 @@ async function cancelOrder(characterName, orderId){
 async function collectOrder(characterName, orderId) {
   const order = await ItemOrder.findOne(
     { _id: orderId },
-    { session } 
     );
-  if (!order) {
-    console.log("Order not found");
+  if (!order || order.status != 'canceled' || order.status != 'complete') {
+    console.log("Order not found or can not collect with status " + order.status);
     return
   }
-  const item = await Item.findOne(
-    { _id: order.item },
-    { session } 
-    ).lean();
-  if (!item) {
-    console.log("Item not found");
-    return
-  }
+  
   if(!(order.sellerCharacter == characterName || order.buyerCharacter == characterName)){
     console.log("This is not your Order!!");
     return
   }
+
+  // start the transaction
   const session = await mongoose.startSession();
   session.startTransaction();
 
   try {
     let charUpdate
+
+    let item
+
     // seller can collected the item if he canceled the order!
     if(order.sellerCharacter == characterName && order.status == 'canceled' && !order.itemCollected){
+      item = await Item.findOne(
+        { _id: order.item },
+        ).lean();
+      if (!item) {
+        console.log("Item not found");
+        throw new Error("Item not found");
+      }
+
       charUpdate = { $push: { items: order.item}}
       const char = await Character.findOneAndUpdate(
         { characterName: characterName },
         charUpdate,
         { session }
       );
-      const orderUpdated = await ItemOrder.findOneAndUpdate( {_id: order._id}, { $set: {itemCollected: true}})
-      if (!char || orderUpdated) {
+      const orderUpdated = await ItemOrder.findOneAndUpdate( {_id: order._id}, { $set: {itemCollected: true}}, {session})
+      if (!char || !orderUpdated) {
         // Character not found
-        throw new Error("Character not found");
+        throw new Error("Seller could not collected canceled order!");
       }
     }
 
@@ -92,28 +98,40 @@ async function collectOrder(characterName, orderId) {
         charUpdate,
         { session }
       );
-      const orderUpdated = await ItemOrder.findOneAndUpdate( {_id: order._id}, { $set: {goldCollected: true}})
-      if (!char || orderUpdated) {
+      const orderUpdated = await ItemOrder.findOneAndUpdate( {_id: order._id}, { $set: {goldCollected: true}}, {session})
+      if (!char || !orderUpdated) {
         // Character not found
-        throw new Error("Character not found");
+        throw new Error("Seller could not collected complete order!");
       }
     }
 
     // buyer can collect the item if the order is complete
     if(order.buyerCharacter == characterName && order.status == 'complete' && !order.itemCollected){
+      item = await Item.findOne(
+        { _id: order.item },
+        ).lean();
+      if (!item) {
+        console.log("Item not found");
+        throw new Error("Item not found");
+      }
+
       charUpdate = { $push: { items: order.item}}
       const char = await Character.findOneAndUpdate(
         { characterName: characterName },
         charUpdate,
         { session }
       );
-      const orderUpdated = await ItemOrder.findOneAndUpdate( {_id: order._id}, { $set: {itemCollected: true}})
-      if (!char || orderUpdated) {
+      const orderUpdated = await ItemOrder.findOneAndUpdate( {_id: order._id}, { $set: {itemCollected: true}}, {session})
+      if (!char || !orderUpdated) {
         // Character not found
-        throw new Error("Character not found");
+        throw new Error("Buyer could not collected canceled order!");
       }
     }
     
+    // if the order is not in one of the three stats above, it is an error.
+    if(!charUpdate){
+      throw new Error("No permissions to collect!")
+    }
     
     // If everything is successful, commit the transaction
     await session.commitTransaction();
@@ -121,8 +139,7 @@ async function collectOrder(characterName, orderId) {
     
     const leanOrder = await ItemOrder.findOne( {_id: order._id}).lean()
     // only send the item info, if collected it
-    if((order.sellerCharacter == characterName && order.status == 'complete' && !order.goldCollected) ||
-      (order.buyerCharacter == characterName && order.status == 'complete' && !order.itemCollected)){
+    if(item){
       senderMediator.publish('items', {character: characterName, msg: {items: [item]} })
     }
     senderMediator.publish('order', {character: characterName, msg: {order: leanOrder}})
@@ -148,17 +165,20 @@ async function sellOrder(characterName, itemId, price, days) {
 
   try {
     const char = await Character.findOne({characterName: characterName, items: itemId})
-    if(!char){
-      throw new Error("character does not own item!")
+    const isItemEquiped = await CharacterService.isItemEquiped(characterName, itemId)
+    const item = await Item.findById(itemId)
+    if(!char || !item || isItemEquiped){
+      throw new Error("character does not own item or is equiped!")
     }
 
     // Create a new order instance
     const orderCreate = await ItemOrder.create([{
       sellerCharacter: characterName,
+      itemName: item.name,
       item: itemId,
       price,
       expireDate: new Date(Date.now() + days * 24 * 60 * 60 * 1000),
-      status: 'init'
+      status: 'active'
     }], {session: session, new: true});
 
     // Check if the order was created successfully
@@ -168,9 +188,25 @@ async function sellOrder(characterName, itemId, price, days) {
     }
     const order = orderCreate[0]
     console.log("posting order: order created!", order);
+
+    // Find or create the Marketplace document for the specified item
+    const itemMarketplace = await ItemMarketplace.findOneAndUpdate(
+      { itemName: order.itemName },
+      { $setOnInsert: { itemName: order.itemName } },
+      { upsert: true, new: true, session }
+    );
+
+    const itemMarketplaceAddedOrder = await ItemMarketplace.findOneAndUpdate(
+      { itemName: order.itemName },
+      { $push: { orderBook: order._id } },
+      { session }
+    );
+    if(!itemMarketplaceAddedOrder){
+      throw new Error("Could not add order to marketplace!")
+    }
     
 
-    const charUpdate = { $pull: { items: itemId } }
+    const charUpdate = { $pull: { items: itemId }, $push: { itemOrders: order._id} }
 
     // Update the character with the newly created Order's document id
     const character = await Character.findOneAndUpdate(
@@ -188,7 +224,7 @@ async function sellOrder(characterName, itemId, price, days) {
     session.endSession();
     // Fetch the updated order as a lean object
     const leanOrder = await ItemOrder.findById(order._id).lean();
-    senderMediator.publish('order', {character: characterName, msg: {order: leanOrder}})
+    senderMediator.publish('item_order', {character: characterName, msg: {item_order: leanOrder}})
     senderMediator.publish('update_char', {character: characterName, msg: charUpdate})
   } catch (error) {
     // on error abbort the transaction
@@ -210,19 +246,24 @@ async function buyOrder(characterName, orderId){
   session.startTransaction();
 
   try {
-    const order = await ItemOrder.findOne({_id: orderId}).lean()
+    const order = await ItemOrder.findOne({_id: orderId, status: 'active'}).lean()
+    console.log("trying to buy order: ", order)
     if(!order){
-      throw new Error('order does not exist')
+      throw new Error('order does not exist or is not an active order')
     }
     
-    const charUpdate = {$inc: { ["currency.gold"]: -price }, $push: {items: order.item}}
+    const charUpdate = {$inc: { ["currency.gold"]: -order.price }, $push: {items: order.item}}
     const char = Character.findOneAndUpdate(
-      {characterName: characterName, ["currency.gold"]: { $gte: price}},
+      {characterName: characterName, ["currency.gold"]: { $gte: order.price}},
       charUpdate,
       {session: session}
       )
 
-    const orderUpdated = await ItemOrder.findOneAndUpdate({_id: orderId}, {$set: {status: 'complete', buyerCharacter: characterName}})
+    const orderUpdated = await ItemOrder.findOneAndUpdate({_id: orderId}, {$set: {status: 'complete', buyerCharacter: characterName}}, {session})
+    const itemMarketplace = await ItemMarketplace.findOneAndUpdate({itemName: order.itemName, orderBook: order._id}, {$pull: {orderBook: order._id}}, {session})
+    if(!char || !orderUpdated || !itemMarketplace){
+      throw new Error("Failed to update char, order or marketplace")
+    }
 
     await session.commitTransaction();
     session.endSession();
@@ -230,9 +271,6 @@ async function buyOrder(characterName, orderId){
     const leanOrder = await ItemOrder.findById(order._id).lean();
     senderMediator.publish('order', {character: leanOrder.buyerCharacter, msg: {order: leanOrder}})
     senderMediator.publish('order', {character: leanOrder.sellerCharacter, msg: {order: leanOrder}})
-    if(!char || !orderUpdated){
-      throw new Error("Failed to update order")
-    }
 
   } catch (error) {
     // on error abbort the transaction
