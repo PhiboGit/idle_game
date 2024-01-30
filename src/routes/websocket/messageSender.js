@@ -1,9 +1,9 @@
 const {WebSocket} = require('ws');
 
 class MessageSender{
-  constructor(mediator, mapCharWS) {
+  constructor(mediator, mapCharWSArray) {
     this.mediator = mediator;
-    this.mapCharWS = mapCharWS;
+    this.mapCharWSArray = mapCharWSArray;
 
     // Subscribe to relevant events from the mediator
     this.mediator.subscribe('init', this.init_EventHandler.bind(this));
@@ -52,6 +52,18 @@ class MessageSender{
     
     const message = {
       type: 'item_order',
+      data: data.msg
+    }
+
+    this.send(data.character, message)
+  }
+
+  order_EventHandler(data) {
+    console.log('MessageSender event: "order" invoked.');
+    verifyData(data)
+    
+    const message = {
+      type: 'order',
       data: data.msg
     }
 
@@ -165,7 +177,7 @@ class MessageSender{
     
     const message = {
       type: 'init_character',
-      activePlayer: this.mapCharWS.size,
+      activePlayer: this.mapCharWSArray.size,
       data: data.msg,
       
     }
@@ -187,13 +199,15 @@ class MessageSender{
   }
 
   send(char, message) {
-    const ws = this.mapCharWS.get(char)
-    if (!ws){
+    const wsArray = this.mapCharWSArray.get(char)
+    if (!wsArray){
       console.log(`${char} is not connected to a WebSocket`)
       return
     }
-    ws.send(JSON.stringify(message))
-    console.log(`WebSocket message send to: ${char}`)
+    for (const ws of wsArray){
+      ws.send(JSON.stringify(message))
+    }
+    console.log(`WebSocket message ${message.type} send to: ${char}, has ${wsArray.length} open connections!`)
   }
 }
 

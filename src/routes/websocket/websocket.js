@@ -6,24 +6,43 @@ const { senderMediator, receiverMediator } = require('./mediator');
 const MessageReceiver = require('./messageReceiver');
 const MessageSender = require('./messageSender');
 
-const mapCharWS = new Map();
+const mapCharWSArray = new Map();
 const mapWSChar = new Map();
 
 const messageReceiver = new MessageReceiver(receiverMediator);
-const messageSender = new MessageSender(senderMediator, mapCharWS);
+const messageSender = new MessageSender(senderMediator, mapCharWSArray);
 
 function onSocketPostError(e) {
   console.log(e);
 }
 
 function addWS(ws, char) {
-  mapCharWS.set(char, ws);
+  // init array if not initialized
+  if (!mapCharWSArray.has(char)) {
+    mapCharWSArray.set(char, []);
+  }
+
+  mapCharWSArray.get(char).push(ws);
   mapWSChar.set(ws, char);
 }
 
 function deleteWS(ws) {
   const char = mapWSChar.get(ws);
-  mapCharWS.delete(char);
+  const charWSArray = mapCharWSArray.get(char);
+  // still has an array
+  if (charWSArray) {
+    const index = charWSArray.indexOf(ws);
+    // find and pull from array
+    if (index !== -1) {
+      charWSArray.splice(index, 1);
+    }
+
+    if (charWSArray.length === 0) {
+      // No more connections for this character, clean up the maps
+      mapCharWSArray.delete(char);
+    }
+  }
+
   mapWSChar.delete(ws);
 }
 
