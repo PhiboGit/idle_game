@@ -3,30 +3,35 @@
     "tier": 1,
     "rarity": "common",
     "displayName": "Iron Ore",
+    "tags": ["Resource", "Gatherable", "Refining Material"],
     "description": ""
   },
   "oreT2": {
     "tier": 2,
     "rarity": "common",
     "displayName": "Starmetal Ore",
+    "tags": ["Resource", "Gatherable", "Refining Material"],
     "description": ""
   },
   "oreT3": {
     "tier": 3,
     "rarity": "common",
     "displayName": "Platinum Ore",
+    "tags": ["Resource", "Gatherable", "Refining Material"],
     "description": ""
   },
   "oreT4": {
     "tier": 4,
     "rarity": "common",
     "displayName": "Orichalcum Ore",
+    "tags": ["Resource", "Gatherable", "Refining Material"],
     "description": ""
   },
   "oreT5": {
     "tier": 5,
     "rarity": "common Ore",
     "displayName": "Mythril Ore",
+    "tags": ["Resource", "Gatherable", "Refining Material"],
     "description": ""
   },
 
@@ -34,30 +39,35 @@
     "tier": 1,
     "rarity": "common",
     "displayName": "Birch",
+    "tags": ["Resource", "Gatherable", "Refining Material"],
     "description": ""
   },
   "woodT2": {
     "tier": 2,
     "rarity": "common",
     "displayName": "Oak",
+    "tags": ["Resource", "Gatherable", "Refining Material"],
     "description": ""
   },
   "woodT3": {
     "tier": 3,
     "rarity": "common",
     "displayName": "Wyrmwood",
+    "tags": ["Resource", "Gatherable", "Refining Material"],
     "description": ""
   },
   "woodT4": {
     "tier": 4,
     "rarity": "common",
     "displayName": "Ironwood",
+    "tags": ["Resource", "Gatherable", "Refining Material"],
     "description": ""
   },
   "woodT5": {
     "tier": 5,
     "rarity": "common",
     "displayName": "Elderwood",
+    "tags": ["Resource", "Gatherable", "Refining Material"],
     "description": ""
   },
 
@@ -65,29 +75,35 @@
     "tier": 1,
     "rarity": "common",
     "displayName": "Jute",
+    "tags": ["Resource", "Gatherable", "Crafting Material"],
     "description": ""
   },
   "fiberT2": {
     "tier": 2,
     "rarity": "common",
     "displayName": "Hemp",
+    "tags": ["Resource", "Gatherable", "Crafting Material"],
     "description": ""
   },
   "fiberT3": {
     "tier": 3,
     "rarity": "common",
+    "tags": ["Resource", "Gatherable", "Crafting Material"],
     "displayName": "Yucca",
+
     "description": ""
   },
   "fiberT4": {
     "tier": 4,
     "rarity": "common",
+    "tags": ["Resource", "Gatherable", "Crafting Material"],
     "displayName": "Flax",
     "description": ""
   },
   "fiberT5": {
     "tier": 5,
     "rarity": "common",
+    "tags": ["Resource", "Gatherable", "Crafting Material"],
     "displayName": "Cotton",
     "description": ""
   }

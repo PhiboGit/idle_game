@@ -3,36 +3,42 @@
     "tier": 1,
     "rarity": "common",
     "displayName": "Coal",
+    "tags": ["Resource", "Refined", "Refining Material"],
     "description": ""
   },
   "ingotT1": {
     "tier": 1,
     "rarity": "common",
     "displayName": "Iron Ingot",
+    "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "ingotT2": {
     "tier": 1,
     "rarity": "common",
     "displayName": "Starmetal Ingot",
+    "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "ingotT3": {
     "tier": 1,
     "rarity": "common",
     "displayName": "Platinum Ingot",
+    "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "ingotT4": {
     "tier": 1,
     "rarity": "common",
     "displayName": "Orichalcum Ingot",
+    "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "ingotT5": {
     "tier": 1,
     "rarity": "common",
     "displayName": "Mythril Ingot",
+    "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
 
@@ -40,30 +46,35 @@
     "tier": 1,
     "rarity": "common",
     "displayName": "Birch Plank",
+    "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "plankT2": {
     "tier": 1,
     "rarity": "common",
     "displayName": "Oak Plank",
+    "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "plankT3": {
     "tier": 1,
     "rarity": "common",
     "displayName": "Wyrmwood Plank",
+    "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "plankT4": {
     "tier": 1,
     "rarity": "common",
     "displayName": "IronWood Plank",
+    "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "plankT5": {
     "tier": 1,
     "rarity": "common",
     "displayName": "Elderwood Plank",
+    "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
 
@@ -71,30 +82,35 @@
     "tier": 1,
     "rarity": "common",
     "displayName": "Jute Fabric",
+    "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "linenT2": {
     "tier": 2,
     "rarity": "common",
     "displayName": "Hemp Fabric",
+    "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "linenT3": {
     "tier": 3,
     "rarity": "common",
     "displayName": "Yucca Fabric",
+    "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "linenT4": {
     "tier": 4,
     "rarity": "common",
     "displayName": "Flax Fabric",
+    "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "linenT5": {
     "tier": 5,
     "rarity": "common",
     "displayName": "Cotton Fabric",
+    "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   }
 }

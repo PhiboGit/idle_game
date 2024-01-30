@@ -3,30 +3,35 @@
     "tier": 1,
     "rarity": "rare",
     "displayName": "Constitution Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
   },
   "strCharm":{
     "tier": 1,
     "rarity": "rare",
     "displayName": "Strength Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
   },
   "intCharm":{
     "tier": 1,
     "rarity": "rare",
     "displayName": "Intelligence Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
   },
   "dexCharm":{
     "tier": 1,
     "rarity": "rare",
     "displayName": "Dexterity Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
   },
   "focCharm":{
     "tier": 1,
     "rarity": "rare",
     "displayName": "Focus Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
   },
 
@@ -34,24 +39,28 @@
     "tier": 1,
     "rarity": "rare",
     "displayName": "Speed Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
   },
   "expCharm":{
     "tier": 1,
     "rarity": "rare",
     "displayName": "Expert Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
   },
   "luckCharm":{
     "tier": 1,
     "rarity": "rare",
     "displayName": "Luck Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
   },
   "yieldCharm":{
     "tier": 1,
     "rarity": "rare",
     "displayName": "Yield Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
   }
 

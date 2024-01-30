@@ -5,11 +5,13 @@ function generateEquipmentObject(name, displayName, description="", slot, equipm
     for (const rarity of rarityList) {
       const key = `${name}T${tier}_${rarity}`;
       itemObject[key] = {
+        "itemName": `${name}T${tier}`,
         "equipmentType": slot,
         "professions": equipmentSkills,
         "tier": tier,
         "rarity": rarity,
         "displayName": displayName,
+        "tags": ["Resource", "Item", "Enchanting Material"],
         "description": description
       };
     }
