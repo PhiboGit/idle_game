@@ -134,7 +134,15 @@ async function getAll(){
  * @returns 
  */
 async function findCharacter(charName){
-  const character =  await Character.findOne({ characterName: charName }).populate('items').populate('orders').exec();
+  const character =  await Character.findOne({ characterName: charName }).
+    populate('items').
+    populate('orders').
+    populate({
+      path: 'itemOrders',
+      // Get item of order - populate the 'item' array for every order
+      populate: { path: 'item' }
+    }).
+    exec();
   return character
 }
 
