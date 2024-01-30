@@ -48,7 +48,7 @@ async function increment(character, incrementForm = {}, setForm= {}, pushForm={}
 }
 
 async function itemUpdate(character, itemIds){
-  const items = await Item.find({'_id': {$in: itemIds}})
+  const items = await Item.find({'_id': {$in: itemIds}}).lean()
   senderMediator.publish('items', {character: character, msg: {items: items} })
 }
 
