@@ -17,7 +17,9 @@ class MessageSender{
     this.mediator.subscribe('actionManager', this.actionManager_EventHandler.bind(this))
     this.mediator.subscribe('items', this.items_EventHandler.bind(this))
     this.mediator.subscribe('order', this.order_EventHandler.bind(this))
+    this.mediator.subscribe('item_order', this.itemOrder_EventHandler.bind(this))
     this.mediator.subscribe('marketplace', this.marketplace_EventHandler.bind(this))
+    this.mediator.subscribe('item_marketplace', this.itemMarketplace_EventHandler.bind(this))
   }
 
   marketplace_EventHandler(data) {
@@ -31,12 +33,25 @@ class MessageSender{
 
     this.send(data.character, message)
   }
-  order_EventHandler(data) {
-    console.log('MessageSender event: "order" invoked.');
+
+  itemMarketplace_EventHandler(data) {
+    console.log('MessageSender event: "item_marketplace" invoked.');
     verifyData(data)
     
     const message = {
-      type: 'order',
+      type: 'item_marketplace',
+      data: data.msg
+    }
+
+    this.send(data.character, message)
+  }
+
+  itemOrder_EventHandler(data) {
+    console.log('MessageSender event: "item_order" invoked.');
+    verifyData(data)
+    
+    const message = {
+      type: 'item_order',
       data: data.msg
     }
 
