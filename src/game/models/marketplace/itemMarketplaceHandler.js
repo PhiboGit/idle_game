@@ -31,7 +31,11 @@ async function handleOrderBook(character, msg){
 
   const itemName = msg.args.itemName
 
-  const orderBook = await ItemMarketplace.findOne({itemName:  itemName}).populate('orderBook').lean()
+  const orderBook = await ItemMarketplace.findOne({itemName:  itemName}).populate({
+    path: 'orderBook',
+    // Get item of order - populate the 'item' array for every order
+    populate: { path: 'item' }
+  }).lean()
 
 
   if(!orderBook){
@@ -44,7 +48,7 @@ async function handleOrderBook(character, msg){
   }
 
   senderMediator.publish('item_marketplace', {character: character,
-    msg: {resource, orderBook}})
+    msg: {orderBook}})
   return
 }
 
@@ -92,7 +96,7 @@ function verifyBuyOrder(msg){
   if((msg && 
     msg.type && typeof msg.type === 'string' && msg.type === 'item_marketplace/buyOrder' &&
     msg.args &&
-    msg.args.itemOrderId && typeof msg.args.itemOrderId === 'string'
+    msg.args.item_orderId && typeof msg.args.item_orderId === 'string'
     )){
       return true
     }
@@ -114,9 +118,9 @@ async function handleBuyOrder(character, msg){
   }
   console.log("Handling buyOrder submission is valid. Trying to post order ...")
 
-  const itemOrderId = msg.args.itemOrderId
+  const item_orderId = msg.args.item_orderId
 
-  ItemMarketplaceService.buyOrder(character, itemOrderId)
+  ItemMarketplaceService.buyOrder(character, item_orderId)
   
   console.log("Handling buyOrder submission successfully!")
 }
@@ -125,7 +129,7 @@ function verifyCancelOrder(msg){
   if((msg && 
     msg.type && typeof msg.type === 'string' && msg.type === 'item_marketplace/cancel' &&
     msg.args &&
-    msg.args.itemOrderId && typeof msg.args.itemOrderId === 'string' 
+    msg.args.item_orderId && typeof msg.args.item_orderId === 'string' 
     )){
       return true
     }
@@ -147,9 +151,9 @@ async function handleCancelOrder(character, msg){
   }
   console.log("Handling cancel submission is valid. Trying to cancel order ...")
 
-  const itemOrderId = msg.args.itemOrderId
+  const item_orderId = msg.args.item_orderId
 
-  ItemMarketplaceService.cancelOrder(character, itemOrderId)
+  ItemMarketplaceService.cancelOrder(character, item_orderId)
   
   console.log("Handling cancel submission successfully!")
 }
@@ -158,7 +162,7 @@ function verifyCollectOrder(msg){
   if((msg && 
     msg.type && typeof msg.type === 'string' && msg.type === 'item_marketplace/collect' &&
     msg.args &&
-    msg.args.itemOrderId && typeof msg.args.itemOrderId === 'string' 
+    msg.args.item_orderId && typeof msg.args.item_orderId === 'string' 
     )){
       return true
     }
@@ -180,9 +184,9 @@ async function handleCollectOrder(character, msg){
   }
   console.log("Handling collect submission is valid. Trying to collect order ...")
 
-  const itemOrderId = msg.args.itemOrderId
+  const item_orderId = msg.args.item_orderId
 
-  ItemMarketplaceService.collectOrder(character, itemOrderId)
+  ItemMarketplaceService.collectOrder(character, item_orderId)
   
   console.log("Handling collect submission successfully!")
 }
