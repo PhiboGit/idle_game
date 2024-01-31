@@ -30,7 +30,7 @@ async function cancelOrder(characterName, orderId){
     session.endSession();
     
     
-    const leanOrder = await ItemOrder.findById(orderId).lean();
+    const leanOrder = await ItemOrder.findById(orderId).populate('item').lean();
     senderMediator.publish('item_order', {character: characterName, msg: {order: leanOrder}})
   } catch (error) {
     await session.abortTransaction();
@@ -48,7 +48,7 @@ async function collectOrder(characterName, orderId) {
   const order = await ItemOrder.findOne(
     { _id: orderId },
     );
-  if (!order || order.status != 'canceled' || order.status != 'complete') {
+  if (!order || order.status == 'active') {
     console.log("Order not found or can not collect with status " + order.status);
     return
   }
@@ -137,12 +137,12 @@ async function collectOrder(characterName, orderId) {
     await session.commitTransaction();
     session.endSession();
     
-    const leanOrder = await ItemOrder.findOne( {_id: order._id}).lean()
+    const leanOrder = await ItemOrder.findOne( {_id: order._id}).populate('item').lean()
     // only send the item info, if collected it
     if(item){
       senderMediator.publish('items', {character: characterName, msg: {items: [item]} })
     }
-    senderMediator.publish('order', {character: characterName, msg: {order: leanOrder}})
+    senderMediator.publish('item_order', {character: characterName, msg: {order: leanOrder}})
     senderMediator.publish('update_char', {character: characterName, msg: charUpdate})
   } catch (error) {
     // If there's an error, abort the transaction
@@ -223,8 +223,8 @@ async function sellOrder(characterName, itemId, price, days) {
     await session.commitTransaction();
     session.endSession();
     // Fetch the updated order as a lean object
-    const leanOrder = await ItemOrder.findById(order._id).lean();
-    senderMediator.publish('item_order', {character: characterName, msg: {item_order: leanOrder}})
+    const leanOrder = await ItemOrder.findById(order._id).populate('item').lean();
+    senderMediator.publish('item_order', {character: characterName, msg: {order: leanOrder}})
     senderMediator.publish('update_char', {character: characterName, msg: charUpdate})
   } catch (error) {
     // on error abbort the transaction
@@ -252,7 +252,7 @@ async function buyOrder(characterName, orderId){
       throw new Error('order does not exist or is not an active order')
     }
     
-    const charUpdate = {$inc: { ["currency.gold"]: -order.price }, $push: {items: order.item}}
+    const charUpdate = {$inc: { ["currency.gold"]: -order.price }, $push: {items: order.item, itemOrders: order._id}}
     const char = Character.findOneAndUpdate(
       {characterName: characterName, ["currency.gold"]: { $gte: order.price}},
       charUpdate,
@@ -268,9 +268,9 @@ async function buyOrder(characterName, orderId){
     await session.commitTransaction();
     session.endSession();
     // Fetch the updated order as a lean object
-    const leanOrder = await ItemOrder.findById(order._id).lean();
-    senderMediator.publish('order', {character: leanOrder.buyerCharacter, msg: {order: leanOrder}})
-    senderMediator.publish('order', {character: leanOrder.sellerCharacter, msg: {order: leanOrder}})
+    const leanOrder = await ItemOrder.findById(order._id).populate('item').lean();
+    senderMediator.publish('item_order', {character: leanOrder.buyerCharacter, msg: {order: leanOrder}})
+    senderMediator.publish('item_order', {character: leanOrder.sellerCharacter, msg: {order: leanOrder}})
 
   } catch (error) {
     // on error abbort the transaction
