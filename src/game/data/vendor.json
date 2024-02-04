@@ -1,8 +1,8 @@
 {
   "sell": {
     "_comment_rarityTierMatrix": {
-      "column": "rarity: - ,com, unc, rar, epi, leg",
-      "row": "tier:  -, T1, T2, T3, T4, T5"},
+      "row": "tier:  -, T1, T2, T3, T4, T5",
+      "column": "rarity: - ,com, unc, rar, epi, leg"},
     "rarityTierMatrix": [
       [1, 5, 10, 20, 30, 50],
       [1, 5, 10, 20, 30, 50],
