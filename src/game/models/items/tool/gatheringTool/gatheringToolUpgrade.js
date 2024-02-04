@@ -54,7 +54,7 @@ function getGearScore(tool, selectedResources){
  */
 function applyBonus(recipe, tool, selectedResources) {
   console.log("applyBonus...")
-  const maxBoniCount = getRarityNumber(tool.tier)
+  const maxBoniCount = tool.tier
 
   const gearScore = getGearScore(tool, selectedResources)
   console.log("applyBonus: ", gearScore)
@@ -62,6 +62,7 @@ function applyBonus(recipe, tool, selectedResources) {
   
   // available bonus stats for this recipe
   const availableBoni = recipe.availableBoni; // speed, exp, yield, luck, str,...
+  console.log("availableBoni", availableBoni);
 
   // bonus are not random if a charm is used
   let rolledBonus = [];
@@ -71,16 +72,21 @@ function applyBonus(recipe, tool, selectedResources) {
       rolledBonus.push(bonusType);
     }
   }
+  console.log("preSelected Boni", rolledBonus);
   
   // remove the pre selected boni from the random roll pool
   const filteredBonuses = availableBoni.filter(bonus => !rolledBonus.includes(bonus));
+  console.log("availableRandomBoni", filteredBonuses);
+  const randomBoni = weightedChoiceRemoved(filteredBonuses, maxBoniCount - rolledBonus.length)
+  console.log("randomBoni", randomBoni);
   // roll boni to apply
-  rolledBonus = [rolledBonus, ...weightedChoiceRemoved(filteredBonuses, maxBoniCount - rolledBonus.length)];
+  rolledBonus = [...rolledBonus, ...randomBoni];
   console.log("rolledBonus", rolledBonus);
 
   // apply the boni to the tool. randomly distribute the gearScore across all the bonus
   let rest = gearScore
   while (rest > 0){
+    if (!rolledBonus) break
     for (const bonusType of rolledBonus) {
       if (rest <= 0) break;
 
@@ -117,9 +123,9 @@ async function upgradeGatheringTool(recipe, selectedUpgrades, characterSkill) {
   applyBonus(recipe, tool, selectedUpgrades);
   console.log(tool);
 
-  const toolDB = await tool.save();
-  console.log("upgradeGatheringTool: ", toolDB );
-  return toolDB._id;
+  const item = await tool.save();
+  console.log("upgradeGatheringTool: ", item );
+  return item._id;
 }
 
 module.exports = { upgradeGatheringTool };

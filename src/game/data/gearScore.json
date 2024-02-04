@@ -5,7 +5,7 @@
     "changes": "20 +0; 45 +25; 75 +75; 120 +100; 175 +125"
   },
     "gearScoreTable": [
-      [0, 20, 40, 60, 80, 100],
+      [1, 20, 40, 60, 80, 100],
       [25, 70, 115, 160, 205, 250],
       [75, 150, 225, 300, 375, 450],
       [100, 220, 340, 460, 580, 700],
@@ -13,37 +13,20 @@
     ],
 
   
+  "maxGearScorePerAttribute": 200,
+
   "_comment_GearScoreToBonusMap": "",
   "gearScoreMap": {
-    "speed": [0, 200],
-    "luck": [0, 4000],
-    "yieldMax": [0, 20],
-    "exp": [0, 200],
-    "stat": [0, 20]
-  },
+    "speed": 200,
+    "luck": 4000,
+    "yieldMax": 20,
+    "exp": 200,
 
-
-  "_comment_bonusCharms": {
-    "column": ["com", "unc", "rar", "epi", "leg"]},
-  "bonusCharmValues": {
-    "speed": [10, 20, 33, 66, 100],
-    "luck": [500, 1000, 1500, 2000, 2500],
-    "yieldMax": [1, 2, 3, 4, 5],
-    "exp": [5, 10, 15, 20, 25],
-
-    "con": [1, 2, 3, 4, 5],
-    "str": [1, 2, 3, 4, 5],
-    "int": [1, 2, 3, 4, 5],
-    "dex": [1, 2, 3, 4, 5],
-    "foc": [1, 2, 3, 4, 5]
-  },
-
-  "gatheringBonuses": ["speed", "luck", "yieldMax", "exp"],
-
-  "skillToStatsMap": {
-    "woodcutting": "con",
-    "mining": "str",
-    "harvesting": "int"
+    "con": 20,
+    "int": 20,
+    "dex": 20,
+    "str": 20,
+    "foc": 20
   }
   
 }

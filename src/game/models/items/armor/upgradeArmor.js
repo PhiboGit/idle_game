@@ -1,8 +1,8 @@
 const Armor = require('./armor')
-const { rollRange, weightedChoiceRemoved} = require('../../../utils/randomDice')
-const {getRarityNumber, rarityEvents} = require('../itemUtils')
-const {getCraftingMaterials} = require('../../../data/resourceDetails/craftingMaterials')
-const { upgradeData } = require('../../../utils/dataLoader')
+const { rollRange, weightedChoiceRemoved } = require('../../../utils/randomDice');
+const { getRarityNumber } = require('../itemUtils');
+const { resourcesInfo } = require('../../../data/resourceDetails/resourcesInfo');
+const { gearScoreData, recipesData } = require('../../../utils/dataLoader')
 
 /**
  * 
@@ -20,6 +20,37 @@ function getArmorStat(tier, rarity) {
   return rollRange(min, max)
 }
 
+/**
+ * @param {Armor} armor
+ * @param {[String]} selectedResources
+ */
+function getGearScore(armor, selectedResources){
+  console.log("getGearScore...");
+  const gearScoreTierRarity = gearScoreData.gearScoreTable;
+
+  const tier = armor.tier -1 // need to index tier1 as 0, tier5 is 4
+  const rarityNumber = getRarityNumber(armor.rarity)
+
+
+  // the max gearScore for this tier
+  const maxGearScore = gearScoreTierRarity[tier][5]
+  // roll the gearScore based on rarity
+  let baseGearScore = rollRange(gearScoreTierRarity[tier][rarityNumber], gearScoreTierRarity[tier][rarityNumber + 1])
+  console.log("getGearScore: rolled ", baseGearScore);
+
+  // check if upgrades were used and apply the gearScoreBonus
+  for (const craftingMaterial of selectedResources) {
+    const gearScoreBonus = resourcesInfo[craftingMaterial]?.gearScoreBonus
+    if(gearScoreBonus){
+      console.log("getGearScore: found a bonus ", gearScoreBonus);
+      baseGearScore += gearScoreBonus
+    }
+  }
+  
+  // no higher gearScore than the maxGearScore value
+  return Math.min(baseGearScore, maxGearScore);
+}
+
 
 /**
  * 
@@ -27,41 +58,45 @@ function getArmorStat(tier, rarity) {
  * @param {[String]} selectedResources 
  */
 function applyBonus(armor, selectedResources){
-  const maxBoniCount = getRarityNumber(armor.rarity) + 1
+  console.log("applyBonus...")
+  const maxBoniCount = getRarityNumber(tool.tier)
+
+  const gearScore = getGearScore(tool, selectedResources)
+  console.log("applyBonus: ", gearScore)
+  tool.properties.totalGearScore = gearScore
   
-
-  // available bonus stats for this armor
-  const gatheringBonuses = upgradeData.gatheringBonuses; // speed, exp, yield, luck
-  const stats = armor.equipmentSkills.map(skill => upgradeData.skillToStatsMap[skill]); // each skill has only one stat
-  // only one random stat
-  const rolledStats = weightedChoiceRemoved(stats, 1)
-  const bonuses = [...gatheringBonuses, ...rolledStats];  // all available boni
-
-
-  // lookup for the values of the bonus
-  const bonusValues = upgradeData.bonusCharmValues;
+  // available bonus stats for this recipe
+  const availableBoni = recipe.availableBoni; // speed, exp, yield, luck, str,...
 
   // bonus are not random if a charm is used
   let rolledBonus = [];
-  for (const bonusCharm of selectedResources) {
-    // translate the charm name to a bonus
-    const bonusType = upgradeData.charmToBonusMap[bonusCharm];
-    if (bonusType) {
+  for (const craftingMaterial of selectedResources) {
+    const bonusType = resourcesInfo[craftingMaterial]?.charmType
+    if(bonusType){
       rolledBonus.push(bonusType);
     }
   }
-
+  
   // remove the pre selected boni from the random roll pool
-  const filteredBonuses = bonuses.filter(bonus => !rolledBonus.includes(bonus));
+  const filteredBonuses = availableBoni.filter(bonus => !rolledBonus.includes(bonus));
   // roll boni to apply
-  rolledBonus = rolledBonus.concat(weightedChoiceRemoved(filteredBonuses, maxBoniCount - rolledBonus.length));
+  rolledBonus = [rolledBonus, ...weightedChoiceRemoved(filteredBonuses, maxBoniCount - rolledBonus.length)];
   console.log("rolledBonus", rolledBonus);
 
-  // apply the boni to the armor
-  rolledBonus.forEach(bonusType => {
-    const bonusValue = bonusValues[bonusType][getRarityNumber(armor.rarity)];
-    armor.properties[bonusType] = bonusValue;
-  });
+  // apply the boni to the tool. randomly distribute the gearScore across all the bonus
+  let rest = gearScore
+  while (rest > 0){
+    for (const bonusType of rolledBonus) {
+      if (rest <= 0) break;
+
+      const bonusValue = rollRange(1, rest);
+      rest -= bonusValue
+
+      // Initialize to 0 if the property does not exist
+      tool.properties.gearScores[bonusType] ??= 0;
+      tool.properties.gearScores[bonusType] += bonusValue;
+    };
+  }
 }
 
 /**
@@ -72,7 +107,8 @@ function applyBonus(armor, selectedResources){
  * @returns 
  */
 async function upgradeArmor(recipe, selectedUpgrades, characterSkill){
-  const name = recipe["name"]
+  const recipeName = recipe["name"];
+  console.log("upgradeArmor: ...", recipeName);
   const equipmentType = recipe["equipmentType"]
   const equipmentSkills = recipe["equipmentSkills"]
   const tier = recipe["tier"]
@@ -84,19 +120,20 @@ async function upgradeArmor(recipe, selectedUpgrades, characterSkill){
   // find the item to upgrade and get the rarity
   const rarity = selectedUpgrades.find(string => string.includes(name)).split("_")[1]
   // get base speed
-  const armorStat = getArmorStat(tier, rarity)
-  const resistanceStat = getArmorStat(tier, rarity)
+  //const armorStat = getArmorStat(tier, rarity)
+  //const resistanceStat = getArmorStat(tier, rarity)
   
   // craft item
 
-  const armor = new Armor(name, equipmentType, equipmentSkills, level, tier, rarity, resistanceStat, armorStat)
+  const armor = new Armor(recipeName, equipmentType, equipmentSkills, level, tier, rarity)
   applyBonus(armor, selectedUpgrades)
 
   console.log(armor)
 
-  const itemDB = await armor.save()
+  const item = await armor.save()
+  console.log("upgradeArmor: ", item );
 
-  return itemDB._id
+  return item._id
 }
 
 module.exports = {upgradeArmor}

@@ -4,6 +4,8 @@ const Character = require('../character')
 const Item = require('../item')
 const GatheringExpTable = require('../../data/gatheringExpTable')
 
+const { getSkillSheetForGearScore } = require('../items/gearScoreConverter')
+
 const {senderMediator} = require('../../../routes/websocket/mediator')
 
 
@@ -172,8 +174,8 @@ function getFieldValue(doc, fieldPath) {
 
 /**
  * Get skill data for a character and skill.
- * @param {String} character 
- * @param {String} skill 
+ * @param {String} character characterName
+ * @param {String} skill name of the skill/profession
  * @returns skillData
  */
 async function getSkillData(character, skill) {
@@ -200,11 +202,13 @@ async function getSkillData(character, skill) {
       if (equipmentID) {
         const item = await Item.findById(equipmentID);
 
-        skillSheet.luck += item.properties.luck || 0;
-        skillSheet.speed += (item.properties.baseSpeed || 0) + (item.properties.speed || 0);
-        skillSheet.yieldMax += item.properties.yieldMax || 0;
-        skillSheet.yieldMin += item.properties.yieldMin || 0;
-        skillSheet.exp += item.properties?.exp || 0;
+        const itemSkillSheet = getSkillSheetForGearScore(skill, item)
+
+        skillSheet.luck += itemSkillSheet.luck;
+        skillSheet.speed += itemSkillSheet.speed;
+        skillSheet.exp += itemSkillSheet.exp
+        skillSheet.yieldMax += itemSkillSheet.yieldMax
+        skillSheet.yieldMin += itemSkillSheet.yieldMin || 0;
       }
     })
   );
