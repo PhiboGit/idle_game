@@ -10,7 +10,10 @@ const messageRoutes = {
   'action': ActionHandler.handleAction,
   'cancel': ActionHandler.handleCancel,
   'equip': EquipHandler.handleEquip,
-  'sell': SellHandler.handleSell,
+  'sell': {
+    'item': SellHandler.handleSellItem,
+    'resource': SellHandler.handleSellResource,
+  },
   'getTime': handleGetTime,
   'broadcast': handleBroadcast,
 
