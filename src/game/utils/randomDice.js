@@ -2,6 +2,12 @@ function rollDice(sides){
     return Math.floor(Math.random() * sides + 1)
 }
 
+/**
+ * 
+ * @param {Number} min 
+ * @param {Number} max 
+ * @returns Integer. The floor of the random number between min and max
+ */
 function rollRange(min, max){
   return Math.floor((Math.random() * (max - min + 1)) + min)
 }
