@@ -2,6 +2,7 @@
   "conCharm":{
     "tier": 1,
     "rarity": "rare",
+    "charmType": "con",
     "displayName": "Constitution Charm",
     "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
@@ -9,6 +10,7 @@
   "strCharm":{
     "tier": 1,
     "rarity": "rare",
+    "charmType": "str",
     "displayName": "Strength Charm",
     "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
@@ -16,6 +18,7 @@
   "intCharm":{
     "tier": 1,
     "rarity": "rare",
+    "charmType": "int",
     "displayName": "Intelligence Charm",
     "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
@@ -23,6 +26,7 @@
   "dexCharm":{
     "tier": 1,
     "rarity": "rare",
+    "charmType": "dex",
     "displayName": "Dexterity Charm",
     "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
@@ -30,38 +34,111 @@
   "focCharm":{
     "tier": 1,
     "rarity": "rare",
+    "charmType": "foc",
     "displayName": "Focus Charm",
     "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
   },
 
-  "speedCharm": {
+  "speedCharm_mining": {
     "tier": 1,
     "rarity": "rare",
-    "displayName": "Speed Charm",
+    "charmType": "speed_mining",
+    "displayName": "Mining Speed Charm",
     "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
   },
-  "expCharm":{
+  "expCharm_mining":{
     "tier": 1,
     "rarity": "rare",
-    "displayName": "Expert Charm",
+    "charmType": "exp_mining",
+    "displayName": "Mining Expert Charm",
     "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
   },
-  "luckCharm":{
+  "luckCharm_mining":{
     "tier": 1,
     "rarity": "rare",
-    "displayName": "Luck Charm",
+    "charmType": "luck_mining",
+    "displayName": "Mining Luck Charm",
     "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
   },
-  "yieldCharm":{
+  "yieldCharm_mining":{
     "tier": 1,
     "rarity": "rare",
-    "displayName": "Yield Charm",
+    "charmType": "yieldMax_mining",
+    "displayName": "Mining Yield Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
+    "description": ""
+  },
+
+
+  "speedCharm_woodcutting": {
+    "tier": 1,
+    "rarity": "rare",
+    "charmType": "speed_woodcutting",
+    "displayName": "Woodcutting Speed Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
+    "description": ""
+  },
+  "expCharm_woodcutting": {
+    "tier": 1,
+    "rarity": "rare",
+    "charmType": "exp_woodcutting",
+    "displayName": "Woodcutting Expert Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
+    "description": ""
+  },
+  "luckCharm_woodcutting": {
+    "tier": 1,
+    "rarity": "rare",
+    "charmType": "luck_woodcutting",
+    "displayName": "Woodcutting Luck Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
+    "description": ""
+  },
+  "yieldCharm_woodcutting": {
+    "tier": 1,
+    "rarity": "rare",
+    "charmType": "yieldMax_woodcutting",
+    "displayName": "Woodcutting Yield Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
+    "description": ""
+  },
+  
+  "speedCharm_harvesting": {
+    "tier": 1,
+    "rarity": "rare",
+    "charmType": "speed_harvesting",
+    "displayName": "Harvesting Speed Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
+    "description": ""
+  },
+  "expCharm_harvesting": {
+    "tier": 1,
+    "rarity": "rare",
+    "charmType": "exp_harvesting",
+    "displayName": "Harvesting Expert Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
+    "description": ""
+  },
+  "luckCharm_harvesting": {
+    "tier": 1,
+    "rarity": "rare",
+    "charmType": "luck_harvesting",
+    "displayName": "Harvesting Luck Charm",
+    "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
+    "description": ""
+  },
+  "yieldCharm_harvesting": {
+    "tier": 1,
+    "rarity": "rare",
+    "charmType": "yieldMax_harvesting",
+    "displayName": "Harvesting Yield Charm",
     "tags": ["Resource", "Luck-Drop", "Upgrade Material", "Charm"],
     "description": ""
   }
+  
 
 }

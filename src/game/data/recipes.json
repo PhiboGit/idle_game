@@ -5,6 +5,7 @@
       "name": "pickaxeT1",
       "equipmentType": "tool",
       "equipmentSkills": ["mining"],
+      "availableBoni": ["speed_mining", "luck_mining", "exp_mining", "yieldMax_mining", "str"],
       "rollRarity":true,
       "tier": 1,
       "equipLevel": 0,
@@ -54,22 +55,13 @@
 
         {"required": false,
         "slot": [
-          {"resource": "luckCharm", "amount": 1},
-          {"resource": "yieldCharm", "amount": 1},
-          {"resource": "expCharm", "amount": 1},
-          {"resource": "speedCharm", "amount": 1},
+          {"resource": "luckCharm_mining", "amount": 1},
+          {"resource": "yieldCharm_mining", "amount": 1},
+          {"resource": "expCharm_mining", "amount": 1},
+          {"resource": "speedCharm_mining", "amount": 1},
           {"resource": "strCharm", "amount": 1}
 
-          ]},
-          
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm", "amount": 1},
-          {"resource": "yieldCharm", "amount": 1},
-          {"resource": "expCharm", "amount": 1},
-          {"resource": "speedCharm", "amount": 1},
-          {"resource": "strCharm", "amount": 1}
-          ]} 
+          ]}
       ]
     },
 
@@ -78,6 +70,7 @@
       "name": "sickleT1",
       "equipmentType": "tool",
       "equipmentSkills": ["harvesting"],
+      "availableBoni": ["speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting", "int"],
       "rollRarity":true,
       "tier": 1,
       "equipLevel": 0,
@@ -127,22 +120,14 @@
 
         {"required": false,
         "slot": [
-          {"resource": "luckCharm", "amount": 1},
-          {"resource": "yieldCharm", "amount": 1},
-          {"resource": "expCharm", "amount": 1},
-          {"resource": "speedCharm", "amount": 1},
-          {"resource": "strCharm", "amount": 1}
+          {"resource": "luckCharm_harvesting", "amount": 1},
+          {"resource": "yieldCharm_harvesting", "amount": 1},
+          {"resource": "expCharm_harvesting", "amount": 1},
+          {"resource": "speedCharm_harvesting", "amount": 1},
+          {"resource": "intCharm", "amount": 1}
 
-          ]},
+          ]}
           
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm", "amount": 1},
-          {"resource": "yieldCharm", "amount": 1},
-          {"resource": "expCharm", "amount": 1},
-          {"resource": "speedCharm", "amount": 1},
-          {"resource": "strCharm", "amount": 1}
-          ]} 
       ]
     },
 
@@ -151,6 +136,7 @@
       "name": "axeT1",
       "equipmentType": "tool",
       "equipmentSkills": ["woodcutting"],
+      "availableBoni": ["speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting", "con"],
       "rollRarity":true,
       "tier": 1,
       "equipLevel": 0,
@@ -200,22 +186,14 @@
 
         {"required": false,
         "slot": [
-          {"resource": "luckCharm", "amount": 1},
-          {"resource": "yieldCharm", "amount": 1},
-          {"resource": "expCharm", "amount": 1},
-          {"resource": "speedCharm", "amount": 1},
-          {"resource": "strCharm", "amount": 1}
+          {"resource": "luckCharm_woodcutting", "amount": 1},
+          {"resource": "yieldCharm_woodcutting", "amount": 1},
+          {"resource": "expCharm_woodcutting", "amount": 1},
+          {"resource": "speedCharm_woodcutting", "amount": 1},
+          {"resource": "conCharm", "amount": 1}
 
-          ]},
+          ]}
           
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm", "amount": 1},
-          {"resource": "yieldCharm", "amount": 1},
-          {"resource": "expCharm", "amount": 1},
-          {"resource": "speedCharm", "amount": 1},
-          {"resource": "strCharm", "amount": 1}
-          ]} 
       ]
     }
   },
@@ -226,6 +204,12 @@
       "name": "hatT1",
       "equipmentType": "head",
       "equipmentSkills": ["mining", "woodcutting", "harvesting"],
+      "availableBoni": [
+        "speed_mining", "luck_mining", "exp_mining", "yieldMax_mining",
+        "speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting",
+        "speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting",
+        "con", "str", "int", "dex", "foc"
+      ],
       "rollRarity":true,
       "tier": 1,
       "equipLevel": 0,
@@ -259,30 +243,28 @@
 
         {"required": false,
         "slot": [
-          {"resource": "luckCharm", "amount": 1},
-          {"resource": "yieldCharm", "amount": 1},
-          {"resource": "expCharm", "amount": 1},
-          {"resource": "speedCharm", "amount": 1},
+          {"resource": "luckCharm_mining", "amount": 1},
+          {"resource": "yieldCharm_mining", "amount": 1},
+          {"resource": "expCharm_mining", "amount": 1},
+          {"resource": "speedCharm_mining", "amount": 1},
+
+          {"resource": "luckCharm_woodcutting", "amount": 1},
+          {"resource": "yieldCharm_woodcutting", "amount": 1},
+          {"resource": "expCharm_woodcutting", "amount": 1},
+          {"resource": "speedCharm_woodcutting", "amount": 1},
+
+          {"resource": "luckCharm_harvesting", "amount": 1},
+          {"resource": "yieldCharm_harvesting", "amount": 1},
+          {"resource": "expCharm_harvesting", "amount": 1},
+          {"resource": "speedCharm_harvesting", "amount": 1},
+
           {"resource": "strCharm", "amount": 1},
           {"resource": "conCharm", "amount": 1},
           {"resource": "intCharm", "amount": 1},
           {"resource": "dexCharm", "amount": 1},
           {"resource": "focCharm", "amount": 1}
 
-          ]},
-          
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm", "amount": 1},
-          {"resource": "yieldCharm", "amount": 1},
-          {"resource": "expCharm", "amount": 1},
-          {"resource": "speedCharm", "amount": 1},
-          {"resource": "strCharm", "amount": 1},
-          {"resource": "conCharm", "amount": 1},
-          {"resource": "intCharm", "amount": 1},
-          {"resource": "dexCharm", "amount": 1},
-          {"resource": "focCharm", "amount": 1}
-          ]} 
+          ]}
       ]
     },
 
@@ -291,6 +273,12 @@
       "name": "chestpieceT1",
       "equipmentType": "chest",
       "equipmentSkills": ["mining", "woodcutting", "harvesting"],
+      "availableBoni": [
+        "speed_mining", "luck_mining", "exp_mining", "yieldMax_mining",
+        "speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting",
+        "speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting",
+        "con", "str", "int", "dex", "foc"
+      ],
       "rollRarity":true,
       "tier": 1,
       "equipLevel": 0,
@@ -329,30 +317,28 @@
 
         {"required": false,
         "slot": [
-          {"resource": "luckCharm", "amount": 1},
-          {"resource": "yieldCharm", "amount": 1},
-          {"resource": "expCharm", "amount": 1},
-          {"resource": "speedCharm", "amount": 1},
+          {"resource": "luckCharm_mining", "amount": 1},
+          {"resource": "yieldCharm_mining", "amount": 1},
+          {"resource": "expCharm_mining", "amount": 1},
+          {"resource": "speedCharm_mining", "amount": 1},
+
+          {"resource": "luckCharm_woodcutting", "amount": 1},
+          {"resource": "yieldCharm_woodcutting", "amount": 1},
+          {"resource": "expCharm_woodcutting", "amount": 1},
+          {"resource": "speedCharm_woodcutting", "amount": 1},
+
+          {"resource": "luckCharm_harvesting", "amount": 1},
+          {"resource": "yieldCharm_harvesting", "amount": 1},
+          {"resource": "expCharm_harvesting", "amount": 1},
+          {"resource": "speedCharm_harvesting", "amount": 1},
+
           {"resource": "strCharm", "amount": 1},
           {"resource": "conCharm", "amount": 1},
           {"resource": "intCharm", "amount": 1},
           {"resource": "dexCharm", "amount": 1},
           {"resource": "focCharm", "amount": 1}
 
-          ]},
-          
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm", "amount": 1},
-          {"resource": "yieldCharm", "amount": 1},
-          {"resource": "expCharm", "amount": 1},
-          {"resource": "speedCharm", "amount": 1},
-          {"resource": "strCharm", "amount": 1},
-          {"resource": "conCharm", "amount": 1},
-          {"resource": "intCharm", "amount": 1},
-          {"resource": "dexCharm", "amount": 1},
-          {"resource": "focCharm", "amount": 1}
-          ]} 
+          ]}
       ]
     },
 
@@ -361,6 +347,12 @@
       "name": "glovesT1",
       "equipmentType": "hands",
       "equipmentSkills": ["mining", "woodcutting", "harvesting"],
+      "availableBoni": [
+        "speed_mining", "luck_mining", "exp_mining", "yieldMax_mining",
+        "speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting",
+        "speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting",
+        "con", "str", "int", "dex", "foc"
+      ],
       "rollRarity":true,
       "tier": 1,
       "equipLevel": 0,
@@ -400,30 +392,28 @@
 
         {"required": false,
         "slot": [
-          {"resource": "luckCharm", "amount": 1},
-          {"resource": "yieldCharm", "amount": 1},
-          {"resource": "expCharm", "amount": 1},
-          {"resource": "speedCharm", "amount": 1},
+          {"resource": "luckCharm_mining", "amount": 1},
+          {"resource": "yieldCharm_mining", "amount": 1},
+          {"resource": "expCharm_mining", "amount": 1},
+          {"resource": "speedCharm_mining", "amount": 1},
+
+          {"resource": "luckCharm_woodcutting", "amount": 1},
+          {"resource": "yieldCharm_woodcutting", "amount": 1},
+          {"resource": "expCharm_woodcutting", "amount": 1},
+          {"resource": "speedCharm_woodcutting", "amount": 1},
+
+          {"resource": "luckCharm_harvesting", "amount": 1},
+          {"resource": "yieldCharm_harvesting", "amount": 1},
+          {"resource": "expCharm_harvesting", "amount": 1},
+          {"resource": "speedCharm_harvesting", "amount": 1},
+
           {"resource": "strCharm", "amount": 1},
           {"resource": "conCharm", "amount": 1},
           {"resource": "intCharm", "amount": 1},
           {"resource": "dexCharm", "amount": 1},
           {"resource": "focCharm", "amount": 1}
 
-          ]},
-          
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm", "amount": 1},
-          {"resource": "yieldCharm", "amount": 1},
-          {"resource": "expCharm", "amount": 1},
-          {"resource": "speedCharm", "amount": 1},
-          {"resource": "strCharm", "amount": 1},
-          {"resource": "conCharm", "amount": 1},
-          {"resource": "intCharm", "amount": 1},
-          {"resource": "dexCharm", "amount": 1},
-          {"resource": "focCharm", "amount": 1}
-          ]} 
+          ]}
       ]
     },
 
@@ -432,6 +422,12 @@
       "name": "pantsT1",
       "equipmentType": "legs",
       "equipmentSkills": ["mining", "woodcutting", "harvesting"],
+      "availableBoni": [
+        "speed_mining", "luck_mining", "exp_mining", "yieldMax_mining",
+        "speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting",
+        "speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting",
+        "con", "str", "int", "dex", "foc"
+      ],
       "rollRarity":true,
       "tier": 1,
       "equipLevel": 0,
@@ -470,30 +466,28 @@
 
         {"required": false,
         "slot": [
-          {"resource": "luckCharm", "amount": 1},
-          {"resource": "yieldCharm", "amount": 1},
-          {"resource": "expCharm", "amount": 1},
-          {"resource": "speedCharm", "amount": 1},
+          {"resource": "luckCharm_mining", "amount": 1},
+          {"resource": "yieldCharm_mining", "amount": 1},
+          {"resource": "expCharm_mining", "amount": 1},
+          {"resource": "speedCharm_mining", "amount": 1},
+
+          {"resource": "luckCharm_woodcutting", "amount": 1},
+          {"resource": "yieldCharm_woodcutting", "amount": 1},
+          {"resource": "expCharm_woodcutting", "amount": 1},
+          {"resource": "speedCharm_woodcutting", "amount": 1},
+
+          {"resource": "luckCharm_harvesting", "amount": 1},
+          {"resource": "yieldCharm_harvesting", "amount": 1},
+          {"resource": "expCharm_harvesting", "amount": 1},
+          {"resource": "speedCharm_harvesting", "amount": 1},
+
           {"resource": "strCharm", "amount": 1},
           {"resource": "conCharm", "amount": 1},
           {"resource": "intCharm", "amount": 1},
           {"resource": "dexCharm", "amount": 1},
           {"resource": "focCharm", "amount": 1}
 
-          ]},
-          
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm", "amount": 1},
-          {"resource": "yieldCharm", "amount": 1},
-          {"resource": "expCharm", "amount": 1},
-          {"resource": "speedCharm", "amount": 1},
-          {"resource": "strCharm", "amount": 1},
-          {"resource": "conCharm", "amount": 1},
-          {"resource": "intCharm", "amount": 1},
-          {"resource": "dexCharm", "amount": 1},
-          {"resource": "focCharm", "amount": 1}
-          ]} 
+          ]}
       ]
     },
 
@@ -502,6 +496,12 @@
       "name": "bootsT1",
       "equipmentType": "feet",
       "equipmentSkills": ["mining", "woodcutting", "harvesting"],
+      "availableBoni": [
+        "speed_mining", "luck_mining", "exp_mining", "yieldMax_mining",
+        "speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting",
+        "speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting",
+        "con", "str", "int", "dex", "foc"
+      ],
       "rollRarity":true,
       "tier": 1,
       "equipLevel": 0,
@@ -540,30 +540,28 @@
 
         {"required": false,
         "slot": [
-          {"resource": "luckCharm", "amount": 1},
-          {"resource": "yieldCharm", "amount": 1},
-          {"resource": "expCharm", "amount": 1},
-          {"resource": "speedCharm", "amount": 1},
+          {"resource": "luckCharm_mining", "amount": 1},
+          {"resource": "yieldCharm_mining", "amount": 1},
+          {"resource": "expCharm_mining", "amount": 1},
+          {"resource": "speedCharm_mining", "amount": 1},
+
+          {"resource": "luckCharm_woodcutting", "amount": 1},
+          {"resource": "yieldCharm_woodcutting", "amount": 1},
+          {"resource": "expCharm_woodcutting", "amount": 1},
+          {"resource": "speedCharm_woodcutting", "amount": 1},
+
+          {"resource": "luckCharm_harvesting", "amount": 1},
+          {"resource": "yieldCharm_harvesting", "amount": 1},
+          {"resource": "expCharm_harvesting", "amount": 1},
+          {"resource": "speedCharm_harvesting", "amount": 1},
+
           {"resource": "strCharm", "amount": 1},
           {"resource": "conCharm", "amount": 1},
           {"resource": "intCharm", "amount": 1},
           {"resource": "dexCharm", "amount": 1},
           {"resource": "focCharm", "amount": 1}
 
-          ]},
-          
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm", "amount": 1},
-          {"resource": "yieldCharm", "amount": 1},
-          {"resource": "expCharm", "amount": 1},
-          {"resource": "speedCharm", "amount": 1},
-          {"resource": "strCharm", "amount": 1},
-          {"resource": "conCharm", "amount": 1},
-          {"resource": "intCharm", "amount": 1},
-          {"resource": "dexCharm", "amount": 1},
-          {"resource": "focCharm", "amount": 1}
-          ]} 
+          ]}
       ]
     }
   }

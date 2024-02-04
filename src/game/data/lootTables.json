@@ -137,10 +137,21 @@
   "Charm":{
     "type": "weights",
     "loot": [
-      {"weight": 1, "item": "speedCharm", "min" : 1, "max" :1},
-      {"weight": 1, "item": "expCharm", "min" : 1, "max" :1},
-      {"weight": 1, "item": "luckCharm", "min" : 1, "max" :1},
-      {"weight": 1, "item": "yieldCharm", "min" : 1, "max" :1},
+      {"weight": 1, "item": "speedCharm_mining", "min" : 1, "max" :1},
+      {"weight": 1, "item": "expCharm_mining", "min" : 1, "max" :1},
+      {"weight": 1, "item": "luckCharm_mining", "min" : 1, "max" :1},
+      {"weight": 1, "item": "yieldCharm_mining", "min" : 1, "max" :1},
+
+      {"weight": 1, "item": "speedCharm_harvesting", "min" : 1, "max" :1},
+      {"weight": 1, "item": "expCharm_harvesting", "min" : 1, "max" :1},
+      {"weight": 1, "item": "luckCharm_harvesting", "min" : 1, "max" :1},
+      {"weight": 1, "item": "yieldCharm_harvesting", "min" : 1, "max" :1},
+
+      {"weight": 1, "item": "speedCharm_woodcutting", "min" : 1, "max" :1},
+      {"weight": 1, "item": "expCharm_woodcutting", "min" : 1, "max" :1},
+      {"weight": 1, "item": "luckCharm_woodcutting", "min" : 1, "max" :1},
+      {"weight": 1, "item": "yieldCharm__woodcutting", "min" : 1, "max" :1},
+
       {"weight": 1, "item": "strCharm", "min" : 1, "max" :1},
       {"weight": 1, "item": "conCharm", "min" : 1, "max" :1},
       {"weight": 1, "item": "intCharm", "min" : 1, "max" :1},

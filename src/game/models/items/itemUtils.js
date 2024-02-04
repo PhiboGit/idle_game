@@ -10,7 +10,7 @@ const rarityToNumber = {
 /**
  * 
  * @param {String} rarity 
- * @returns {Number}
+ * @returns {Number} indext at 0 for common, 4 legendary
  */
 function getRarityNumber(rarity) {
   return rarityToNumber[rarity]

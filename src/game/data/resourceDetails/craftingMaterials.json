@@ -3,6 +3,7 @@
     "displayName": "sap_uncommon",
     "tier": 1,
     "rarity": "uncommon",
+    "gearScoreBonus": 5,
     "tags": ["Resource", "Luck-Drop", "Crafting Material"],
     "description": ""
   },
@@ -10,6 +11,7 @@
     "displayName": "sap_rare",
     "tier": 1,
     "rarity": "rare",
+    "gearScoreBonus": 15,
     "tags": ["Resource", "Luck-Drop", "Crafting Material"],
     "description": ""
   },
@@ -17,6 +19,7 @@
     "displayName": "sap_epic",
     "tier": 1,
     "rarity": "epic",
+    "gearScoreBonus": 30,
     "tags": ["Resource", "Luck-Drop", "Crafting Material"],
     "description": ""
   },
@@ -24,6 +27,7 @@
     "displayName": "sap_legendary",
     "tier": 1,
     "rarity": "legendary",
+    "gearScoreBonus": 50,
     "tags": ["Resource", "Luck-Drop", "Crafting Material"],
     "description": ""
   },
