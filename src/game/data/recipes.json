@@ -195,6 +195,71 @@
           ]}
           
       ]
+    },
+
+    "axeT2":{
+      "profession": "toolsmith",
+      "name": "axeT2",
+      "equipmentType": "tool",
+      "equipmentSkills": ["woodcutting"],
+      "availableBoni": ["speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting", "con"],
+      "rollRarity":true,
+      "tier": 2,
+      "equipLevel": 25,
+      "amount": 1,
+      "level": 0,
+      "time": 20000,
+      "exp": 300,
+      "expChar": 50,
+      "ingredients": [
+        {"required": true,
+        "slot": [
+          {"resource": "ingotT2", "amount": 15}
+        ]},
+  
+        {"required": true,
+        "slot": [
+          {"resource": "plankT2", "amount": 15}
+          
+          ]},
+          
+        {"required": true,
+        "slot": [
+          {"resource": "linenT2", "amount": 15}
+          
+        ]} 
+      ],
+      "upgrades": [
+        {"required": true,
+        "slot": [
+          {"resource": "axeT2_common", "amount": 1},
+          {"resource": "axeT2_uncommon", "amount": 1},
+          {"resource": "axeT2_rare", "amount": 1},
+          {"resource": "axeT2_epic", "amount": 1},
+          {"resource": "axeT2_legendary", "amount": 1}
+          ]},
+
+
+        {"required": false,
+        "slot": [
+          {"resource": "luckCharm_woodcutting", "amount": 1},
+          {"resource": "yieldCharm_woodcutting", "amount": 1},
+          {"resource": "expCharm_woodcutting", "amount": 1},
+          {"resource": "speedCharm_woodcutting", "amount": 1},
+          {"resource": "conCharm", "amount": 1}
+
+          ]},
+
+        {"required": false,
+        "slot": [
+          {"resource": "luckCharm_woodcutting", "amount": 1},
+          {"resource": "yieldCharm_woodcutting", "amount": 1},
+          {"resource": "expCharm_woodcutting", "amount": 1},
+          {"resource": "speedCharm_woodcutting", "amount": 1},
+          {"resource": "conCharm", "amount": 1}
+          ]}
+          
+      ]
     }
   },
 
