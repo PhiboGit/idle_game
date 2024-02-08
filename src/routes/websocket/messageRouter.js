@@ -1,4 +1,5 @@
 const ActionHandler = require('../../game/actions/actionHandler')
+const RegionActionHandler = require('../../game/actions/regionActionHandler')
 const EquipHandler = require('../../game/equipHandler')
 const SellHandler = require('../../game/sellHandler')
 const MarketplaceHandler = require('../../game/models/marketplace/marketplaceHandler')
@@ -8,6 +9,7 @@ const {senderMediator} = require('./mediator')
 // Define a configuration object for message routing
 const messageRoutes = {
   'action': ActionHandler.handleAction,
+  'region_action': RegionActionHandler.handleRegionAction,
   'cancel': ActionHandler.handleCancel,
   'equip': EquipHandler.handleEquip,
   'sell': {

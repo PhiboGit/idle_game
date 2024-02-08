@@ -76,8 +76,6 @@ function verifyAction(msg){
 
 // "args": {
 //   "tier": 1,
-//   "limit": true,
-//   "iterations": 100
 // }
 function verifyGatheringArgs(args){
 	if(

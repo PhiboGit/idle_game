@@ -1,71 +1,14 @@
 {
-    "regions":{
-       "everfall":{
-          "woodcutting":{
-             "tiers":[
-                0.65,
-                0.34,
-                0.1,
-                0,
-                0
-             ],
-             "time":15000
-          },
-          "mining":{
-             "tiers":[
-                0.65,
-                0.34,
-                0.1,
-                0,
-                0
-             ],
-             "time":15000
-          }
-       },
-       "windsward":{
-          "woodcutting":{
-             "tiers":[
-                0.1,
-                0,
-                0,
-                0,
-                0
-             ],
-             "time":5000
-          },
-          "mining":{
-             "tiers":[
-                0.1,
-                0,
-                0,
-                0,
-                0
-             ],
-             "time":5000
-          }
-       },
-       "firstlight":{
-          "woodcutting":{
-             "tiers":[
-                0.65,
-                0.34,
-                0.1,
-                0,
-                0
-             ],
-             "time":5000
-          },
-          "mining":{
-             "tiers":[
-                0.65,
-                0.34,
-                0.1,
-                0,
-                0
-             ],
-             "time":15000
-          }
-       }
-    }
- }
- 
+  "starter_region":{
+      "travelTime": 10000,
+      "terrain": [
+        {"weight": 10, "node": "nothing", "min" : 1, "max" :1},
+        {"weight": 25, "node": "TreeT1", "min" : 5, "max" :5},
+        {"weight": 5, "node": "TreeT2", "min" : 50, "max" :200},
+        {"weight": 25, "node": "PlantT1", "min" : 100, "max" :100},
+        {"weight": 5, "node": "PlantT2", "min" : 10, "max" :10},
+        {"weight": 25, "node": "VeinT1", "min" : 100, "max" :100},
+        {"weight": 5, "node": "VeinT2", "min" : 10, "max" :10000}
+      ]
+  }
+}

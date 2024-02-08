@@ -1,10 +1,12 @@
 const CharacterService = require('../models/services/characterService')
+const RegionManager = require('./regionManager')
 
 const actionLookup = {
 	'crafting': require('./crafting/crafting'),
 	'upgrading': require('./crafting/crafting'),
 	'gathering': require('./gathering/gathering'),
-	'enchanting': require('./enchanting/enchanting')
+	'enchanting': require('./enchanting/enchanting'),
+	'traveling': require('./traveling/traveling')
 }
 
 
@@ -84,14 +86,33 @@ async function processQueue(character) {
 	console.log('Queue is being processed...')
 	while (characterActionQ.length > 0) {
 		// gets the next object in the queue
-		const actionObject = characterActionQ.shift()
+		let actionObject = characterActionQ.shift()
+		// REGION
+		if(actionObject.type === 'region_action' && actionObject.iterations > 0){
+			console.log("actionManager: region_action detected...")
+			const actionObjectNew = RegionManager.getNextAction(character, actionObject)
+
+			// decrement the set iterations. This is a break criterion
+			actionObject.iterations -= actionObjectNew.iterations
+			// add again the the quueue at first position. That way the region_action is processed again.
+			characterActionQ.unshift(actionObject)
+
+			actionObject = actionObjectNew
+		}
 		CharacterService.updateActionManager(character, {$set: { actionQueue: characterActionQ }})      
 		try {
+			if(actionObject.actionType === 'regionGathering'){
+				throw new Error('region')
+			}
 			await startSequentialTimeouts(character,actionObject)
 			CharacterService.updateActionManager(character, {$set: { currentAction: null }})
 			console.log('All timeouts completed.',character)
 		} catch (error) {
 			switch (error) {
+				case 'region':
+					console.error('Region gathering exhausted.', character, actionObject)
+					CharacterService.updateActionManager(character, { $set: { currentAction: null } })
+					break
 				case 'cancel':
 					console.error('Timeout canceled.', character, actionObject)
 					CharacterService.updateActionManager(character, { $set: { currentAction: null } })
@@ -134,6 +155,7 @@ async function startSequentialTimeouts(character, actionObject) {
 		actionObject["actionTime"] = time
 		CharacterService.updateActionManager(character, {$set: { currentAction: actionObject }})
 		console.log(`Iterations left: ${actionObject.iterations}`)
+		// this starts the actual action.
 		const result = await actionClass.start(character, actionObject, activeTimeout)
 		console.log(`Timeout completed. ${result}`)
 		actionObject.counter++
