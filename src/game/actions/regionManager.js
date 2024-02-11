@@ -2,14 +2,16 @@ const { gatheringResourcesData, regionData} = require('../utils/dataLoader')
 const { weightedChoice } = require('../utils/randomDice')
 
 
-function getNextNode(region){
+function getNextNode(region, selectedNodes){
   let weights  = []
   const events = []
   for (const node of regionData[region].terrain){
+    // can only get a node that was selected
+    if(!selectedNodes.includes(node.node)) continue
     events.push(node)
     weights.push(node.weight)
   }
-
+  console.log("getNextNode: ", weights, events)
   const result = weightedChoice(events, 1, weights)[0]
 
   console.log("getNextNode for region:", result)
@@ -22,19 +24,38 @@ function getNextNode(region){
   return re
 }
 
+function getTravelTime(region, selectedNodes) {
+  const totalWeight = regionData[region].totalWeight 
+  const travelCost = regionData[region].travelCost 
+  const selectedWeight = regionData[region].terrain
+    .filter(entry => selectedNodes.includes(entry.node)) 
+    .reduce((sum, entry) => sum + entry.weight, 0); 
+
+  const notCovered = totalWeight - selectedWeight
+  
+  const totalTravelTime = travelCost * notCovered
+
+  return totalTravelTime
+}
+
 
 function getNextAction(character, regionActionObject){
-  console.log("regionManager: ", regionActionObject)
   const region = regionActionObject.args.region
-  const regionInfo = regionData[region]
-  console.log("regionManager: ", regionInfo)
-  const selectedNodes = regionActionObject.args.nodes
-  const nextAction = getNextNode(region)
+  console.log("regionManager: selected region:", region)
+  const selectedNodes = regionActionObject.args.nodes.map((item) => item.node)
+  console.log("regionManager: selectedNodes:", selectedNodes)
+  const nextAction = getNextNode(region, selectedNodes)
+  
+  const travelTime = getTravelTime(region, selectedNodes)
 
-  if(!regionActionObject.args.traveled || !selectedNodes.includes(nextAction.node)){
-    console.log("regionManager: send you traveling. Either you started to find a node, or you did not find the selected node!")
-    regionActionObject.args["traveled"] = true
+  if(!regionActionObject.info.traveled){
+    console.log("regionManager: send you traveling. You just started moving or finished a node!")
+    
+    regionActionObject.info.traveled = true
+    regionActionObject.info.timeSpentTraveling += travelTime
+    regionActionObject.info.travelCount += 1
     const travelAction = {
+      region_action: true,
       counter: 0,
       type: "action",
       actionType: "searching", 
@@ -42,16 +63,26 @@ function getNextAction(character, regionActionObject){
       limit: true,
       iterations:1,
       args: {
-        travelTime: regionInfo.travelTime,
+        travelTime: travelTime,
       }
     }
     return travelAction
   }
-  console.log("regionManager: you found a selected node...")
-  regionActionObject.args["traveled"] = false
-
   const nodeInfo = findProfessionAndTier(nextAction.node)
+  console.log("regionManager: you found a selected node...")
+  regionActionObject.info.traveled = false
+  regionActionObject.info.lastNode = nextAction.node
+  regionActionObject.args.nodes[selectedNodes.indexOf(nextAction.node)].iterations -= nextAction.iterations
+  regionActionObject.args.nodes[selectedNodes.indexOf(nextAction.node)].counter += nextAction.iterations
+
+  const done = regionActionObject.args.nodes.every((item) => item.iterations <= 0)
+  if (regionActionObject.args.limit && done) {
+    console.log("regionManager: conditions are met. The action will end." )
+    regionActionObject.iterations = 0
+  }
+
   const actionObject = {
+    region_action: true,
     counter: 0,
     type: "action",
     actionType: nodeInfo.profession, 
@@ -59,7 +90,7 @@ function getNextAction(character, regionActionObject){
     limit: true,
     iterations:nextAction.iterations,
     args: {
-      "tier": nodeInfo.tier,
+      tier: nodeInfo.tier,
     }
   }
   console.log("regionManager: your new action is gathering this node!", actionObject)

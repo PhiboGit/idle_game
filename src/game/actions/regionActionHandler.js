@@ -6,20 +6,17 @@ const { regionData } = require('../utils/dataLoader')
 function verifyRegionAction(msg){
   if((msg && 
     msg.type && typeof msg.type === 'string' && msg.type === 'region_action' &&
-    msg.hasOwnProperty("actionType") && typeof msg.actionType === 'string' && msg.actionType === 'region' &&
     msg.hasOwnProperty("task") && typeof msg.task === 'string' && msg.task === 'gathering' &&
     
-    msg.hasOwnProperty("iterations") && typeof msg.iterations === 'number' &&
-    Number.isInteger(msg.iterations) &&
-    msg.iterations > 0 &&
-    
-    msg.hasOwnProperty("limit") && typeof msg.limit === 'boolean' &&
     
     msg.args &&
+    msg.args.limit && typeof msg.args.limit === 'boolean' &&
     msg.args.region && typeof msg.args.region === 'string' &&
     msg.args.nodes && Array.isArray(msg.args.nodes) &&
     msg.args.nodes.length <= 50 && msg.args.nodes.length > 0 &&
-    msg.args.nodes.every(item => typeof item === 'string') 
+    msg.args.nodes.every(item => (
+      item && item.node && typeof item.node ==='string' &&
+      item.iterations && typeof item.iterations ==='number' && Number.isInteger(item.iterations) && item.iterations > 0)) 
     )){
       return true
     }
@@ -48,16 +45,19 @@ function handleRegionAction(character, msg) {
    return
   }
 
-  const selected_nodes = msg.args.nodes
-  for (const node of selected_nodes) {
+  const nodes = msg.args.nodes
+  for (const item of nodes) {
+    const node = item.node
+    // add a counter
+    item["counter"] = 0;
     let found = false
     for (const terrain of regionData[region].terrain){
       if (terrain.node === node){
         found = true
       }
     }
-
-    if (node === 'nothing' || !found){
+    // the node does not exist for this region
+    if (!found){
       senderMediator.publish('error', {character: character,
         msg: {message: "The submitted form for type: 'region_action' is not valid!",
               info: {
@@ -68,6 +68,18 @@ function handleRegionAction(character, msg) {
   }
   
   console.log("region_action is valid!")
+  msg["iterations"] = 1
+  msg["actionType"] = region
+  msg["limit"] = true
+
+  // attatch the info
+  msg["info"] = {
+    traveled: false,
+    travelCount: 0,
+    timeSpentTraveling: 0,
+    lastNode: null,
+  }
+
   ActionManager.add(character, msg)
 }
 

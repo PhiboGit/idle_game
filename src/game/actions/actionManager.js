@@ -46,9 +46,10 @@ function add(character, msg){
 		task: msg.task,
 		limit: msg.limit,
 		iterations:msg.iterations,
-		args: msg.args
+		args: msg.args,
+		info: msg.info
 	}
-  console.log(`ActionManager.add: ${character} `, JSON.stringify(actionObject))
+  console.log(`ActionManager.add: ${character} `, actionObject)
     
   enqueue(character, actionObject)
 }
@@ -87,13 +88,11 @@ async function processQueue(character) {
 	while (characterActionQ.length > 0) {
 		// gets the next object in the queue
 		let actionObject = characterActionQ.shift()
-		// REGION
+		// REGION. The regionManager inserts the action. the actionObject is never active and only in queue!
 		if(actionObject.type === 'region_action' && actionObject.iterations > 0){
 			console.log("actionManager: region_action detected...")
 			const actionObjectNew = RegionManager.getNextAction(character, actionObject)
 
-			// decrement the set iterations. This is a break criterion
-			actionObject.iterations -= actionObjectNew.iterations
 			// add again the the quueue at first position. That way the region_action is processed again.
 			characterActionQ.unshift(actionObject)
 
@@ -101,11 +100,8 @@ async function processQueue(character) {
 		}
 		CharacterService.updateActionManager(character, {$set: { actionQueue: characterActionQ }})      
 		try {
-			if(actionObject.actionType === 'regionGathering'){
-				throw new Error('region')
-			}
 			await startSequentialTimeouts(character,actionObject)
-			CharacterService.updateActionManager(character, {$set: { currentAction: null }})
+			await CharacterService.updateActionManager(character, {$set: { currentAction: null }})
 			console.log('All timeouts completed.',character)
 		} catch (error) {
 			switch (error) {
@@ -115,6 +111,13 @@ async function processQueue(character) {
 					break
 				case 'cancel':
 					console.error('Timeout canceled.', character, actionObject)
+					// canceling an action from the regionManager will cancel the region_action
+					// this is to prevent to cancel traveling
+					if(actionObject.region_action){
+						if(actionQueue[character] && actionQueue[character][0] && actionQueue[character][0].type === 'region_action'){
+							dequeue(character, 0)
+						}
+					}
 					CharacterService.updateActionManager(character, { $set: { currentAction: null } })
 					break
 				case 'level':

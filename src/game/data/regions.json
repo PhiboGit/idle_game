@@ -1,14 +1,38 @@
 {
   "starter_region":{
-      "travelTime": 10000,
-      "terrain": [
-        {"weight": 10, "node": "nothing", "min" : 1, "max" :1},
-        {"weight": 25, "node": "TreeT1", "min" : 5, "max" :5},
-        {"weight": 5, "node": "TreeT2", "min" : 50, "max" :200},
-        {"weight": 25, "node": "PlantT1", "min" : 100, "max" :100},
-        {"weight": 5, "node": "PlantT2", "min" : 10, "max" :10},
-        {"weight": 25, "node": "VeinT1", "min" : 100, "max" :100},
-        {"weight": 5, "node": "VeinT2", "min" : 10, "max" :10000}
-      ]
+    "display_name": "Starter Region",
+    "travelCost": 1000,
+    "totalWeight": 100,
+    "terrain": [
+      {"weight": 33, "node": "TreeT1", "min" : 5, "max" :5},
+      {"weight": 33, "node": "PlantT1", "min" : 5, "max" :5},
+      {"weight": 33, "node": "VeinT1", "min" : 5, "max" :5}
+    ]
+  },
+  "first_light":{
+    "display_name": "First Light",
+    "travelCost": 3000,
+    "totalWeight": 100,
+    "terrain": [
+      {"weight": 25, "node": "TreeT1", "min" : 5, "max" :5},
+      {"weight": 25, "node": "PlantT1", "min" : 5, "max" :5},
+      {"weight": 25, "node": "VeinT1", "min" : 5, "max" :5},
+      {"weight": 5, "node": "TreeT2", "min" : 10, "max" :10},
+      {"weight": 5, "node": "PlantT2", "min" : 10, "max" :10},
+      {"weight": 5, "node": "VeinT2", "min" : 5, "max" :15}
+    ]
+  },
+  "everfall":{
+    "display_name": "Everfall",
+    "travelCost": 3000,
+    "totalWeight": 100,
+    "terrain": [
+      {"weight": 25, "node": "TreeT1", "min" : 5, "max" :5},
+      {"weight": 25, "node": "PlantT1", "min" : 5, "max" :5},
+      {"weight": 25, "node": "VeinT1", "min" : 5, "max" :5},
+      {"weight": 5, "node": "TreeT2", "min" : 10, "max" :10},
+      {"weight": 5, "node": "PlantT2", "min" : 10, "max" :10},
+      {"weight": 5, "node": "VeinT2", "min" : 5, "max" :15}
+    ]
   }
 }
