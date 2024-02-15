@@ -29,7 +29,7 @@
   },
   "oreT5": {
     "tier": 5,
-    "rarity": "common Ore",
+    "rarity": "common",
     "displayName": "Mythril Ore",
     "tags": ["Resource", "Gatherable", "Refining Material"],
     "description": ""
