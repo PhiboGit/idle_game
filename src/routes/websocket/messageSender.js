@@ -133,17 +133,19 @@ class MessageSender{
   chat_EventHandler(data) {
     console.log('MessageSender event: "chat" invoked.');
     verifyData(data)
-    this.mapCharWS.forEach(function each(client) {
-      if (client.readyState === WebSocket.OPEN) {
-        const message = {
-          type: 'chat',
-          data: {
-            sender: data.character,
-            message: data.msg
+    this.mapCharWSArray.forEach((array, char) => {
+      array.forEach((clientWS, index) => {
+        if (clientWS.readyState === WebSocket.OPEN) {
+          const message = {
+            type: 'chat',
+            data: {
+              sender: data.character,
+              message: data.msg
+            }
           }
+          clientWS.send(JSON.stringify(message));
         }
-        client.send(JSON.stringify(message));
-      }
+      })
     })
   }
 
