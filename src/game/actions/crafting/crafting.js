@@ -64,7 +64,7 @@ async function crafting(character, skillName, task, recipeName, selectedResource
 	const incrementData = {}
   const pushData = {}
   incrementData['exp'] = recipe.expChar 
-  incrementData[`skills.${skillName}.exp`] = (recipe.exp * ( 1 + characterSkillData.exp))
+  incrementData[`skills.${skillName}.exp`] = (recipe.exp * ( 1 + characterSkillData.expBonus))
   
   // check ingredients
   const characterDB = await CharacterService.findCharacter(character)

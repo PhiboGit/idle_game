@@ -190,7 +190,7 @@ async function getSkillData(character, skill) {
     speed: 0,
     yieldMax: 0,
     yieldMin: 0,
-    exp: 0,
+    expBonus: 0,
   };
 
   // iterate over all the equipment items
@@ -206,7 +206,7 @@ async function getSkillData(character, skill) {
 
         skillSheet.luck += itemSkillSheet.luck;
         skillSheet.speed += itemSkillSheet.speed;
-        skillSheet.exp += itemSkillSheet.exp
+        skillSheet.expBonus += itemSkillSheet.expBonus
         skillSheet.yieldMax += itemSkillSheet.yieldMax
         skillSheet.yieldMin += itemSkillSheet.yieldMin || 0;
       }
@@ -215,7 +215,7 @@ async function getSkillData(character, skill) {
   
   // some values need adjustments, eg. percentage values
   skillSheet.speed = skillSheet.speed / 100
-  skillSheet.exp = skillSheet.exp / 100
+  skillSheet.expBonus = skillSheet.expBonus / 100
   
   console.log("SkillData: ", skillSheet)
   return skillSheet;

@@ -85,7 +85,7 @@ async function enchanting(character, skillName, task, itemId, enchantingResource
 	// filling out the form to increment the values of a character
 	const incrementData = {}
   incrementData['exp'] = enchantingProfession[`T${item.tier}`].expChar 
-  incrementData[`skills.${skillName}.exp`] = (enchantingProfession[`T${item.tier}`].exp * ( 1 + characterSkill.exp))
+  incrementData[`skills.${skillName}.exp`] = (enchantingProfession[`T${item.tier}`].exp * ( 1 + characterSkill.expBonus))
   
   // check ingredients
   const characterDB = await CharacterService.findCharacter(character)
