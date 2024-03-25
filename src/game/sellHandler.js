@@ -119,7 +119,7 @@ async function handleSellResource(character, msg){
   const char = await CharacterService.findCharacter(character)
 
 
-  if(!(char.resources[resourceName] || char.resources[resourceName] <= 0 || char.resources[resourceName] < amount)){
+  if(!(char.resources[resourceName] || char.resources[resourceName] > 0 || char.resources[resourceName] >= amount)){
     senderMediator.publish('error', {character: character,
       msg: {message: "You do not have the resource!",
             info: {
