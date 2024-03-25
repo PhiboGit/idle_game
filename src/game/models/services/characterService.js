@@ -206,7 +206,7 @@ async function getSkillData(character, skill) {
 
         skillSheet.luck += itemSkillSheet.luck;
         skillSheet.speed += itemSkillSheet.speed;
-        skillSheet.expBonus += itemSkillSheet.expBonus
+        skillSheet.expBonus += itemSkillSheet.exp
         skillSheet.yieldMax += itemSkillSheet.yieldMax
         skillSheet.yieldMin += itemSkillSheet.yieldMin || 0;
       }
