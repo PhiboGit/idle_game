@@ -140,7 +140,7 @@ async function collectOrder(characterName, orderId) {
     const leanOrder = await ItemOrder.findOne( {_id: order._id}).populate('item').lean()
     // only send the item info, if collected it
     if(item){
-      senderMediator.publish('items', {character: characterName, msg: {items: [item]} })
+      senderMediator.publish('item_update', {character: characterName, msg: {item: item} })
     }
     senderMediator.publish('item_order', {character: characterName, msg: {order: leanOrder}})
     senderMediator.publish('update_char', {character: characterName, msg: charUpdate})

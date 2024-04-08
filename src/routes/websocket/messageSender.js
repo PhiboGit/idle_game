@@ -15,7 +15,7 @@ class MessageSender{
     this.mediator.subscribe('time', this.time_EventHandler.bind(this))
     this.mediator.subscribe('update_char', this.updateChar_EventHandler.bind(this))
     this.mediator.subscribe('actionManager', this.actionManager_EventHandler.bind(this))
-    this.mediator.subscribe('items', this.items_EventHandler.bind(this))
+    this.mediator.subscribe('item_update', this.items_EventHandler.bind(this))
     this.mediator.subscribe('order', this.order_EventHandler.bind(this))
     this.mediator.subscribe('item_order', this.itemOrder_EventHandler.bind(this))
     this.mediator.subscribe('marketplace', this.marketplace_EventHandler.bind(this))
@@ -71,11 +71,11 @@ class MessageSender{
   }
 
   items_EventHandler(data) {
-    console.log('MessageSender event: "items" invoked.');
+    console.log('MessageSender event: "item_update" invoked.');
     verifyData(data)
     
     const message = {
-      type: 'items',
+      type: 'item_update',
       data: data.msg
     }
 

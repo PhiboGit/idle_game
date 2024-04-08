@@ -49,9 +49,9 @@ async function increment(character, incrementForm = {}, setForm= {}, pushForm={}
   senderMediator.publish('update_char', {character: character, msg: update})
 }
 
-async function itemUpdate(character, itemIds){
-  const items = await Item.find({'_id': {$in: itemIds}}).lean()
-  senderMediator.publish('items', {character: character, msg: {items: items} })
+async function itemUpdate(character, itemId){
+  const item = await Item.findById(itemId).lean()
+  senderMediator.publish('item_update', {character: character, msg: {item: item} })
 }
 
 /**
@@ -155,18 +155,12 @@ async function findCharacter(charName){
  * @returns undefined if path does not exist, otherwise the value of the fieldPath
  */
 function getFieldValue(doc, fieldPath) {
-  const fieldParts = fieldPath.split('.');
-  // traversing down the fieldPath
-  let value = doc;
-  for (const part of fieldParts) {
-    console.log("CharacterService field access: traversing... " + part)
-      if (true) {
-          value = value[part];
-      } else {
-        console.log("CharacterService field access: Invalid field: " + part);
-        return null
-      }
-  }
+  const resolvePath = (object, path, defaultValue) => path
+    .split('.')
+    .reduce((o, p) => o ? o[p] : defaultValue, object)
+
+  const value = resolvePath(doc, fieldPath, undefined)
+  console.log("CharacterService fieldValue:", fieldPath, value )
 
   return value;
 }
@@ -245,7 +239,7 @@ async function equipItem(character, itemId, skillName, slotType){
       { new: true }
     )
     if(item) {
-      senderMediator.publish('items', {character: character, msg: {items: [item]} })
+      senderMediator.publish('item_update', {character: character, msg: {item: item} })
     }
   }
 }

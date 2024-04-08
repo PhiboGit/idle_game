@@ -8,7 +8,7 @@ const { gearScoreData } = require('../../utils/dataLoader')
  */
 function getSkillSheetForGearScore(skillName, item) {
   const gearScores = item.properties.gearScores ?? {}
-  console.log("gearScoreConverter: ", gearScores)
+  console.log("gearScoreConverter: ",item.name, gearScores)
   const skillSheet = {
     luck: 0,
     speed: 0,
