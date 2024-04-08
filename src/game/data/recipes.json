@@ -1,633 +1,965 @@
 {
-  "toolsmith": {
-    "pickaxeT1":{
-      "profession": "toolsmith",
-      "name": "pickaxeT1",
-      "equipmentType": "tool",
-      "equipmentSkills": ["mining"],
-      "availableBoni": ["speed_mining", "luck_mining", "exp_mining", "yieldMax_mining", "str"],
-      "rollRarity":true,
-      "tier": 1,
-      "equipLevel": 0,
-      "amount": 1,
-      "level": 0,
-      "time": 20000,
-      "exp": 100,
-      "expChar": 50,
-      "ingredients": [
-        {"required": true,
-        "slot": [
-          {"resource": "ingotT1", "amount": 15},
-          {"resource": "chunk_uncommon", "amount": 1},
-          {"resource": "chunk_rare", "amount": 1},
-          {"resource": "chunk_epic", "amount": 1},
-          {"resource": "chunk_legendary", "amount": 1}
+  "linenT1":{
+    "profession": "weaving",
+    "name": "linenT1",
+    
+    "amount": 1,
+    "level": 0,
+    "time": 20000,
+    "exp": 10,
+    "expChar": 5,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "fiberT1", "amount": 10}
+        ]}
+    ]
+  },
+  "linenT2":{
+    "profession": "weaving",
+    "name": "linenT2",
+
+    "amount": 1,
+    "level": 25,
+    "time": 40000,
+    "exp": 20,
+    "expChar": 10,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "fiberT2", "amount": 10}
         ]},
-  
-        {"required": true,
-        "slot": [
-          {"resource": "plankT1", "amount": 15},
-          {"resource": "stick_uncommon", "amount": 1},
-          {"resource": "stick_rare", "amount": 1},
-          {"resource": "stick_epic", "amount": 1},
-          {"resource": "stick_legendary", "amount": 1}
-          ]},
-          
-        {"required": true,
-        "slot": [
-          {"resource": "linenT1", "amount": 15},
-          {"resource": "strand_uncommon", "amount": 1},
-          {"resource": "strand_rare", "amount": 1},
-          {"resource": "strand_epic", "amount": 1},
-          {"resource": "strand_legendary", "amount": 1}
-        ]} 
-      ],
-      "upgrades": [
-        {"required": true,
-        "slot": [
-          {"resource": "pickaxeT1_common", "amount": 1},
-          {"resource": "pickaxeT1_uncommon", "amount": 1},
-          {"resource": "pickaxeT1_rare", "amount": 1},
-          {"resource": "pickaxeT1_epic", "amount": 1},
-          {"resource": "pickaxeT1_legendary", "amount": 1}
-          ]},
+      {"required": true,
+      "slot": [
+        {"resource": "linenT1", "amount": 3}
+        ]}
+    ]
+  },
+  "linenT3":{
+    "profession": "weaving",
+    "name": "linenT3",
 
-
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm_mining", "amount": 1},
-          {"resource": "yieldCharm_mining", "amount": 1},
-          {"resource": "expCharm_mining", "amount": 1},
-          {"resource": "speedCharm_mining", "amount": 1},
-          {"resource": "strCharm", "amount": 1}
-
-          ]}
-      ]
-    },
-
-    "sickleT1":{
-      "profession": "toolsmith",
-      "name": "sickleT1",
-      "equipmentType": "tool",
-      "equipmentSkills": ["harvesting"],
-      "availableBoni": ["speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting", "int"],
-      "rollRarity":true,
-      "tier": 1,
-      "equipLevel": 0,
-      "amount": 1,
-      "level": 0,
-      "time": 20000,
-      "exp": 100,
-      "expChar": 50,
-      "ingredients": [
-        {"required": true,
-        "slot": [
-          {"resource": "ingotT1", "amount": 15},
-          {"resource": "chunk_uncommon", "amount": 1},
-          {"resource": "chunk_rare", "amount": 1},
-          {"resource": "chunk_epic", "amount": 1},
-          {"resource": "chunk_legendary", "amount": 1}
+    "amount": 1,
+    "level": 50,
+    "time": 60000,
+    "exp": 30,
+    "expChar": 15,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "fiberT3", "amount": 10}
         ]},
-  
-        {"required": true,
-        "slot": [
-          {"resource": "plankT1", "amount": 15},
-          {"resource": "stick_uncommon", "amount": 1},
-          {"resource": "stick_rare", "amount": 1},
-          {"resource": "stick_epic", "amount": 1},
-          {"resource": "stick_legendary", "amount": 1}
-          ]},
-          
-        {"required": true,
-        "slot": [
-          {"resource": "linenT1", "amount": 15},
-          {"resource": "strand_uncommon", "amount": 1},
-          {"resource": "strand_rare", "amount": 1},
-          {"resource": "strand_epic", "amount": 1},
-          {"resource": "strand_legendary", "amount": 1}
-        ]} 
-      ],
-      "upgrades": [
-        {"required": true,
-        "slot": [
-          {"resource": "sickleT1_common", "amount": 1},
-          {"resource": "sickleT1_uncommon", "amount": 1},
-          {"resource": "sickleT1_rare", "amount": 1},
-          {"resource": "sickleT1_epic", "amount": 1},
-          {"resource": "sickleT1_legendary", "amount": 1}
-          ]},
+      {"required": true,
+      "slot": [
+        {"resource": "linenT2", "amount": 3}
+        ]}
+    ]
+  },
+  "linenT4":{
+    "profession": "weaving",
+    "name": "linenT4",
 
-
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm_harvesting", "amount": 1},
-          {"resource": "yieldCharm_harvesting", "amount": 1},
-          {"resource": "expCharm_harvesting", "amount": 1},
-          {"resource": "speedCharm_harvesting", "amount": 1},
-          {"resource": "intCharm", "amount": 1}
-
-          ]}
-          
-      ]
-    },
-
-    "axeT1":{
-      "profession": "toolsmith",
-      "name": "axeT1",
-      "equipmentType": "tool",
-      "equipmentSkills": ["woodcutting"],
-      "availableBoni": ["speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting", "con"],
-      "rollRarity":true,
-      "tier": 1,
-      "equipLevel": 0,
-      "amount": 1,
-      "level": 0,
-      "time": 20000,
-      "exp": 100,
-      "expChar": 50,
-      "ingredients": [
-        {"required": true,
-        "slot": [
-          {"resource": "ingotT1", "amount": 15},
-          {"resource": "chunk_uncommon", "amount": 1},
-          {"resource": "chunk_rare", "amount": 1},
-          {"resource": "chunk_epic", "amount": 1},
-          {"resource": "chunk_legendary", "amount": 1}
+    "amount": 1,
+    "level": 75,
+    "time": 80000,
+    "exp": 40,
+    "expChar": 20,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "fiberT4", "amount": 10}
         ]},
-  
-        {"required": true,
-        "slot": [
-          {"resource": "plankT1", "amount": 15},
-          {"resource": "stick_uncommon", "amount": 1},
-          {"resource": "stick_rare", "amount": 1},
-          {"resource": "stick_epic", "amount": 1},
-          {"resource": "stick_legendary", "amount": 1}
-          ]},
-          
-        {"required": true,
-        "slot": [
-          {"resource": "linenT1", "amount": 15},
-          {"resource": "strand_uncommon", "amount": 1},
-          {"resource": "strand_rare", "amount": 1},
-          {"resource": "strand_epic", "amount": 1},
-          {"resource": "strand_legendary", "amount": 1}
-        ]} 
-      ],
-      "upgrades": [
-        {"required": true,
-        "slot": [
-          {"resource": "axeT1_common", "amount": 1},
-          {"resource": "axeT1_uncommon", "amount": 1},
-          {"resource": "axeT1_rare", "amount": 1},
-          {"resource": "axeT1_epic", "amount": 1},
-          {"resource": "axeT1_legendary", "amount": 1}
-          ]},
+      {"required": true,
+      "slot": [
+        {"resource": "linenT3", "amount": 3}
+        ]}
+    ]
+  },
+  "linenT5":{
+    "profession": "weaving",
+    "name": "linenT5",
 
-
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm_woodcutting", "amount": 1},
-          {"resource": "yieldCharm_woodcutting", "amount": 1},
-          {"resource": "expCharm_woodcutting", "amount": 1},
-          {"resource": "speedCharm_woodcutting", "amount": 1},
-          {"resource": "conCharm", "amount": 1}
-
-          ]}
-          
-      ]
-    },
-
-    "axeT2":{
-      "profession": "toolsmith",
-      "name": "axeT2",
-      "equipmentType": "tool",
-      "equipmentSkills": ["woodcutting"],
-      "availableBoni": ["speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting", "con"],
-      "rollRarity":true,
-      "tier": 2,
-      "equipLevel": 25,
-      "amount": 1,
-      "level": 0,
-      "time": 20000,
-      "exp": 300,
-      "expChar": 50,
-      "ingredients": [
-        {"required": true,
-        "slot": [
-          {"resource": "ingotT2", "amount": 15}
+    "amount": 1,
+    "level": 100,
+    "time": 100000,
+    "exp": 50,
+    "expChar": 25,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "fiberT5", "amount": 10}
         ]},
-  
-        {"required": true,
-        "slot": [
-          {"resource": "plankT2", "amount": 15}
-          
-          ]},
-          
-        {"required": true,
-        "slot": [
-          {"resource": "linenT2", "amount": 15}
-          
-        ]} 
-      ],
-      "upgrades": [
-        {"required": true,
-        "slot": [
-          {"resource": "axeT2_common", "amount": 1},
-          {"resource": "axeT2_uncommon", "amount": 1},
-          {"resource": "axeT2_rare", "amount": 1},
-          {"resource": "axeT2_epic", "amount": 1},
-          {"resource": "axeT2_legendary", "amount": 1}
-          ]},
-
-
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm_woodcutting", "amount": 1},
-          {"resource": "yieldCharm_woodcutting", "amount": 1},
-          {"resource": "expCharm_woodcutting", "amount": 1},
-          {"resource": "speedCharm_woodcutting", "amount": 1},
-          {"resource": "conCharm", "amount": 1}
-
-          ]},
-
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm_woodcutting", "amount": 1},
-          {"resource": "yieldCharm_woodcutting", "amount": 1},
-          {"resource": "expCharm_woodcutting", "amount": 1},
-          {"resource": "speedCharm_woodcutting", "amount": 1},
-          {"resource": "conCharm", "amount": 1}
-          ]}
-          
-      ]
-    }
+      {"required": true,
+      "slot": [
+        {"resource": "linenT4", "amount": 3}
+        ]}
+    ]
   },
 
-  "armorer": {
-    "hatT1":{
-      "profession": "armorer",
-      "name": "hatT1",
-      "equipmentType": "head",
-      "equipmentSkills": ["mining", "woodcutting", "harvesting"],
-      "availableBoni": [
-        "speed_mining", "luck_mining", "exp_mining", "yieldMax_mining",
-        "speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting",
-        "speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting",
-        "con", "str", "int", "dex", "foc"
-      ],
-      "rollRarity":true,
-      "tier": 1,
-      "equipLevel": 0,
-      "amount": 1,
-      "level": 0,
-      "time": 20000,
-      "exp": 100,
-      "expChar": 10,
-      "ingredients": [
+  "plankT1":{
+    "profession": "woodworking",
+    "name": "plankT1",
 
-          
-        {"required": true,
-        "slot": [
-          {"resource": "linenT1", "amount": 30},
-          {"resource": "strand_uncommon", "amount": 1},
-          {"resource": "strand_rare", "amount": 1},
-          {"resource": "strand_epic", "amount": 1},
-          {"resource": "strand_legendary", "amount": 1}
-        ]} 
-      ],
-      "upgrades": [
-        {"required": true,
-        "slot": [
-          {"resource": "hatT1_common", "amount": 1},
-          {"resource": "hatT1_uncommon", "amount": 1},
-          {"resource": "hatT1_rare", "amount": 1},
-          {"resource": "hatT1_epic", "amount": 1},
-          {"resource": "hatT1_legendary", "amount": 1}
-          ]},
+    "amount": 1,
+    "level": 0,
+    "time": 20000,
+    "exp": 10,
+    "expChar": 5,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "woodT1", "amount": 10}
+        ]}
+    ]
+  },
+  "plankT2":{
+    "profession": "woodworking",
+    "name": "plankT2",
 
-
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm_mining", "amount": 1},
-          {"resource": "yieldCharm_mining", "amount": 1},
-          {"resource": "expCharm_mining", "amount": 1},
-          {"resource": "speedCharm_mining", "amount": 1},
-
-          {"resource": "luckCharm_woodcutting", "amount": 1},
-          {"resource": "yieldCharm_woodcutting", "amount": 1},
-          {"resource": "expCharm_woodcutting", "amount": 1},
-          {"resource": "speedCharm_woodcutting", "amount": 1},
-
-          {"resource": "luckCharm_harvesting", "amount": 1},
-          {"resource": "yieldCharm_harvesting", "amount": 1},
-          {"resource": "expCharm_harvesting", "amount": 1},
-          {"resource": "speedCharm_harvesting", "amount": 1},
-
-          {"resource": "strCharm", "amount": 1},
-          {"resource": "conCharm", "amount": 1},
-          {"resource": "intCharm", "amount": 1},
-          {"resource": "dexCharm", "amount": 1},
-          {"resource": "focCharm", "amount": 1}
-
-          ]}
-      ]
-    },
-
-    "chestpieceT1":{
-      "profession": "armorer",
-      "name": "chestpieceT1",
-      "equipmentType": "chest",
-      "equipmentSkills": ["mining", "woodcutting", "harvesting"],
-      "availableBoni": [
-        "speed_mining", "luck_mining", "exp_mining", "yieldMax_mining",
-        "speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting",
-        "speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting",
-        "con", "str", "int", "dex", "foc"
-      ],
-      "rollRarity":true,
-      "tier": 1,
-      "equipLevel": 0,
-      "amount": 1,
-      "level": 0,
-      "time": 20000,
-      "exp": 100,
-      "expChar": 10,
-      "ingredients": [
-
-          
-        {"required": true,
-        "slot": [
-          {"resource": "linenT1", "amount": 20},
-          {"resource": "strand_uncommon", "amount": 1},
-          {"resource": "strand_rare", "amount": 1},
-          {"resource": "strand_epic", "amount": 1},
-          {"resource": "strand_legendary", "amount": 1}
+    "amount": 1,
+    "level": 25,
+    "time": 40000,
+    "exp": 20,
+    "expChar": 10,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "woodT2", "amount": 10}
         ]},
-         
-        {"required": true,
-        "slot": [
-          {"resource": "ingotT1", "amount": 5}
-        ]} 
-      ],
-      "upgrades": [
-        {"required": true,
-        "slot": [
-          {"resource": "chestpieceT1_common", "amount": 1},
-          {"resource": "chestpieceT1_uncommon", "amount": 1},
-          {"resource": "chestpieceT1_rare", "amount": 1},
-          {"resource": "chestpieceT1_epic", "amount": 1},
-          {"resource": "chestpieceT1_legendary", "amount": 1}
-          ]},
+      {"required": true,
+      "slot": [
+        {"resource": "plankT1", "amount": 3}
+        ]}
+    ]
+  },
+  "plankT3":{
+    "profession": "woodworking",
+    "name": "plankT3",
 
-
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm_mining", "amount": 1},
-          {"resource": "yieldCharm_mining", "amount": 1},
-          {"resource": "expCharm_mining", "amount": 1},
-          {"resource": "speedCharm_mining", "amount": 1},
-
-          {"resource": "luckCharm_woodcutting", "amount": 1},
-          {"resource": "yieldCharm_woodcutting", "amount": 1},
-          {"resource": "expCharm_woodcutting", "amount": 1},
-          {"resource": "speedCharm_woodcutting", "amount": 1},
-
-          {"resource": "luckCharm_harvesting", "amount": 1},
-          {"resource": "yieldCharm_harvesting", "amount": 1},
-          {"resource": "expCharm_harvesting", "amount": 1},
-          {"resource": "speedCharm_harvesting", "amount": 1},
-
-          {"resource": "strCharm", "amount": 1},
-          {"resource": "conCharm", "amount": 1},
-          {"resource": "intCharm", "amount": 1},
-          {"resource": "dexCharm", "amount": 1},
-          {"resource": "focCharm", "amount": 1}
-
-          ]}
-      ]
-    },
-
-    "glovesT1":{
-      "profession": "armorer",
-      "name": "glovesT1",
-      "equipmentType": "hands",
-      "equipmentSkills": ["mining", "woodcutting", "harvesting"],
-      "availableBoni": [
-        "speed_mining", "luck_mining", "exp_mining", "yieldMax_mining",
-        "speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting",
-        "speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting",
-        "con", "str", "int", "dex", "foc"
-      ],
-      "rollRarity":true,
-      "tier": 1,
-      "equipLevel": 0,
-      "amount": 1,
-      "level": 0,
-      "time": 20000,
-      "exp": 100,
-      "expChar": 10,
-      "ingredients": [
-
-          
-        {"required": true,
-        "slot": [
-          {"resource": "linenT1", "amount": 10},
-          {"resource": "strand_uncommon", "amount": 1},
-          {"resource": "strand_rare", "amount": 1},
-          {"resource": "strand_epic", "amount": 1},
-          {"resource": "strand_legendary", "amount": 1}
+    "amount": 1,
+    "level": 50,
+    "time": 60000,
+    "exp": 30,
+    "expChar": 15,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "woodT3", "amount": 10}
         ]},
+      {"required": true,
+      "slot": [
+        {"resource": "plankT2", "amount": 3}
+        ]}
+    ]
+  },
+  "plankT4":{
+    "profession": "woodworking",
+    "name": "plankT4",
 
-        {"required": true,
-        "slot": [
-          {"resource": "ingotT1", "amount": 1}
-          
-        ]} 
-      ],
-      "upgrades": [
-        {"required": true,
-        "slot": [
-          {"resource": "glovesT1_common", "amount": 1},
-          {"resource": "glovesT1_uncommon", "amount": 1},
-          {"resource": "glovesT1_rare", "amount": 1},
-          {"resource": "glovesT1_epic", "amount": 1},
-          {"resource": "glovesT1_legendary", "amount": 1}
-          ]},
-
-
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm_mining", "amount": 1},
-          {"resource": "yieldCharm_mining", "amount": 1},
-          {"resource": "expCharm_mining", "amount": 1},
-          {"resource": "speedCharm_mining", "amount": 1},
-
-          {"resource": "luckCharm_woodcutting", "amount": 1},
-          {"resource": "yieldCharm_woodcutting", "amount": 1},
-          {"resource": "expCharm_woodcutting", "amount": 1},
-          {"resource": "speedCharm_woodcutting", "amount": 1},
-
-          {"resource": "luckCharm_harvesting", "amount": 1},
-          {"resource": "yieldCharm_harvesting", "amount": 1},
-          {"resource": "expCharm_harvesting", "amount": 1},
-          {"resource": "speedCharm_harvesting", "amount": 1},
-
-          {"resource": "strCharm", "amount": 1},
-          {"resource": "conCharm", "amount": 1},
-          {"resource": "intCharm", "amount": 1},
-          {"resource": "dexCharm", "amount": 1},
-          {"resource": "focCharm", "amount": 1}
-
-          ]}
-      ]
-    },
-
-    "pantsT1":{
-      "profession": "armorer",
-      "name": "pantsT1",
-      "equipmentType": "legs",
-      "equipmentSkills": ["mining", "woodcutting", "harvesting"],
-      "availableBoni": [
-        "speed_mining", "luck_mining", "exp_mining", "yieldMax_mining",
-        "speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting",
-        "speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting",
-        "con", "str", "int", "dex", "foc"
-      ],
-      "rollRarity":true,
-      "tier": 1,
-      "equipLevel": 0,
-      "amount": 1,
-      "level": 0,
-      "time": 20000,
-      "exp": 100,
-      "expChar": 10,
-      "ingredients": [
-
-          
-        {"required": true,
-        "slot": [
-          {"resource": "linenT1", "amount": 30},
-          {"resource": "strand_uncommon", "amount": 1},
-          {"resource": "strand_rare", "amount": 1},
-          {"resource": "strand_epic", "amount": 1},
-          {"resource": "strand_legendary", "amount": 1}
+    "amount": 1,
+    "level": 75,
+    "time": 80000,
+    "exp": 40,
+    "expChar": 20,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "woodT4", "amount": 10}
         ]},
+      {"required": true,
+      "slot": [
+        {"resource": "plankT3", "amount": 3}
+        ]}
+    ]
+  },
+  "plankT5":{
+    "profession": "woodworking",
+    "name": "plankT5",
 
-        {"required": true,
+    "amount": 1,
+    "level": 100,
+    "time": 100000,
+    "exp": 50,
+    "expChar": 25,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "woodT5", "amount": 10}
+        ]},
+      {"required": true,
+      "slot": [
+        {"resource": "plankT4", "amount": 3}
+        ]}
+    ]
+  },
+
+  "coal":{
+    "profession": "smelting",
+    "name": "coal",
+
+    "amount": 20,
+    "level": 0,
+    "time": 20000,
+    "exp": 10,
+    "expChar": 5,
+    "ingredients": [
+      {"required": true,
         "slot": [
-          {"resource": "ingotT1", "amount": 10}
-        ]} 
-      ],
-      "upgrades": [
-        {"required": true,
-        "slot": [
-          {"resource": "pantsT1_common", "amount": 1},
-          {"resource": "pantsT1_uncommon", "amount": 1},
-          {"resource": "pantsT1_rare", "amount": 1},
-          {"resource": "pantsT1_epic", "amount": 1},
-          {"resource": "pantsT1_legendary", "amount": 1}
-          ]},
+          {"resource": "woodT1", "amount": 5},
+          {"resource": "woodT2", "amount": 7},
+          {"resource": "woodT3", "amount": 10},
+          {"resource": "woodT4", "amount": 15},
+          {"resource": "woodT5", "amount": 20}
+        ]}
+    
+    ]
+  },
+
+  "ingotT1":{
+    "profession": "smelting",
+    "name": "ingotT1",
+
+    "amount": 1,
+    "level": 0,
+    "time": 20000,
+    "exp": 10,
+    "expChar": 5,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "coal", "amount": 5}
+        ]},
+      {"required": true,
+      "slot": [
+        {"resource": "oreT1", "amount": 10}
+        ]}
+    ]
+  },
+  "ingotT2":{
+    "profession": "smelting",
+    "name": "ingotT2",
+
+    "amount": 1,
+    "level": 25,
+    "time": 40000,
+    "exp": 20,
+    "expChar": 10,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "coal", "amount": 5}
+        ]},
+      {"required": true,
+      "slot": [
+        {"resource": "oreT2", "amount": 10}
+        ]},
+      {"required": true,
+      "slot": [
+        {"resource": "ingotT1", "amount": 3}
+        ]}
+    ]
+  },
+  "ingotT3":{
+    "profession": "smelting",
+    "name": "ingotT3",
+
+    "amount": 1,
+    "level": 50,
+    "time": 60000,
+    "exp": 30,
+    "expChar": 15,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "coal", "amount": 5}
+        ]},
+      {"required": true,
+      "slot": [
+        {"resource": "oreT3", "amount": 10}
+        ]},
+      {"required": true,
+      "slot": [
+        {"resource": "ingotT2", "amount": 3}
+        ]}
+    ]
+  },
+  "ingotT4":{
+    "profession": "smelting",
+    "name": "ingotT4",
+
+    "amount": 1,
+    "level": 75,
+    "time": 80000,
+    "exp": 40,
+    "expChar": 20,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "coal", "amount": 5}
+        ]},
+      {"required": true,
+      "slot": [
+        {"resource": "oreT4", "amount": 10}
+        ]},
+      {"required": true,
+      "slot": [
+        {"resource": "ingotT3", "amount": 3}
+        ]}
+    ]
+  },
+  "ingotT5":{
+    "profession": "smelting",
+    "name": "ingotT5",
+
+    "amount": 1,
+    "level": 100,
+    "time": 100000,
+    "exp": 50,
+    "expChar": 25,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "coal", "amount": 5}
+        ]},
+      {"required": true,
+      "slot": [
+        {"resource": "oreT5", "amount": 10}
+        ]},
+      {"required": true,
+      "slot": [
+        {"resource": "ingotT4", "amount": 3}
+        ]}
+    ]
+  },
 
 
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm_mining", "amount": 1},
-          {"resource": "yieldCharm_mining", "amount": 1},
-          {"resource": "expCharm_mining", "amount": 1},
-          {"resource": "speedCharm_mining", "amount": 1},
+  "pickaxeT1":{
+    "profession": "toolsmith",
+    "name": "pickaxeT1",
+    "equipmentType": "tool",
+    "equipmentSkills": ["mining"],
+    "availableBoni": ["speed_mining", "luck_mining", "exp_mining", "yieldMax_mining", "str"],
+    "rollRarity":true,
+    "tier": 1,
+    "equipLevel": 0,
+    "amount": 1,
+    "level": 0,
+    "time": 20000,
+    "exp": 100,
+    "expChar": 50,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "ingotT1", "amount": 15},
+        {"resource": "chunk_uncommon", "amount": 1},
+        {"resource": "chunk_rare", "amount": 1},
+        {"resource": "chunk_epic", "amount": 1},
+        {"resource": "chunk_legendary", "amount": 1}
+      ]},
 
-          {"resource": "luckCharm_woodcutting", "amount": 1},
-          {"resource": "yieldCharm_woodcutting", "amount": 1},
-          {"resource": "expCharm_woodcutting", "amount": 1},
-          {"resource": "speedCharm_woodcutting", "amount": 1},
-
-          {"resource": "luckCharm_harvesting", "amount": 1},
-          {"resource": "yieldCharm_harvesting", "amount": 1},
-          {"resource": "expCharm_harvesting", "amount": 1},
-          {"resource": "speedCharm_harvesting", "amount": 1},
-
-          {"resource": "strCharm", "amount": 1},
-          {"resource": "conCharm", "amount": 1},
-          {"resource": "intCharm", "amount": 1},
-          {"resource": "dexCharm", "amount": 1},
-          {"resource": "focCharm", "amount": 1}
-
-          ]}
-      ]
-    },
-
-    "bootsT1":{
-      "profession": "armorer",
-      "name": "bootsT1",
-      "equipmentType": "feet",
-      "equipmentSkills": ["mining", "woodcutting", "harvesting"],
-      "availableBoni": [
-        "speed_mining", "luck_mining", "exp_mining", "yieldMax_mining",
-        "speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting",
-        "speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting",
-        "con", "str", "int", "dex", "foc"
-      ],
-      "rollRarity":true,
-      "tier": 1,
-      "equipLevel": 0,
-      "amount": 1,
-      "level": 0,
-      "time": 20000,
-      "exp": 100,
-      "expChar": 10,
-      "ingredients": [
-
-          
-        {"required": true,
-        "slot": [
-          {"resource": "linenT1", "amount": 30},
-          {"resource": "strand_uncommon", "amount": 1},
-          {"resource": "strand_rare", "amount": 1},
-          {"resource": "strand_epic", "amount": 1},
-          {"resource": "strand_legendary", "amount": 1}
+      {"required": true,
+      "slot": [
+        {"resource": "plankT1", "amount": 15},
+        {"resource": "stick_uncommon", "amount": 1},
+        {"resource": "stick_rare", "amount": 1},
+        {"resource": "stick_epic", "amount": 1},
+        {"resource": "stick_legendary", "amount": 1}
+        ]},
+        
+      {"required": true,
+      "slot": [
+        {"resource": "linenT1", "amount": 15},
+        {"resource": "strand_uncommon", "amount": 1},
+        {"resource": "strand_rare", "amount": 1},
+        {"resource": "strand_epic", "amount": 1},
+        {"resource": "strand_legendary", "amount": 1}
+      ]} 
+    ],
+    "upgrades": [
+      {"required": true,
+      "slot": [
+        {"resource": "pickaxeT1_common", "amount": 1},
+        {"resource": "pickaxeT1_uncommon", "amount": 1},
+        {"resource": "pickaxeT1_rare", "amount": 1},
+        {"resource": "pickaxeT1_epic", "amount": 1},
+        {"resource": "pickaxeT1_legendary", "amount": 1}
         ]},
 
-        {"required": true,
-        "slot": [
-          {"resource": "ingotT1", "amount": 5}
-        ]} 
-      ],
-      "upgrades": [
-        {"required": true,
-        "slot": [
-          {"resource": "bootsT1_common", "amount": 1},
-          {"resource": "bootsT1_uncommon", "amount": 1},
-          {"resource": "bootsT1_rare", "amount": 1},
-          {"resource": "bootsT1_epic", "amount": 1},
-          {"resource": "bootsT1_legendary", "amount": 1}
-          ]},
+
+      {"required": false,
+      "slot": [
+        {"resource": "luckCharm_mining", "amount": 1},
+        {"resource": "yieldCharm_mining", "amount": 1},
+        {"resource": "expCharm_mining", "amount": 1},
+        {"resource": "speedCharm_mining", "amount": 1},
+        {"resource": "strCharm", "amount": 1}
+
+        ]}
+    ]
+  },
+
+  "sickleT1":{
+    "profession": "toolsmith",
+    "name": "sickleT1",
+    "equipmentType": "tool",
+    "equipmentSkills": ["harvesting"],
+    "availableBoni": ["speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting", "int"],
+    "rollRarity":true,
+    "tier": 1,
+    "equipLevel": 0,
+    "amount": 1,
+    "level": 0,
+    "time": 20000,
+    "exp": 100,
+    "expChar": 50,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "ingotT1", "amount": 15},
+        {"resource": "chunk_uncommon", "amount": 1},
+        {"resource": "chunk_rare", "amount": 1},
+        {"resource": "chunk_epic", "amount": 1},
+        {"resource": "chunk_legendary", "amount": 1}
+      ]},
+
+      {"required": true,
+      "slot": [
+        {"resource": "plankT1", "amount": 15},
+        {"resource": "stick_uncommon", "amount": 1},
+        {"resource": "stick_rare", "amount": 1},
+        {"resource": "stick_epic", "amount": 1},
+        {"resource": "stick_legendary", "amount": 1}
+        ]},
+        
+      {"required": true,
+      "slot": [
+        {"resource": "linenT1", "amount": 15},
+        {"resource": "strand_uncommon", "amount": 1},
+        {"resource": "strand_rare", "amount": 1},
+        {"resource": "strand_epic", "amount": 1},
+        {"resource": "strand_legendary", "amount": 1}
+      ]} 
+    ],
+    "upgrades": [
+      {"required": true,
+      "slot": [
+        {"resource": "sickleT1_common", "amount": 1},
+        {"resource": "sickleT1_uncommon", "amount": 1},
+        {"resource": "sickleT1_rare", "amount": 1},
+        {"resource": "sickleT1_epic", "amount": 1},
+        {"resource": "sickleT1_legendary", "amount": 1}
+        ]},
 
 
-        {"required": false,
-        "slot": [
-          {"resource": "luckCharm_mining", "amount": 1},
-          {"resource": "yieldCharm_mining", "amount": 1},
-          {"resource": "expCharm_mining", "amount": 1},
-          {"resource": "speedCharm_mining", "amount": 1},
+      {"required": false,
+      "slot": [
+        {"resource": "luckCharm_harvesting", "amount": 1},
+        {"resource": "yieldCharm_harvesting", "amount": 1},
+        {"resource": "expCharm_harvesting", "amount": 1},
+        {"resource": "speedCharm_harvesting", "amount": 1},
+        {"resource": "intCharm", "amount": 1}
 
-          {"resource": "luckCharm_woodcutting", "amount": 1},
-          {"resource": "yieldCharm_woodcutting", "amount": 1},
-          {"resource": "expCharm_woodcutting", "amount": 1},
-          {"resource": "speedCharm_woodcutting", "amount": 1},
+        ]}
+        
+    ]
+  },
 
-          {"resource": "luckCharm_harvesting", "amount": 1},
-          {"resource": "yieldCharm_harvesting", "amount": 1},
-          {"resource": "expCharm_harvesting", "amount": 1},
-          {"resource": "speedCharm_harvesting", "amount": 1},
+  "axeT1":{
+    "profession": "toolsmith",
+    "name": "axeT1",
+    "equipmentType": "tool",
+    "equipmentSkills": ["woodcutting"],
+    "availableBoni": ["speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting", "con"],
+    "rollRarity":true,
+    "tier": 1,
+    "equipLevel": 0,
+    "amount": 1,
+    "level": 0,
+    "time": 20000,
+    "exp": 100,
+    "expChar": 50,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "ingotT1", "amount": 15},
+        {"resource": "chunk_uncommon", "amount": 1},
+        {"resource": "chunk_rare", "amount": 1},
+        {"resource": "chunk_epic", "amount": 1},
+        {"resource": "chunk_legendary", "amount": 1}
+      ]},
 
-          {"resource": "strCharm", "amount": 1},
-          {"resource": "conCharm", "amount": 1},
-          {"resource": "intCharm", "amount": 1},
-          {"resource": "dexCharm", "amount": 1},
-          {"resource": "focCharm", "amount": 1}
+      {"required": true,
+      "slot": [
+        {"resource": "plankT1", "amount": 15},
+        {"resource": "stick_uncommon", "amount": 1},
+        {"resource": "stick_rare", "amount": 1},
+        {"resource": "stick_epic", "amount": 1},
+        {"resource": "stick_legendary", "amount": 1}
+        ]},
+        
+      {"required": true,
+      "slot": [
+        {"resource": "linenT1", "amount": 15},
+        {"resource": "strand_uncommon", "amount": 1},
+        {"resource": "strand_rare", "amount": 1},
+        {"resource": "strand_epic", "amount": 1},
+        {"resource": "strand_legendary", "amount": 1}
+      ]} 
+    ],
+    "upgrades": [
+      {"required": true,
+      "slot": [
+        {"resource": "axeT1_common", "amount": 1},
+        {"resource": "axeT1_uncommon", "amount": 1},
+        {"resource": "axeT1_rare", "amount": 1},
+        {"resource": "axeT1_epic", "amount": 1},
+        {"resource": "axeT1_legendary", "amount": 1}
+        ]},
 
-          ]}
-      ]
-    }
+
+      {"required": false,
+      "slot": [
+        {"resource": "luckCharm_woodcutting", "amount": 1},
+        {"resource": "yieldCharm_woodcutting", "amount": 1},
+        {"resource": "expCharm_woodcutting", "amount": 1},
+        {"resource": "speedCharm_woodcutting", "amount": 1},
+        {"resource": "conCharm", "amount": 1}
+
+        ]}
+        
+    ]
+  },
+
+  "axeT2":{
+    "profession": "toolsmith",
+    "name": "axeT2",
+    "equipmentType": "tool",
+    "equipmentSkills": ["woodcutting"],
+    "availableBoni": ["speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting", "con"],
+    "rollRarity":true,
+    "tier": 2,
+    "equipLevel": 25,
+    "amount": 1,
+    "level": 0,
+    "time": 20000,
+    "exp": 300,
+    "expChar": 50,
+    "ingredients": [
+      {"required": true,
+      "slot": [
+        {"resource": "ingotT2", "amount": 15}
+      ]},
+
+      {"required": true,
+      "slot": [
+        {"resource": "plankT2", "amount": 15}
+        
+        ]},
+        
+      {"required": true,
+      "slot": [
+        {"resource": "linenT2", "amount": 15}
+        
+      ]} 
+    ],
+    "upgrades": [
+      {"required": true,
+      "slot": [
+        {"resource": "axeT2_common", "amount": 1},
+        {"resource": "axeT2_uncommon", "amount": 1},
+        {"resource": "axeT2_rare", "amount": 1},
+        {"resource": "axeT2_epic", "amount": 1},
+        {"resource": "axeT2_legendary", "amount": 1}
+        ]},
+
+
+      {"required": false,
+      "slot": [
+        {"resource": "luckCharm_woodcutting", "amount": 1},
+        {"resource": "yieldCharm_woodcutting", "amount": 1},
+        {"resource": "expCharm_woodcutting", "amount": 1},
+        {"resource": "speedCharm_woodcutting", "amount": 1},
+        {"resource": "conCharm", "amount": 1}
+
+        ]},
+
+      {"required": false,
+      "slot": [
+        {"resource": "luckCharm_woodcutting", "amount": 1},
+        {"resource": "yieldCharm_woodcutting", "amount": 1},
+        {"resource": "expCharm_woodcutting", "amount": 1},
+        {"resource": "speedCharm_woodcutting", "amount": 1},
+        {"resource": "conCharm", "amount": 1}
+        ]}
+        
+    ]
+  },
+
+
+
+  "hatT1":{
+    "profession": "armorer",
+    "name": "hatT1",
+    "equipmentType": "head",
+    "equipmentSkills": ["mining", "woodcutting", "harvesting"],
+    "availableBoni": [
+      "speed_mining", "luck_mining", "exp_mining", "yieldMax_mining",
+      "speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting",
+      "speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting",
+      "con", "str", "int", "dex", "foc"
+    ],
+    "rollRarity":true,
+    "tier": 1,
+    "equipLevel": 0,
+    "amount": 1,
+    "level": 0,
+    "time": 20000,
+    "exp": 100,
+    "expChar": 10,
+    "ingredients": [
+
+        
+      {"required": true,
+      "slot": [
+        {"resource": "linenT1", "amount": 30},
+        {"resource": "strand_uncommon", "amount": 1},
+        {"resource": "strand_rare", "amount": 1},
+        {"resource": "strand_epic", "amount": 1},
+        {"resource": "strand_legendary", "amount": 1}
+      ]} 
+    ],
+    "upgrades": [
+      {"required": true,
+      "slot": [
+        {"resource": "hatT1_common", "amount": 1},
+        {"resource": "hatT1_uncommon", "amount": 1},
+        {"resource": "hatT1_rare", "amount": 1},
+        {"resource": "hatT1_epic", "amount": 1},
+        {"resource": "hatT1_legendary", "amount": 1}
+        ]},
+
+
+      {"required": false,
+      "slot": [
+        {"resource": "luckCharm_mining", "amount": 1},
+        {"resource": "yieldCharm_mining", "amount": 1},
+        {"resource": "expCharm_mining", "amount": 1},
+        {"resource": "speedCharm_mining", "amount": 1},
+
+        {"resource": "luckCharm_woodcutting", "amount": 1},
+        {"resource": "yieldCharm_woodcutting", "amount": 1},
+        {"resource": "expCharm_woodcutting", "amount": 1},
+        {"resource": "speedCharm_woodcutting", "amount": 1},
+
+        {"resource": "luckCharm_harvesting", "amount": 1},
+        {"resource": "yieldCharm_harvesting", "amount": 1},
+        {"resource": "expCharm_harvesting", "amount": 1},
+        {"resource": "speedCharm_harvesting", "amount": 1},
+
+        {"resource": "strCharm", "amount": 1},
+        {"resource": "conCharm", "amount": 1},
+        {"resource": "intCharm", "amount": 1},
+        {"resource": "dexCharm", "amount": 1},
+        {"resource": "focCharm", "amount": 1}
+
+        ]}
+    ]
+  },
+
+  "chestpieceT1":{
+    "profession": "armorer",
+    "name": "chestpieceT1",
+    "equipmentType": "chest",
+    "equipmentSkills": ["mining", "woodcutting", "harvesting"],
+    "availableBoni": [
+      "speed_mining", "luck_mining", "exp_mining", "yieldMax_mining",
+      "speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting",
+      "speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting",
+      "con", "str", "int", "dex", "foc"
+    ],
+    "rollRarity":true,
+    "tier": 1,
+    "equipLevel": 0,
+    "amount": 1,
+    "level": 0,
+    "time": 20000,
+    "exp": 100,
+    "expChar": 10,
+    "ingredients": [
+
+        
+      {"required": true,
+      "slot": [
+        {"resource": "linenT1", "amount": 20},
+        {"resource": "strand_uncommon", "amount": 1},
+        {"resource": "strand_rare", "amount": 1},
+        {"resource": "strand_epic", "amount": 1},
+        {"resource": "strand_legendary", "amount": 1}
+      ]},
+        
+      {"required": true,
+      "slot": [
+        {"resource": "ingotT1", "amount": 5}
+      ]} 
+    ],
+    "upgrades": [
+      {"required": true,
+      "slot": [
+        {"resource": "chestpieceT1_common", "amount": 1},
+        {"resource": "chestpieceT1_uncommon", "amount": 1},
+        {"resource": "chestpieceT1_rare", "amount": 1},
+        {"resource": "chestpieceT1_epic", "amount": 1},
+        {"resource": "chestpieceT1_legendary", "amount": 1}
+        ]},
+
+
+      {"required": false,
+      "slot": [
+        {"resource": "luckCharm_mining", "amount": 1},
+        {"resource": "yieldCharm_mining", "amount": 1},
+        {"resource": "expCharm_mining", "amount": 1},
+        {"resource": "speedCharm_mining", "amount": 1},
+
+        {"resource": "luckCharm_woodcutting", "amount": 1},
+        {"resource": "yieldCharm_woodcutting", "amount": 1},
+        {"resource": "expCharm_woodcutting", "amount": 1},
+        {"resource": "speedCharm_woodcutting", "amount": 1},
+
+        {"resource": "luckCharm_harvesting", "amount": 1},
+        {"resource": "yieldCharm_harvesting", "amount": 1},
+        {"resource": "expCharm_harvesting", "amount": 1},
+        {"resource": "speedCharm_harvesting", "amount": 1},
+
+        {"resource": "strCharm", "amount": 1},
+        {"resource": "conCharm", "amount": 1},
+        {"resource": "intCharm", "amount": 1},
+        {"resource": "dexCharm", "amount": 1},
+        {"resource": "focCharm", "amount": 1}
+
+        ]}
+    ]
+  },
+
+  "glovesT1":{
+    "profession": "armorer",
+    "name": "glovesT1",
+    "equipmentType": "hands",
+    "equipmentSkills": ["mining", "woodcutting", "harvesting"],
+    "availableBoni": [
+      "speed_mining", "luck_mining", "exp_mining", "yieldMax_mining",
+      "speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting",
+      "speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting",
+      "con", "str", "int", "dex", "foc"
+    ],
+    "rollRarity":true,
+    "tier": 1,
+    "equipLevel": 0,
+    "amount": 1,
+    "level": 0,
+    "time": 20000,
+    "exp": 100,
+    "expChar": 10,
+    "ingredients": [
+
+        
+      {"required": true,
+      "slot": [
+        {"resource": "linenT1", "amount": 10},
+        {"resource": "strand_uncommon", "amount": 1},
+        {"resource": "strand_rare", "amount": 1},
+        {"resource": "strand_epic", "amount": 1},
+        {"resource": "strand_legendary", "amount": 1}
+      ]},
+
+      {"required": true,
+      "slot": [
+        {"resource": "ingotT1", "amount": 1}
+        
+      ]} 
+    ],
+    "upgrades": [
+      {"required": true,
+      "slot": [
+        {"resource": "glovesT1_common", "amount": 1},
+        {"resource": "glovesT1_uncommon", "amount": 1},
+        {"resource": "glovesT1_rare", "amount": 1},
+        {"resource": "glovesT1_epic", "amount": 1},
+        {"resource": "glovesT1_legendary", "amount": 1}
+        ]},
+
+
+      {"required": false,
+      "slot": [
+        {"resource": "luckCharm_mining", "amount": 1},
+        {"resource": "yieldCharm_mining", "amount": 1},
+        {"resource": "expCharm_mining", "amount": 1},
+        {"resource": "speedCharm_mining", "amount": 1},
+
+        {"resource": "luckCharm_woodcutting", "amount": 1},
+        {"resource": "yieldCharm_woodcutting", "amount": 1},
+        {"resource": "expCharm_woodcutting", "amount": 1},
+        {"resource": "speedCharm_woodcutting", "amount": 1},
+
+        {"resource": "luckCharm_harvesting", "amount": 1},
+        {"resource": "yieldCharm_harvesting", "amount": 1},
+        {"resource": "expCharm_harvesting", "amount": 1},
+        {"resource": "speedCharm_harvesting", "amount": 1},
+
+        {"resource": "strCharm", "amount": 1},
+        {"resource": "conCharm", "amount": 1},
+        {"resource": "intCharm", "amount": 1},
+        {"resource": "dexCharm", "amount": 1},
+        {"resource": "focCharm", "amount": 1}
+
+        ]}
+    ]
+  },
+
+  "pantsT1":{
+    "profession": "armorer",
+    "name": "pantsT1",
+    "equipmentType": "legs",
+    "equipmentSkills": ["mining", "woodcutting", "harvesting"],
+    "availableBoni": [
+      "speed_mining", "luck_mining", "exp_mining", "yieldMax_mining",
+      "speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting",
+      "speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting",
+      "con", "str", "int", "dex", "foc"
+    ],
+    "rollRarity":true,
+    "tier": 1,
+    "equipLevel": 0,
+    "amount": 1,
+    "level": 0,
+    "time": 20000,
+    "exp": 100,
+    "expChar": 10,
+    "ingredients": [
+
+        
+      {"required": true,
+      "slot": [
+        {"resource": "linenT1", "amount": 30},
+        {"resource": "strand_uncommon", "amount": 1},
+        {"resource": "strand_rare", "amount": 1},
+        {"resource": "strand_epic", "amount": 1},
+        {"resource": "strand_legendary", "amount": 1}
+      ]},
+
+      {"required": true,
+      "slot": [
+        {"resource": "ingotT1", "amount": 10}
+      ]} 
+    ],
+    "upgrades": [
+      {"required": true,
+      "slot": [
+        {"resource": "pantsT1_common", "amount": 1},
+        {"resource": "pantsT1_uncommon", "amount": 1},
+        {"resource": "pantsT1_rare", "amount": 1},
+        {"resource": "pantsT1_epic", "amount": 1},
+        {"resource": "pantsT1_legendary", "amount": 1}
+        ]},
+
+
+      {"required": false,
+      "slot": [
+        {"resource": "luckCharm_mining", "amount": 1},
+        {"resource": "yieldCharm_mining", "amount": 1},
+        {"resource": "expCharm_mining", "amount": 1},
+        {"resource": "speedCharm_mining", "amount": 1},
+
+        {"resource": "luckCharm_woodcutting", "amount": 1},
+        {"resource": "yieldCharm_woodcutting", "amount": 1},
+        {"resource": "expCharm_woodcutting", "amount": 1},
+        {"resource": "speedCharm_woodcutting", "amount": 1},
+
+        {"resource": "luckCharm_harvesting", "amount": 1},
+        {"resource": "yieldCharm_harvesting", "amount": 1},
+        {"resource": "expCharm_harvesting", "amount": 1},
+        {"resource": "speedCharm_harvesting", "amount": 1},
+
+        {"resource": "strCharm", "amount": 1},
+        {"resource": "conCharm", "amount": 1},
+        {"resource": "intCharm", "amount": 1},
+        {"resource": "dexCharm", "amount": 1},
+        {"resource": "focCharm", "amount": 1}
+
+        ]}
+    ]
+  },
+
+  "bootsT1":{
+    "profession": "armorer",
+    "name": "bootsT1",
+    "equipmentType": "feet",
+    "equipmentSkills": ["mining", "woodcutting", "harvesting"],
+    "availableBoni": [
+      "speed_mining", "luck_mining", "exp_mining", "yieldMax_mining",
+      "speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting",
+      "speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting",
+      "con", "str", "int", "dex", "foc"
+    ],
+    "rollRarity":true,
+    "tier": 1,
+    "equipLevel": 0,
+    "amount": 1,
+    "level": 0,
+    "time": 20000,
+    "exp": 100,
+    "expChar": 10,
+    "ingredients": [
+
+        
+      {"required": true,
+      "slot": [
+        {"resource": "linenT1", "amount": 30},
+        {"resource": "strand_uncommon", "amount": 1},
+        {"resource": "strand_rare", "amount": 1},
+        {"resource": "strand_epic", "amount": 1},
+        {"resource": "strand_legendary", "amount": 1}
+      ]},
+
+      {"required": true,
+      "slot": [
+        {"resource": "ingotT1", "amount": 5}
+      ]} 
+    ],
+    "upgrades": [
+      {"required": true,
+      "slot": [
+        {"resource": "bootsT1_common", "amount": 1},
+        {"resource": "bootsT1_uncommon", "amount": 1},
+        {"resource": "bootsT1_rare", "amount": 1},
+        {"resource": "bootsT1_epic", "amount": 1},
+        {"resource": "bootsT1_legendary", "amount": 1}
+        ]},
+
+
+      {"required": false,
+      "slot": [
+        {"resource": "luckCharm_mining", "amount": 1},
+        {"resource": "yieldCharm_mining", "amount": 1},
+        {"resource": "expCharm_mining", "amount": 1},
+        {"resource": "speedCharm_mining", "amount": 1},
+
+        {"resource": "luckCharm_woodcutting", "amount": 1},
+        {"resource": "yieldCharm_woodcutting", "amount": 1},
+        {"resource": "expCharm_woodcutting", "amount": 1},
+        {"resource": "speedCharm_woodcutting", "amount": 1},
+
+        {"resource": "luckCharm_harvesting", "amount": 1},
+        {"resource": "yieldCharm_harvesting", "amount": 1},
+        {"resource": "expCharm_harvesting", "amount": 1},
+        {"resource": "speedCharm_harvesting", "amount": 1},
+
+        {"resource": "strCharm", "amount": 1},
+        {"resource": "conCharm", "amount": 1},
+        {"resource": "intCharm", "amount": 1},
+        {"resource": "dexCharm", "amount": 1},
+        {"resource": "focCharm", "amount": 1}
+
+        ]}
+    ]
   }
 }

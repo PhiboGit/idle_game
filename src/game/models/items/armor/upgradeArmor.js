@@ -2,7 +2,7 @@ const Armor = require('./armor')
 const { rollRange, weightedChoiceRemoved } = require('../../../utils/randomDice');
 const { getRarityNumber } = require('../itemUtils');
 const { resourcesInfo } = require('../../../data/resourceDetails/resourcesInfo');
-const { gearScoreData, recipesData } = require('../../../utils/dataLoader')
+const { gearScoreData } = require('../../../utils/dataLoader')
 
 /**
  * 

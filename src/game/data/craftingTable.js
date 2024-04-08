@@ -1,5 +1,4 @@
-const dataLoader = require('../utils/dataLoader')
-const craftingTable = dataLoader.craftingTable
+const {craftingTable} = require('../utils/dataLoader')
 
 const {weightedChoice, adjustWeights} = require('../utils/randomDice')
 

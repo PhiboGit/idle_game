@@ -6,7 +6,6 @@ const region_filepath = path.join(__dirname, '../data/regions.json');
 const gatheringResources_filepath = path.join(__dirname, '../data/gatheringResources.json');
 const gatheringEXP_filepath = path.join(__dirname, '../data/EXP.json')
 const recipes_filepath = path.join(__dirname, '../data/recipes.json')
-const refiningRecipes_filepath = path.join(__dirname, '../data/refiningRecipes.json')
 const lootTables_filepath = path.join(__dirname, '../data/lootTables.json')
 const craftingMaterials_filepath = path.join(__dirname, '../data/resourceDetails/craftingMaterials.json')
 const charms_filepath = path.join(__dirname, '../data/resourceDetails/charms.json')
@@ -20,8 +19,6 @@ const gearScore_filepath = path.join(__dirname, '../data/gearScore.json')
 const regionData = loadJSONData(region_filepath);
 const gatheringEXPData = loadJSONData(gatheringEXP_filepath);
 const gatheringResourcesData = loadJSONData(gatheringResources_filepath);
-const recipesData = loadJSONData(recipes_filepath);
-const refiningRecipes = loadJSONData(refiningRecipes_filepath);
 const lootTables = loadJSONData(lootTables_filepath)
 
 const craftingMaterials = loadJSONData(craftingMaterials_filepath)
@@ -34,6 +31,8 @@ const enchantingProfession = loadJSONData(enchanting_filepath)
 const craftingTable = loadJSONData(craftingTable_filepath)
 const vendorData = loadJSONData(vendor_filepath)
 const gearScoreData = loadJSONData(gearScore_filepath)
+
+const recipesData = loadJSONData(recipes_filepath);
 
 function loadJSONData(filePath) {
     try {
@@ -76,4 +75,4 @@ if (isValid) {
     console.log('JSON data is not valid according to the schema:', validate.errors);
 }
 
-module.exports = {charms,gearScoreData, gatheredResources, refinedResources, regionData,vendorData, recipesData, refiningRecipes, gatheringEXPData, gatheringResourcesData, lootTables, craftingMaterials, enchantingProfession, craftingTable};
+module.exports = {charms,gearScoreData, gatheredResources, refinedResources, regionData,vendorData, recipesData, gatheringEXPData, gatheringResourcesData, lootTables, craftingMaterials, enchantingProfession, craftingTable};
