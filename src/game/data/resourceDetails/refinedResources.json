@@ -14,28 +14,28 @@
     "description": ""
   },
   "ingotT2": {
-    "tier": 1,
+    "tier": 2,
     "rarity": "common",
     "displayName": "Starmetal Ingot",
     "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "ingotT3": {
-    "tier": 1,
+    "tier": 3,
     "rarity": "common",
     "displayName": "Platinum Ingot",
     "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "ingotT4": {
-    "tier": 1,
+    "tier": 4,
     "rarity": "common",
     "displayName": "Orichalcum Ingot",
     "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "ingotT5": {
-    "tier": 1,
+    "tier": 5,
     "rarity": "common",
     "displayName": "Mythril Ingot",
     "tags": ["Resource", "Refined", "Crafting Material"],
@@ -50,28 +50,28 @@
     "description": ""
   },
   "plankT2": {
-    "tier": 1,
+    "tier": 2,
     "rarity": "common",
     "displayName": "Oak Plank",
     "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "plankT3": {
-    "tier": 1,
+    "tier": 3,
     "rarity": "common",
     "displayName": "Wyrmwood Plank",
     "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "plankT4": {
-    "tier": 1,
+    "tier": 4,
     "rarity": "common",
     "displayName": "IronWood Plank",
     "tags": ["Resource", "Refined", "Crafting Material"],
     "description": ""
   },
   "plankT5": {
-    "tier": 1,
+    "tier": 5,
     "rarity": "common",
     "displayName": "Elderwood Plank",
     "tags": ["Resource", "Refined", "Crafting Material"],
