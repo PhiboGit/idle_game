@@ -335,7 +335,7 @@
 
   "pickaxeT1":{
     "profession": "toolsmith",
-    "name": "pickaxeT1",
+    "name": "pickaxeT1_common",
     "equipmentType": "tool",
     "equipmentSkills": ["mining"],
     "availableBoni": ["speed_mining", "luck_mining", "exp_mining", "yieldMax_mining", "str"],
@@ -400,7 +400,7 @@
 
   "sickleT1":{
     "profession": "toolsmith",
-    "name": "sickleT1",
+    "name": "sickleT1_common",
     "equipmentType": "tool",
     "equipmentSkills": ["harvesting"],
     "availableBoni": ["speed_harvesting", "luck_harvesting", "exp_harvesting", "yieldMax_harvesting", "int"],
@@ -466,7 +466,7 @@
 
   "axeT1":{
     "profession": "toolsmith",
-    "name": "axeT1",
+    "name": "axeT1_common",
     "equipmentType": "tool",
     "equipmentSkills": ["woodcutting"],
     "availableBoni": ["speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting", "con"],
@@ -532,7 +532,7 @@
 
   "axeT2":{
     "profession": "toolsmith",
-    "name": "axeT2",
+    "name": "axeT2_common",
     "equipmentType": "tool",
     "equipmentSkills": ["woodcutting"],
     "availableBoni": ["speed_woodcutting", "luck_woodcutting", "exp_woodcutting", "yieldMax_woodcutting", "con"],
@@ -599,7 +599,7 @@
 
   "hatT1":{
     "profession": "armorer",
-    "name": "hatT1",
+    "name": "hatT1_common",
     "equipmentType": "head",
     "equipmentSkills": ["mining", "woodcutting", "harvesting"],
     "availableBoni": [
@@ -668,7 +668,7 @@
 
   "chestpieceT1":{
     "profession": "armorer",
-    "name": "chestpieceT1",
+    "name": "chestpieceT1_common",
     "equipmentType": "chest",
     "equipmentSkills": ["mining", "woodcutting", "harvesting"],
     "availableBoni": [
@@ -742,7 +742,7 @@
 
   "glovesT1":{
     "profession": "armorer",
-    "name": "glovesT1",
+    "name": "glovesT1_common",
     "equipmentType": "hands",
     "equipmentSkills": ["mining", "woodcutting", "harvesting"],
     "availableBoni": [
@@ -817,7 +817,7 @@
 
   "pantsT1":{
     "profession": "armorer",
-    "name": "pantsT1",
+    "name": "pantsT1_common",
     "equipmentType": "legs",
     "equipmentSkills": ["mining", "woodcutting", "harvesting"],
     "availableBoni": [
@@ -891,7 +891,7 @@
 
   "bootsT1":{
     "profession": "armorer",
-    "name": "bootsT1",
+    "name": "bootsT1_common",
     "equipmentType": "feet",
     "equipmentSkills": ["mining", "woodcutting", "harvesting"],
     "availableBoni": [
